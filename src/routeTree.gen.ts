@@ -10,12 +10,20 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as FaqRouteImport } from './routes/faq'
 import { Route as PostersRouteImport } from './routes/posters'
+import { Route as SetupsRouteImport } from './routes/setups'
 import { Route as StickersRouteImport } from './routes/stickers'
+import { Route as WishlistRouteImport } from './routes/wishlist'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FaqRoute = FaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PostersRoute = PostersRouteImport.update({
@@ -23,40 +31,69 @@ const PostersRoute = PostersRouteImport.update({
   path: '/posters',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SetupsRoute = SetupsRouteImport.update({
+  id: '/setups',
+  path: '/setups',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const StickersRoute = StickersRouteImport.update({
   id: '/stickers',
   path: '/stickers',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WishlistRoute = WishlistRouteImport.update({
+  id: '/wishlist',
+  path: '/wishlist',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/faq': typeof FaqRoute
   '/posters': typeof PostersRoute
+  '/setups': typeof SetupsRoute
   '/stickers': typeof StickersRoute
+  '/wishlist': typeof WishlistRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/faq': typeof FaqRoute
   '/posters': typeof PostersRoute
+  '/setups': typeof SetupsRoute
   '/stickers': typeof StickersRoute
+  '/wishlist': typeof WishlistRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/faq': typeof FaqRoute
   '/posters': typeof PostersRoute
+  '/setups': typeof SetupsRoute
   '/stickers': typeof StickersRoute
+  '/wishlist': typeof WishlistRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/posters' | '/stickers'
+  fullPaths: '/' | '/faq' | '/posters' | '/setups' | '/stickers' | '/wishlist'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/posters' | '/stickers'
-  id: '__root__' | '/' | '/posters' | '/stickers'
+  to: '/' | '/faq' | '/posters' | '/setups' | '/stickers' | '/wishlist'
+  id:
+    | '__root__'
+    | '/'
+    | '/faq'
+    | '/posters'
+    | '/setups'
+    | '/stickers'
+    | '/wishlist'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  FaqRoute: typeof FaqRoute
   PostersRoute: typeof PostersRoute
+  SetupsRoute: typeof SetupsRoute
   StickersRoute: typeof StickersRoute
+  WishlistRoute: typeof WishlistRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -68,11 +105,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/posters': {
       id: '/posters'
       path: '/posters'
       fullPath: '/posters'
       preLoaderRoute: typeof PostersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/setups': {
+      id: '/setups'
+      path: '/setups'
+      fullPath: '/setups'
+      preLoaderRoute: typeof SetupsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/stickers': {
@@ -82,13 +133,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StickersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/wishlist': {
+      id: '/wishlist'
+      path: '/wishlist'
+      fullPath: '/wishlist'
+      preLoaderRoute: typeof WishlistRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  FaqRoute: FaqRoute,
   PostersRoute: PostersRoute,
+  SetupsRoute: SetupsRoute,
   StickersRoute: StickersRoute,
+  WishlistRoute: WishlistRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
