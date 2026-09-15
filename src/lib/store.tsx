@@ -15,7 +15,7 @@ export type CartItem = {
   key: string;
   productId?: string;
   name: string;
-  image?: string;
+  image?: string | undefined;
   size: string;
   price: number;
   qty: number;
