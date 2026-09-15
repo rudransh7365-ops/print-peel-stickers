@@ -10,33 +10,53 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PostersRouteImport } from './routes/posters'
+import { Route as StickersRouteImport } from './routes/stickers'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PostersRoute = PostersRouteImport.update({
+  id: '/posters',
+  path: '/posters',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StickersRoute = StickersRouteImport.update({
+  id: '/stickers',
+  path: '/stickers',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/posters': typeof PostersRoute
+  '/stickers': typeof StickersRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/posters': typeof PostersRoute
+  '/stickers': typeof StickersRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/posters': typeof PostersRoute
+  '/stickers': typeof StickersRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/posters' | '/stickers'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/posters' | '/stickers'
+  id: '__root__' | '/' | '/posters' | '/stickers'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  PostersRoute: typeof PostersRoute
+  StickersRoute: typeof StickersRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +68,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/posters': {
+      id: '/posters'
+      path: '/posters'
+      fullPath: '/posters'
+      preLoaderRoute: typeof PostersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/stickers': {
+      id: '/stickers'
+      path: '/stickers'
+      fullPath: '/stickers'
+      preLoaderRoute: typeof StickersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  PostersRoute: PostersRoute,
+  StickersRoute: StickersRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
