@@ -41,10 +41,11 @@ const FAQS = [
   },
 ];
 
-export function FaqList() {
+export function FaqList({ limit }: { limit?: number }) {
+  const faqs = typeof limit === "number" ? FAQS.slice(0, limit) : FAQS;
   return (
     <div className="divide-y-2 divide-ink border-4 border-ink bg-paper">
-      {FAQS.map((f) => (
+      {faqs.map((f) => (
         <details key={f.q} className="group p-5">
           <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-display text-xl uppercase">
             {f.q}
