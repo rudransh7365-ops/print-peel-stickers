@@ -8,6 +8,15 @@ import gojo1 from "@/assets/gojo-run-1.png.asset.json";
 import neymar1 from "@/assets/neymar-jr-1.png.asset.json";
 import rengoku1 from "@/assets/rengoku-1.png.asset.json";
 import bmwPoster1 from "@/assets/bmw-m4-poster-1.png.asset.json";
+import zoroThreeSword1 from "@/assets/zoro-three-sword-1.png.asset.json";
+import strawHatCrew1 from "@/assets/straw-hat-crew-1.png.asset.json";
+import zenitsuThunderPoster1 from "@/assets/zenitsu-thunder-poster-1.png.asset.json";
+import porsche911RainPoster1 from "@/assets/porsche-911-rain-poster-1.png.asset.json";
+import bmwM4StreetPoster2 from "@/assets/bmw-m4-street-poster-2.png.asset.json";
+import bugattiAirfieldPoster1 from "@/assets/bugatti-airfield-poster-1.png.asset.json";
+import beanStreetwear1 from "@/assets/bean-streetwear-1.jpg.asset.json";
+import shrekSlay1 from "@/assets/shrek-slay-1.jpg.asset.json";
+import evilEyeProtection1 from "@/assets/evil-eye-protection-1.jpg.asset.json";
 
 export type Category = "stickers" | "posters";
 
@@ -157,6 +166,69 @@ export const PRODUCTS: Product[] = [
     popular: true,
   },
   {
+    id: "zoro-three-sword-sticker-1",
+    name: "Zoro Three Sword Sticker #1",
+    category: "stickers",
+    types: ["anime"],
+    description: STICKER_DESC,
+    price: 20,
+    sizes: STICKER_SIZES,
+    images: [zoroThreeSword1.url],
+    tags: ["Anime", "Zoro", "One Piece", "Sword"],
+    recentlyAdded: true,
+    trending: true,
+  },
+  {
+    id: "straw-hat-crew-sticker-1",
+    name: "Straw Hat Crew Sticker #1",
+    category: "stickers",
+    types: ["anime", "minimal"],
+    description: STICKER_DESC,
+    price: 20,
+    sizes: STICKER_SIZES,
+    images: [strawHatCrew1.url],
+    tags: ["Anime", "One Piece", "Crew", "Manga"],
+    recentlyAdded: true,
+    popular: true,
+  },
+  {
+    id: "bean-streetwear-sticker-1",
+    name: "Bean Streetwear Sticker #1",
+    category: "stickers",
+    types: ["meme"],
+    description: STICKER_DESC,
+    price: 20,
+    sizes: STICKER_SIZES,
+    images: [beanStreetwear1.url],
+    tags: ["Meme", "Bean", "Streetwear", "Funny"],
+    recentlyAdded: true,
+  },
+  {
+    id: "shrek-slay-sticker-1",
+    name: "Shrek Slay Sticker #1",
+    category: "stickers",
+    types: ["meme"],
+    description: STICKER_DESC,
+    price: 20,
+    sizes: STICKER_SIZES,
+    images: [shrekSlay1.url],
+    tags: ["Meme", "Shrek", "Funny", "Sunglasses"],
+    recentlyAdded: true,
+    popular: true,
+  },
+  {
+    id: "evil-eye-protection-sticker-1",
+    name: "Evil Eye Protection Sticker #1",
+    category: "stickers",
+    types: ["typography", "minimal"],
+    description: STICKER_DESC,
+    price: 20,
+    sizes: STICKER_SIZES,
+    images: [evilEyeProtection1.url],
+    tags: ["Evil Eye", "Protection", "Typography", "Symbol"],
+    recentlyAdded: true,
+  },
+  {
     id: "cristiano-poster-1",
     name: "Cristiano Poster #1",
     category: "posters",
@@ -183,6 +255,58 @@ export const PRODUCTS: Product[] = [
     recentlyAdded: true,
     popular: true,
   },
+  {
+    id: "zenitsu-thunder-poster-1",
+    name: "Zenitsu Thunder Poster #1",
+    category: "posters",
+    types: ["anime"],
+    description: POSTER_DESC,
+    price: 30,
+    sizes: POSTER_SIZES,
+    images: [zenitsuThunderPoster1.url],
+    tags: ["Anime", "Zenitsu", "Demon Slayer", "Thunder"],
+    recentlyAdded: true,
+    trending: true,
+  },
+  {
+    id: "porsche-911-rain-poster-1",
+    name: "Porsche 911 Rain Poster #1",
+    category: "posters",
+    types: ["cars"],
+    description: POSTER_DESC,
+    price: 30,
+    sizes: POSTER_SIZES,
+    images: [porsche911RainPoster1.url],
+    tags: ["Cars", "Porsche", "911", "Motorsport"],
+    recentlyAdded: true,
+    bestSeller: true,
+  },
+  {
+    id: "bmw-m4-street-poster-2",
+    name: "BMW M4 Street Poster #2",
+    category: "posters",
+    types: ["cars"],
+    description: POSTER_DESC,
+    price: 30,
+    sizes: POSTER_SIZES,
+    images: [bmwM4StreetPoster2.url],
+    tags: ["Cars", "BMW", "M4", "Street"],
+    recentlyAdded: true,
+    trending: true,
+  },
+  {
+    id: "bugatti-airfield-poster-1",
+    name: "Bugatti Airfield Poster #1",
+    category: "posters",
+    types: ["cars"],
+    description: POSTER_DESC,
+    price: 30,
+    sizes: POSTER_SIZES,
+    images: [bugattiAirfieldPoster1.url],
+    tags: ["Cars", "Bugatti", "Jet", "Airfield"],
+    recentlyAdded: true,
+    popular: true,
+  },
 ];
 
 export const STICKER_TYPES = [
@@ -193,6 +317,7 @@ export const STICKER_TYPES = [
   "minimal",
   "floral",
   "cars",
+  "meme",
 ];
 
 export const getProduct = (id: string) => PRODUCTS.find((p) => p.id === id);
