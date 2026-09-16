@@ -3,7 +3,7 @@
  * The WhatsApp destination lives here only — it is never rendered on the site.
  * Replace the digits below with your number in international format (no + / spaces).
  */
-export const WHATSAPP_NUMBER = "910000000000";
+export const WHATSAPP_NUMBER = "918517022565";
 
 export const BRAND = {
   name: "PRINT&PEEL",
