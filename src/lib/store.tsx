@@ -29,10 +29,35 @@ export type CartItem = {
   };
 };
 
+export type CustomerProfile = {
+  firstName: string;
+  lastName: string;
+  phone: string;
+  email: string;
+  address: string;
+  city: string;
+  state: string;
+  pincode: string;
+  country: string;
+};
+
+export type OrderRecord = {
+  id: string;
+  date: string;
+  items: CartItem[];
+  customer: CustomerProfile;
+  subtotal: number;
+  delivery: number;
+  tax: number;
+  total: number;
+};
+
 type Store = {
   cart: CartItem[];
   wishlist: string[];
   recent: string[];
+  profile: CustomerProfile | null;
+  orders: OrderRecord[];
   addToCart: (item: Omit<CartItem, "key"> & { key?: string }) => void;
   removeFromCart: (key: string) => void;
   setQty: (key: string, qty: number) => void;
@@ -40,6 +65,9 @@ type Store = {
   toggleWishlist: (id: string) => void;
   isWishlisted: (id: string) => boolean;
   pushRecent: (id: string) => void;
+  saveProfile: (profile: CustomerProfile) => void;
+  saveOrder: (order: OrderRecord) => void;
+  reorder: (order: OrderRecord) => void;
   count: number;
   subtotal: number;
   freeDelivery: boolean;
@@ -62,12 +90,16 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [wishlist, setWishlist] = useState<string[]>([]);
   const [recent, setRecent] = useState<string[]>([]);
+  const [profile, setProfile] = useState<CustomerProfile | null>(null);
+  const [orders, setOrders] = useState<OrderRecord[]>([]);
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
     setCart(read<CartItem[]>("pp_cart", []));
     setWishlist(read<string[]>("pp_wishlist", []));
     setRecent(read<string[]>("pp_recent", []));
+    setProfile(read<CustomerProfile | null>("pp_profile", null));
+    setOrders(read<OrderRecord[]>("pp_orders", []));
     setHydrated(true);
   }, []);
 
@@ -80,6 +112,14 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (hydrated) localStorage.setItem("pp_recent", JSON.stringify(recent));
   }, [recent, hydrated]);
+  useEffect(() => {
+    if (!hydrated) return;
+    if (profile) localStorage.setItem("pp_profile", JSON.stringify(profile));
+    else localStorage.removeItem("pp_profile");
+  }, [profile, hydrated]);
+  useEffect(() => {
+    if (hydrated) localStorage.setItem("pp_orders", JSON.stringify(orders));
+  }, [orders, hydrated]);
 
   const addToCart = useCallback((item: Omit<CartItem, "key"> & { key?: string }) => {
     const key =
@@ -118,12 +158,36 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     setRecent((prev) => [id, ...prev.filter((x) => x !== id)].slice(0, 8));
   }, []);
 
+  const saveProfile = useCallback((next: CustomerProfile) => {
+    setProfile(next);
+    toast.success("Details saved");
+  }, []);
+
+  const saveOrder = useCallback((order: OrderRecord) => {
+    setOrders((prev) => [order, ...prev.filter((item) => item.id !== order.id)]);
+  }, []);
+
+  const reorder = useCallback((order: OrderRecord) => {
+    setCart((prev) => {
+      const next = [...prev];
+      order.items.forEach((item) => {
+        const existing = next.find((line) => line.key === item.key);
+        if (existing) existing.qty += item.qty;
+        else next.push({ ...item });
+      });
+      return next;
+    });
+    toast.success("Order added to cart");
+  }, []);
+
   const value = useMemo<Store>(() => {
     const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
     return {
       cart,
       wishlist,
       recent,
+      profile,
+      orders,
       addToCart,
       removeFromCart,
       setQty,
@@ -131,6 +195,9 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       toggleWishlist,
       isWishlisted: (id) => wishlist.includes(id),
       pushRecent,
+      saveProfile,
+      saveOrder,
+      reorder,
       count: cart.reduce((s, i) => s + i.qty, 0),
       subtotal,
       freeDelivery: subtotal >= FREE_DELIVERY_THRESHOLD,
@@ -141,12 +208,17 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     cart,
     wishlist,
     recent,
+    profile,
+    orders,
     addToCart,
     removeFromCart,
     setQty,
     clearCart,
     toggleWishlist,
     pushRecent,
+    saveProfile,
+    saveOrder,
+    reorder,
     hydrated,
   ]);
 
