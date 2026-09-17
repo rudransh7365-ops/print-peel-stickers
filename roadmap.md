@@ -1,0 +1,1 @@
+- [ ] Use ₹180 as the free-delivery threshold throughout the storefront.

@@ -7,7 +7,7 @@ Finish the previously requested customer and order features, make every poster a
 - Add sticker versions of every poster design, keeping picture-based names and matching anime, cars, football, or other filters.
 - Add any remaining uploaded designs that are not yet in the catalogue, with picture-based names and correct categories.
 - Update every poster description and visible product detail to say “self-adhesive”.
-- Apply the confirmed delivery rule: ₹50 below ₹230 and free delivery from ₹230, including the cart, checkout, WhatsApp order, and receipt totals.
+- Apply the confirmed delivery rule: ₹50 below ₹180 and free delivery from ₹180, including the cart, checkout, WhatsApp order, and receipt totals.
 - Add a locally saved customer profile with name, phone, email, and address details.
 - Add a first-visit details prompt with save/skip actions, plus returning-customer shortcuts.
 - Autofill checkout from saved profile details while keeping fields editable.
