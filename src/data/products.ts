@@ -17,6 +17,15 @@ import bugattiAirfieldPoster1 from "@/assets/bugatti-airfield-poster-1.png.asset
 import beanStreetwear1 from "@/assets/bean-streetwear-1.jpg.asset.json";
 import shrekSlay1 from "@/assets/shrek-slay-1.jpg.asset.json";
 import evilEyeProtection1 from "@/assets/evil-eye-protection-1.jpg.asset.json";
+import messi10Sticker1 from "@/assets/messi-10-sticker-1.png.asset.json";
+import lokiTricksterSticker1 from "@/assets/loki-trickster-sticker-1.png.asset.json";
+import zenitsuSwordSticker1 from "@/assets/zenitsu-sword-sticker-1.jpeg.asset.json";
+import luffyPeekSticker1 from "@/assets/luffy-peek-sticker-1.jpeg.asset.json";
+import sukunaCurseSticker1 from "@/assets/sukuna-curse-sticker-1.jpeg.asset.json";
+import brolyPowerSticker1 from "@/assets/broly-power-sticker-1.jpeg.asset.json";
+import gojoPurpleSticker2 from "@/assets/gojo-purple-sticker-2.jpeg.asset.json";
+import itachiAkatsukiSticker1 from "@/assets/itachi-akatsuki-sticker-1.jpg.asset.json";
+import luffyKingQuoteSticker1 from "@/assets/luffy-king-quote-sticker-1.jpg.asset.json";
 
 export type Category = "stickers" | "posters";
 
@@ -57,7 +66,7 @@ const POSTER_SIZES: SizeOption[] = [
 const STICKER_DESC =
   "Premium laminated vinyl sticker. Water resistant, scratch resistant and easy to clean.";
 const POSTER_DESC =
-  "Premium print on thick matte paper. Sharp colours, clean edges, ready to put up.";
+  "Premium self-adhesive poster on thick matte paper. Sharp colours, clean edges and ready to stick up.";
 
 export const PRODUCTS: Product[] = [
   {
@@ -306,6 +315,188 @@ export const PRODUCTS: Product[] = [
     tags: ["Cars", "Bugatti", "Jet", "Airfield"],
     recentlyAdded: true,
     popular: true,
+  },
+  {
+    id: "cristiano-sticker-1",
+    name: "Cristiano Red Seven Sticker #1",
+    category: "stickers",
+    types: ["football", "sports"],
+    description: STICKER_DESC,
+    price: 20,
+    sizes: STICKER_SIZES,
+    images: [cristianoPoster1.url],
+    tags: ["Football", "Ronaldo", "CR7", "Sports"],
+    recentlyAdded: true,
+  },
+  {
+    id: "bmw-m4-editorial-sticker-1",
+    name: "BMW M4 Editorial Sticker #1",
+    category: "stickers",
+    types: ["cars"],
+    description: STICKER_DESC,
+    price: 20,
+    sizes: STICKER_SIZES,
+    images: [bmwPoster1.url],
+    tags: ["Cars", "BMW", "M4", "Editorial"],
+    recentlyAdded: true,
+  },
+  {
+    id: "zenitsu-thunder-sticker-1",
+    name: "Zenitsu Thunder Sticker #1",
+    category: "stickers",
+    types: ["anime"],
+    description: STICKER_DESC,
+    price: 20,
+    sizes: STICKER_SIZES,
+    images: [zenitsuThunderPoster1.url],
+    tags: ["Anime", "Zenitsu", "Demon Slayer", "Thunder"],
+    recentlyAdded: true,
+  },
+  {
+    id: "porsche-911-rain-sticker-1",
+    name: "Porsche 911 Rain Sticker #1",
+    category: "stickers",
+    types: ["cars"],
+    description: STICKER_DESC,
+    price: 20,
+    sizes: STICKER_SIZES,
+    images: [porsche911RainPoster1.url],
+    tags: ["Cars", "Porsche", "911", "Rain"],
+    recentlyAdded: true,
+  },
+  {
+    id: "bmw-m4-street-sticker-2",
+    name: "BMW M4 Street Sticker #2",
+    category: "stickers",
+    types: ["cars"],
+    description: STICKER_DESC,
+    price: 20,
+    sizes: STICKER_SIZES,
+    images: [bmwM4StreetPoster2.url],
+    tags: ["Cars", "BMW", "M4", "Street"],
+    recentlyAdded: true,
+  },
+  {
+    id: "bugatti-airfield-sticker-1",
+    name: "Bugatti Airfield Sticker #1",
+    category: "stickers",
+    types: ["cars"],
+    description: STICKER_DESC,
+    price: 20,
+    sizes: STICKER_SIZES,
+    images: [bugattiAirfieldPoster1.url],
+    tags: ["Cars", "Bugatti", "Jet", "Airfield"],
+    recentlyAdded: true,
+  },
+  {
+    id: "messi-10-sticker-1",
+    name: "Messi Number 10 Sticker #1",
+    category: "stickers",
+    types: ["football", "sports", "typography"],
+    description: STICKER_DESC,
+    price: 20,
+    sizes: STICKER_SIZES,
+    images: [messi10Sticker1.url],
+    tags: ["Football", "Messi", "Number 10", "Typography"],
+    recentlyAdded: true,
+  },
+  {
+    id: "loki-trickster-sticker-1",
+    name: "Loki Trickster Sticker #1",
+    category: "stickers",
+    types: ["minimal", "typography"],
+    description: STICKER_DESC,
+    price: 20,
+    sizes: STICKER_SIZES,
+    images: [lokiTricksterSticker1.url],
+    tags: ["Loki", "Trickster", "Helmet", "Typography"],
+    recentlyAdded: true,
+  },
+  {
+    id: "zenitsu-sword-sticker-1",
+    name: "Zenitsu Sword Sticker #1",
+    category: "stickers",
+    types: ["anime"],
+    description: STICKER_DESC,
+    price: 20,
+    sizes: STICKER_SIZES,
+    images: [zenitsuSwordSticker1.url],
+    tags: ["Anime", "Zenitsu", "Demon Slayer", "Sword"],
+    recentlyAdded: true,
+  },
+  {
+    id: "luffy-peek-sticker-1",
+    name: "Luffy Peek Sticker #1",
+    category: "stickers",
+    types: ["anime"],
+    description: STICKER_DESC,
+    price: 20,
+    sizes: STICKER_SIZES,
+    images: [luffyPeekSticker1.url],
+    tags: ["Anime", "Luffy", "One Piece", "Straw Hat"],
+    recentlyAdded: true,
+    popular: true,
+  },
+  {
+    id: "sukuna-curse-sticker-1",
+    name: "Sukuna Curse Sticker #1",
+    category: "stickers",
+    types: ["anime"],
+    description: STICKER_DESC,
+    price: 20,
+    sizes: STICKER_SIZES,
+    images: [sukunaCurseSticker1.url],
+    tags: ["Anime", "Sukuna", "Jujutsu", "Curse"],
+    recentlyAdded: true,
+  },
+  {
+    id: "broly-power-sticker-1",
+    name: "Broly Power Sticker #1",
+    category: "stickers",
+    types: ["anime"],
+    description: STICKER_DESC,
+    price: 20,
+    sizes: STICKER_SIZES,
+    images: [brolyPowerSticker1.url],
+    tags: ["Anime", "Broly", "Dragon Ball", "Power"],
+    recentlyAdded: true,
+  },
+  {
+    id: "gojo-purple-sticker-2",
+    name: "Gojo Purple Aura Sticker #2",
+    category: "stickers",
+    types: ["anime"],
+    description: STICKER_DESC,
+    price: 20,
+    sizes: STICKER_SIZES,
+    images: [gojoPurpleSticker2.url],
+    tags: ["Anime", "Gojo", "Jujutsu", "Purple Aura"],
+    recentlyAdded: true,
+    trending: true,
+  },
+  {
+    id: "itachi-akatsuki-sticker-1",
+    name: "Itachi Akatsuki Sticker #1",
+    category: "stickers",
+    types: ["anime", "minimal"],
+    description: STICKER_DESC,
+    price: 20,
+    sizes: STICKER_SIZES,
+    images: [itachiAkatsukiSticker1.url],
+    tags: ["Anime", "Itachi", "Naruto", "Akatsuki"],
+    recentlyAdded: true,
+  },
+  {
+    id: "luffy-king-quote-sticker-1",
+    name: "Luffy King Quote Sticker #1",
+    category: "stickers",
+    types: ["anime", "typography"],
+    description: STICKER_DESC,
+    price: 20,
+    sizes: STICKER_SIZES,
+    images: [luffyKingQuoteSticker1.url],
+    tags: ["Anime", "Luffy", "One Piece", "Quote"],
+    recentlyAdded: true,
   },
 ];
 
