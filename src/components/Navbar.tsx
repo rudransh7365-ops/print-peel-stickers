@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Heart, Menu, Search, ShoppingBag, X } from "lucide-react";
+import { Heart, Menu, Search, ShoppingBag, UserRound, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { SearchOverlay } from "./SearchOverlay";
 import { useStore } from "@/lib/store";
@@ -11,11 +11,12 @@ const LINKS = [
   { to: "/custom", label: "Custom" },
   { to: "/setups", label: "Stickered Setups" },
   { to: "/about", label: "About" },
+  { to: "/orders", label: "Orders" },
 ] as const;
 
 const MARQUEE = [
   "PREMIUM LAMINATED VINYL",
-  "FREE DELIVERY ABOVE ₹230",
+  "FREE DELIVERY FROM ₹180",
   "WATER + SCRATCH RESISTANT",
   "ORDER ON WHATSAPP",
 ];
@@ -87,11 +88,25 @@ export function Navbar() {
               <Search className="size-4" aria-hidden="true" />
             </button>
             <Link
+              to="/profile"
+              aria-label="Profile"
+              className="hidden size-10 place-items-center border-2 border-ink bg-white hard-shadow-sm press sm:grid"
+            >
+              <UserRound className="size-4" aria-hidden="true" />
+            </Link>
+            <Link
               to="/wishlist"
               aria-label="Wishlist"
               className="hidden size-10 place-items-center border-2 border-ink bg-white hard-shadow-sm press sm:grid"
             >
               <Heart className="size-4" aria-hidden="true" />
+            </Link>
+            <Link
+              to="/profile"
+              onClick={() => setMenuOpen(false)}
+              className="block border-b-2 border-ink/10 px-5 py-4 font-display text-2xl uppercase"
+            >
+              Profile
             </Link>
             <Link
               to="/cart"

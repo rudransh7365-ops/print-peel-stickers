@@ -23,7 +23,7 @@ export function DeliveryProgress({ compact = false }: { compact?: boolean }) {
       </div>
       <p className="mt-2 text-sm font-bold">
         {freeDelivery ? (
-          <>🎉 CONGRATULATIONS! You&apos;ve unlocked FREE DELIVERY.</>
+          <>🎉 FREE DELIVERY UNLOCKED</>
         ) : (
           <>Add {formatPrice(remainingForFree)} more to unlock FREE DELIVERY.</>
         )}

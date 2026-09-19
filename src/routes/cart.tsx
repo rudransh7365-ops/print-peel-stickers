@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Minus, Plus, Trash2 } from "lucide-react";
-import { formatPrice } from "@/lib/config";
+import { DELIVERY_FEE, formatPrice } from "@/lib/config";
 import { useStore } from "@/lib/store";
 import { DeliveryProgress } from "@/components/DeliveryProgress";
 
@@ -18,6 +18,7 @@ export const Route = createFileRoute("/cart")({
 
 function CartPage() {
   const { cart, setQty, removeFromCart, clearCart, subtotal, freeDelivery, hydrated } = useStore();
+  const delivery = freeDelivery ? 0 : DELIVERY_FEE;
 
   return (
     <div className="mx-auto max-w-5xl px-5 py-12">
@@ -115,12 +116,12 @@ function CartPage() {
             <div className="mb-4 flex justify-between gap-4 font-mono text-xs font-bold text-muted-foreground">
               <span>Delivery</span>
               <span className="text-right">
-                {freeDelivery ? "FREE" : "Delivery charges apply below ₹230"}
+                {freeDelivery ? "FREE" : formatPrice(delivery)}
               </span>
             </div>
             <div className="mb-6 flex justify-between border-t-2 border-ink pt-4 font-display text-2xl uppercase">
               <span>Total</span>
-              <span>{formatPrice(subtotal)}</span>
+              <span>{formatPrice(subtotal + delivery)}</span>
             </div>
             <div className="flex flex-wrap gap-3">
               <Link

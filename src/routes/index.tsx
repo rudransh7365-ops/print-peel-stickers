@@ -10,6 +10,7 @@ import { FaqList } from "@/components/FaqList";
 import { DeliveryProgress } from "@/components/DeliveryProgress";
 import { useStore } from "@/lib/store";
 import { enquiryMessage, openWhatsApp } from "@/lib/whatsapp";
+import { FREE_DELIVERY_THRESHOLD } from "@/lib/config";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -167,7 +168,7 @@ function Home() {
       {/* DELIVERY */}
       <section className="mx-auto max-w-4xl px-5 py-16">
         <Reveal>
-          <h2 className="mb-6 text-4xl">FREE DELIVERY ABOVE ₹230</h2>
+          <h2 className="mb-6 text-4xl">FREE DELIVERY FROM ₹{FREE_DELIVERY_THRESHOLD}</h2>
           <DeliveryProgress />
         </Reveal>
       </section>
