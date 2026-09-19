@@ -15,7 +15,9 @@ import { Route as CartRouteImport } from './routes/cart'
 import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as CustomRouteImport } from './routes/custom'
 import { Route as FaqRouteImport } from './routes/faq'
+import { Route as OrdersRouteImport } from './routes/orders'
 import { Route as PostersRouteImport } from './routes/posters'
+import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as SetupsRouteImport } from './routes/setups'
 import { Route as StickersRouteImport } from './routes/stickers'
 import { Route as WishlistRouteImport } from './routes/wishlist'
@@ -51,9 +53,19 @@ const FaqRoute = FaqRouteImport.update({
   path: '/faq',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OrdersRoute = OrdersRouteImport.update({
+  id: '/orders',
+  path: '/orders',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PostersRoute = PostersRouteImport.update({
   id: '/posters',
   path: '/posters',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SetupsRoute = SetupsRouteImport.update({
@@ -84,7 +96,9 @@ export interface FileRoutesByFullPath {
   '/checkout': typeof CheckoutRoute
   '/custom': typeof CustomRoute
   '/faq': typeof FaqRoute
+  '/orders': typeof OrdersRoute
   '/posters': typeof PostersRoute
+  '/profile': typeof ProfileRoute
   '/setups': typeof SetupsRoute
   '/stickers': typeof StickersRoute
   '/wishlist': typeof WishlistRoute
@@ -97,7 +111,9 @@ export interface FileRoutesByTo {
   '/checkout': typeof CheckoutRoute
   '/custom': typeof CustomRoute
   '/faq': typeof FaqRoute
+  '/orders': typeof OrdersRoute
   '/posters': typeof PostersRoute
+  '/profile': typeof ProfileRoute
   '/setups': typeof SetupsRoute
   '/stickers': typeof StickersRoute
   '/wishlist': typeof WishlistRoute
@@ -111,7 +127,9 @@ export interface FileRoutesById {
   '/checkout': typeof CheckoutRoute
   '/custom': typeof CustomRoute
   '/faq': typeof FaqRoute
+  '/orders': typeof OrdersRoute
   '/posters': typeof PostersRoute
+  '/profile': typeof ProfileRoute
   '/setups': typeof SetupsRoute
   '/stickers': typeof StickersRoute
   '/wishlist': typeof WishlistRoute
@@ -126,7 +144,9 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/custom'
     | '/faq'
+    | '/orders'
     | '/posters'
+    | '/profile'
     | '/setups'
     | '/stickers'
     | '/wishlist'
@@ -139,7 +159,9 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/custom'
     | '/faq'
+    | '/orders'
     | '/posters'
+    | '/profile'
     | '/setups'
     | '/stickers'
     | '/wishlist'
@@ -152,7 +174,9 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/custom'
     | '/faq'
+    | '/orders'
     | '/posters'
+    | '/profile'
     | '/setups'
     | '/stickers'
     | '/wishlist'
@@ -166,7 +190,9 @@ export interface RootRouteChildren {
   CheckoutRoute: typeof CheckoutRoute
   CustomRoute: typeof CustomRoute
   FaqRoute: typeof FaqRoute
+  OrdersRoute: typeof OrdersRoute
   PostersRoute: typeof PostersRoute
+  ProfileRoute: typeof ProfileRoute
   SetupsRoute: typeof SetupsRoute
   StickersRoute: typeof StickersRoute
   WishlistRoute: typeof WishlistRoute
@@ -217,11 +243,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FaqRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/orders': {
+      id: '/orders'
+      path: '/orders'
+      fullPath: '/orders'
+      preLoaderRoute: typeof OrdersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/posters': {
       id: '/posters'
       path: '/posters'
       fullPath: '/posters'
       preLoaderRoute: typeof PostersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/setups': {
@@ -262,7 +302,9 @@ const rootRouteChildren: RootRouteChildren = {
   CheckoutRoute: CheckoutRoute,
   CustomRoute: CustomRoute,
   FaqRoute: FaqRoute,
+  OrdersRoute: OrdersRoute,
   PostersRoute: PostersRoute,
+  ProfileRoute: ProfileRoute,
   SetupsRoute: SetupsRoute,
   StickersRoute: StickersRoute,
   WishlistRoute: WishlistRoute,

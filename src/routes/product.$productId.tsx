@@ -2,7 +2,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { Heart, Minus, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { PRODUCTS, getProduct } from "@/data/products";
-import { formatPrice } from "@/lib/config";
+import { formatPrice, FREE_DELIVERY_THRESHOLD } from "@/lib/config";
 import { useStore } from "@/lib/store";
 import { ProductCard } from "@/components/ProductCard";
 
@@ -192,8 +192,8 @@ function ProductPage() {
           </div>
 
           <ul className="mt-8 space-y-2 border-4 border-ink bg-paper p-5 text-xs font-bold">
-            <li>Premium laminated finish · water &amp; scratch resistant</li>
-            <li>Free delivery on orders above ₹230</li>
+            <li>{product.category === "posters" ? "Premium self-adhesive matte finish" : "Premium laminated finish · water & scratch resistant"}</li>
+            <li>Free delivery from ₹{FREE_DELIVERY_THRESHOLD}</li>
             <li>Order is confirmed on WhatsApp before printing</li>
           </ul>
         </div>

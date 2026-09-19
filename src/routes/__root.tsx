@@ -16,6 +16,7 @@ import { Footer } from "@/components/Footer";
 import { LoadingScreen } from "@/components/LoadingScreen";
 import { StoreProvider } from "@/lib/store";
 import { Toaster } from "@/components/ui/sonner";
+import { WelcomePrompt } from "@/components/WelcomePrompt";
 
 function NotFoundComponent() {
   return (
@@ -132,6 +133,7 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <StoreProvider>
         <LoadingScreen />
+        <WelcomePrompt />
         <Navbar />
         <main>
           {/* Required: nested routes render here. */}
