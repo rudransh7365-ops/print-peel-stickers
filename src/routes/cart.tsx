@@ -8,9 +8,9 @@ export const Route = createFileRoute("/cart")({
   head: () => ({
     meta: [
       { title: "Your Cart — PRINT&PEEL" },
-      { name: "description", content: "Review your stickers and posters before checkout." },
+      { name: "description", content: "Review your stickers and self-adhesive posters before checkout." },
       { property: "og:title", content: "Your Cart — PRINT&PEEL" },
-      { property: "og:description", content: "Review your stickers and posters before checkout." },
+      { property: "og:description", content: "Review your stickers and self-adhesive posters before checkout." },
     ],
   }),
   component: CartPage,

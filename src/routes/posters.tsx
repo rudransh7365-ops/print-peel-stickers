@@ -4,16 +4,16 @@ import { CatalogPage } from "@/components/CatalogPage";
 export const Route = createFileRoute("/posters")({
   head: () => ({
     meta: [
-      { title: "Posters — PRINT&PEEL" },
+      { title: "Self-Adhesive Posters — PRINT&PEEL" },
       {
         name: "description",
         content:
-          "Premium matte posters in 1/4 A4, 1/2 A4 and A4. Pick your size and order over WhatsApp.",
+          "Premium self-adhesive matte posters in 1/4 A4, 1/2 A4 and full A4. Pick your size and order over WhatsApp.",
       },
-      { property: "og:title", content: "Posters — PRINT&PEEL" },
+      { property: "og:title", content: "Self-Adhesive Posters — PRINT&PEEL" },
       {
         property: "og:description",
-        content: "Premium matte posters in 1/4 A4, 1/2 A4 and A4 sizes.",
+        content: "Premium self-adhesive matte posters in 1/4 A4, 1/2 A4 and full A4 sizes.",
       },
     ],
   }),
@@ -22,12 +22,12 @@ export const Route = createFileRoute("/posters")({
       category="posters"
       title={
         <>
-          WALL
+          SELF-ADHESIVE
           <br />
           POSTERS
         </>
       }
-      kicker="1/4 A4 · 1/2 A4 · A4"
+      kicker="1/4 A4 · 1/2 A4 · FULL A4"
     />
   ),
 });

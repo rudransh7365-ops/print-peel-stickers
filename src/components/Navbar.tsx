@@ -7,7 +7,7 @@ import { useStore } from "@/lib/store";
 const LINKS = [
   { to: "/", label: "Home" },
   { to: "/stickers", label: "Stickers" },
-  { to: "/posters", label: "Posters" },
+  { to: "/posters", label: "Self-Adhesive Posters" },
   { to: "/custom", label: "Custom" },
   { to: "/setups", label: "Stickered Setups" },
   { to: "/about", label: "About" },

@@ -81,16 +81,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "PRINT&PEEL — Premium Stickers & Posters" },
+      { title: "PRINT&PEEL — Premium Stickers & Self-Adhesive Posters" },
       {
         name: "description",
         content:
-          "Premium laminated vinyl stickers, posters and custom prints. Water resistant, scratch resistant, ordered over WhatsApp.",
+          "Premium laminated vinyl stickers, self-adhesive posters and custom prints. Water resistant, scratch resistant, ordered over WhatsApp.",
       },
-      { property: "og:title", content: "PRINT&PEEL — Premium Stickers & Posters" },
+      { property: "og:title", content: "PRINT&PEEL — Premium Stickers & Self-Adhesive Posters" },
       {
         property: "og:description",
-        content: "Print it. Peel it. Make it yours. Premium stickers, posters & custom prints.",
+        content: "Print it. Peel it. Make it yours. Premium stickers, self-adhesive posters & custom prints.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
