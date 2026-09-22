@@ -15,16 +15,16 @@ import { FREE_DELIVERY_THRESHOLD } from "@/lib/config";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "PRINT&PEEL — Premium Stickers & Posters" },
+      { title: "PRINT&PEEL — Premium Stickers & Self-Adhesive Posters" },
       {
         name: "description",
         content:
-          "Bold laminated stickers and posters for laptops, bottles and walls. Anime, football, cars, typography and your own custom designs.",
+          "Bold laminated stickers and self-adhesive posters for laptops, bottles and walls. Anime, football, cars, typography and your own custom designs.",
       },
-      { property: "og:title", content: "PRINT&PEEL — Premium Stickers & Posters" },
+      { property: "og:title", content: "PRINT&PEEL — Premium Stickers & Self-Adhesive Posters" },
       {
         property: "og:description",
-        content: "Bold laminated stickers and posters. Print it. Peel it. Make it yours.",
+        content: "Bold laminated stickers and self-adhesive posters. Print it. Peel it. Make it yours.",
       },
     ],
   }),

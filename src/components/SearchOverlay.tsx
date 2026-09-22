@@ -34,7 +34,7 @@ export function SearchOverlay({ open, onClose }: { open: boolean; onClose: () =>
             autoFocus
             value={q}
             onChange={(e) => setQ(e.target.value)}
-            placeholder="Search stickers, posters, tags…"
+            placeholder="Search stickers, self-adhesive posters, tags…"
             aria-label="Search"
             className="min-w-0 flex-1 bg-transparent font-bold outline-none placeholder:font-normal placeholder:text-muted-foreground"
           />
@@ -54,7 +54,7 @@ export function SearchOverlay({ open, onClose }: { open: boolean; onClose: () =>
           )}
           {!q && (
             <p className="p-6 font-mono text-[11px] tracking-widest uppercase text-muted-foreground">
-              Try “football”, “anime”, “poster”, “floral”
+              Try “football”, “anime”, “self-adhesive poster”, “floral”
             </p>
           )}
           <ul>

@@ -9,7 +9,7 @@ const FAQS = [
   },
   {
     q: "What sizes are available?",
-    a: "Stickers come in 3 × 3 inch and 5 × 5 inch. Posters come in 1/4 A4, 1/2 A4 and A4. Custom sizes are possible in the Custom section.",
+    a: "Stickers come in 3 × 3 inch and 5 × 5 inch. Self-adhesive posters come in 1/4 A4, 1/2 A4 and full A4. Custom sizes are possible in the Custom section.",
   },
   {
     q: "How do I order?",
@@ -32,8 +32,8 @@ const FAQS = [
     a: "Yes — mix any number of designs and quantities in one cart.",
   },
   {
-    q: "Can I order posters?",
-    a: "Yes. Pick the poster size you want before adding it to the cart.",
+    q: "Can I order self-adhesive posters?",
+    a: "Yes. Pick the self-adhesive poster size you want before adding it to the cart.",
   },
   {
     q: "Does the sticker leave residue?",

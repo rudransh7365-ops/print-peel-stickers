@@ -5,6 +5,7 @@ import { PRODUCTS, getProduct } from "@/data/products";
 import { formatPrice, FREE_DELIVERY_THRESHOLD } from "@/lib/config";
 import { useStore } from "@/lib/store";
 import { ProductCard } from "@/components/ProductCard";
+import { StickerSizeConfirmation } from "@/components/StickerSizeConfirmation";
 
 export const Route = createFileRoute("/product/$productId")({
   loader: ({ params }) => {
@@ -117,7 +118,7 @@ function ProductPage() {
             {product.description}
           </p>
 
-          <fieldset className="mb-6">
+          <fieldset className={product.category === "stickers" ? "mb-4" : "mb-6"}>
             <legend className="mb-3 font-mono text-[10px] font-extrabold tracking-widest uppercase">
               Size
             </legend>
@@ -137,6 +138,14 @@ function ProductPage() {
               ))}
             </div>
           </fieldset>
+
+          {product.category === "stickers" && (
+            <StickerSizeConfirmation
+              product={product}
+              selectedIndex={sizeIdx}
+              onSelect={setSizeIdx}
+            />
+          )}
 
           <div className="mb-8 flex items-center gap-4">
             <span className="font-mono text-[10px] font-extrabold tracking-widest uppercase">
