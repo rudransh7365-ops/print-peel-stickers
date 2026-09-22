@@ -9,12 +9,12 @@ export const Route = createFileRoute("/about")({
       {
         name: "description",
         content:
-          "PRINT&PEEL makes premium laminated stickers, posters and custom prints. Print it. Peel it. Make it yours.",
+          "PRINT&PEEL makes premium laminated stickers, self-adhesive posters and custom prints. Print it. Peel it. Make it yours.",
       },
       { property: "og:title", content: "About — PRINT&PEEL" },
       {
         property: "og:description",
-        content: "Premium laminated stickers, posters and custom prints.",
+        content: "Premium laminated stickers, self-adhesive posters and custom prints.",
       },
     ],
   }),
@@ -36,9 +36,9 @@ function AboutPage() {
           <span className="bg-neon-blue px-2">MAKE IT YOURS.</span>
         </h1>
         <p className="max-w-xl text-base font-bold">
-          PRINT&amp;PEEL is a small sticker and poster studio. We print designs on premium
-          laminated vinyl and thick matte paper, so the stuff you use every day — laptop, bottle,
-          notebook, wall — actually looks like yours.
+          PRINT&amp;PEEL is a small sticker and self-adhesive poster studio. We print designs on
+          premium laminated vinyl and thick matte paper, so the stuff you use every day — laptop,
+          bottle, notebook, wall — actually looks like yours.
         </p>
         <p className="mt-4 max-w-xl text-sm font-medium text-muted-foreground">
           Got your own artwork? Upload it in the Custom section and we&apos;ll print it. Every order

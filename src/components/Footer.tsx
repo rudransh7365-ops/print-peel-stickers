@@ -25,7 +25,7 @@ export function Footer() {
               Stickers
             </Link>
             <Link to="/posters" className="block text-sm font-extrabold uppercase">
-              Posters
+              Self-Adhesive Posters
             </Link>
             <Link to="/custom" className="block text-sm font-extrabold uppercase">
               Custom

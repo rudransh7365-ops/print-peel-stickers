@@ -45,7 +45,8 @@ function ProductPage() {
     pushRecent(product.id);
   }, [product.id, pushRecent]);
 
-  const size = product.sizes[sizeIdx] ?? product.sizes[0]!;
+  const size = product.sizes[sizeIdx] ?? product.sizes[0];
+  if (!size) return null;
   const saved = isWishlisted(product.id);
   const related = PRODUCTS.filter(
     (p) => p.id !== product.id && p.types.some((t) => product.types.includes(t)),
