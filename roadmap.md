@@ -1,6 +1,6 @@
-- [ ] Use ₹180 as the free-delivery threshold throughout the storefront.
-- [ ] Add poster artwork as sticker products and import any remaining uploads.
-- [ ] Add self-adhesive wording to posters.
-- [ ] Add local profile, welcome prompt, checkout autofill, and navigation.
-- [ ] Add dated saved orders, receipts, order summaries, and reorder.
-- [ ] Validate metadata, build, and browser flows.
+- [x] Use ₹180 as the free-delivery threshold throughout the storefront.
+- [x] Add poster artwork as sticker products and import any remaining uploads.
+- [x] Add self-adhesive wording to posters.
+- [x] Add local profile, welcome prompt, checkout autofill, and navigation.
+- [x] Add dated saved orders, receipts, order summaries, and reorder.
+- [x] Validate metadata, build, and browser flows.
