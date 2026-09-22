@@ -4,3 +4,8 @@
 - [x] Add local profile, welcome prompt, checkout autofill, and navigation.
 - [x] Add dated saved orders, receipts, order summaries, and reorder.
 - [x] Validate metadata, build, and browser flows.
+- [ ] Update sticker and self-adhesive poster size prices everywhere.
+- [ ] Add a visual 3 × 3 and 5 × 5 inch size confirmation to every sticker page only.
+- [ ] Add the ten newly uploaded designs with picture-based names and categories.
+- [ ] Ensure every poster-facing label and description says self-adhesive.
+- [ ] Validate catalogue, product selection, cart pricing, and mobile/desktop presentation.
