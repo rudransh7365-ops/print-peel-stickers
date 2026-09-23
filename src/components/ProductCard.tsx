@@ -17,7 +17,8 @@ export function ProductCard({ product, dark = false }: { product: Product; dark?
   const { addToCart, toggleWishlist, isWishlisted } = useStore();
   const badge = badgeOf(product);
   const saved = isWishlisted(product.id);
-  const size = product.sizes[0]!;
+  const size = product.sizes[0];
+  if (!size) return null;
 
   return (
     <article className="group relative">
