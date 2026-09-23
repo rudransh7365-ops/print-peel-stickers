@@ -9,3 +9,8 @@
 - [x] Add the ten newly uploaded designs with picture-based names and categories.
 - [x] Ensure every poster-facing label and description says self-adhesive.
 - [x] Validate catalogue, product selection, cart pricing, and mobile/desktop presentation.
+- [ ] Extract and add all 20 PDF sticker designs.
+- [ ] Add the two separately uploaded sticker designs.
+- [ ] Add Let It Flow Cola Sticker #1 as a self-adhesive poster.
+- [ ] Charge ₹50 delivery for GWL/Gwalior and ₹90 elsewhere, while retaining free delivery.
+- [ ] Validate all new catalogue items and checkout delivery totals.
