@@ -8,4 +8,4 @@
 - [x] Add a visual 3 × 3 and 5 × 5 inch size confirmation to every sticker page only.
 - [x] Add the ten newly uploaded designs with picture-based names and categories.
 - [x] Ensure every poster-facing label and description says self-adhesive.
-- [ ] Validate catalogue, product selection, cart pricing, and mobile/desktop presentation.
+- [x] Validate catalogue, product selection, cart pricing, and mobile/desktop presentation.
