@@ -13,11 +13,13 @@ function badgeOf(p: Product) {
   return null;
 }
 
-export function ProductCard({ product, dark = false }: { product: Product; dark?: boolean }) {
+export function ProductCard({ product, dark = false, selectedSize }: { product: Product; dark?: boolean; selectedSize?: string | null }) {
   const { addToCart, toggleWishlist, isWishlisted } = useStore();
   const badge = badgeOf(product);
   const saved = isWishlisted(product.id);
-  const size = product.sizes[0];
+  const size = selectedSize
+    ? product.sizes.find((s) => s.label === selectedSize) ?? product.sizes[0]
+    : product.sizes[0];
   if (!size) return null;
 
   return (
