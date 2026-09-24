@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Minus, Plus, Trash2 } from "lucide-react";
-import { DELIVERY_FEE, formatPrice } from "@/lib/config";
+import { DELIVERY_FEE_STANDARD, formatPrice, deliveryFeeForCity } from "@/lib/config";
 import { useStore } from "@/lib/store";
 import { DeliveryProgress } from "@/components/DeliveryProgress";
 
@@ -17,8 +17,10 @@ export const Route = createFileRoute("/cart")({
 });
 
 function CartPage() {
-  const { cart, setQty, removeFromCart, clearCart, subtotal, freeDelivery, hydrated } = useStore();
-  const delivery = freeDelivery ? 0 : DELIVERY_FEE;
+  const { cart, setQty, removeFromCart, clearCart, subtotal, freeDelivery, hydrated, profile } = useStore();
+  const city = profile?.city ?? "";
+  const baseDelivery = city ? deliveryFeeForCity(city) : DELIVERY_FEE_STANDARD;
+  const delivery = freeDelivery ? 0 : baseDelivery;
 
   return (
     <div className="mx-auto max-w-5xl px-5 py-12">

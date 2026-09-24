@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { DELIVERY_FEE, formatPrice } from "@/lib/config";
+import { DELIVERY_FEE_STANDARD, formatPrice, deliveryFeeForCity } from "@/lib/config";
 import { downloadReceipt, formatOrderDate, orderText, printReceipt } from "@/lib/orders";
 import { useStore, type CustomerProfile, type OrderRecord } from "@/lib/store";
 import { openWhatsApp } from "@/lib/whatsapp";
@@ -25,7 +25,9 @@ function CheckoutPage() {
   const [notes, setNotes] = useState("");
   const [order, setOrder] = useState<OrderRecord | null>(null);
   useEffect(() => { if (profile) setDetails(profile); }, [profile]);
-  const delivery = freeDelivery ? 0 : DELIVERY_FEE;
+  const city = details.city ?? "";
+  const baseDelivery = city ? deliveryFeeForCity(city) : DELIVERY_FEE_STANDARD;
+  const delivery = freeDelivery ? 0 : baseDelivery;
   const total = subtotal + delivery;
   const field = "w-full border-4 border-ink bg-paper px-4 py-3 text-sm font-bold outline-none focus:border-accent";
   const customImages = (order?.items ?? cart).filter((item) => item.custom?.imageDataUrl);
