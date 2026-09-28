@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { CreditCard, ShieldCheck } from "lucide-react";
 import { useEffect, useState } from "react";
 import { DELIVERY_FEE_STANDARD, formatPrice, deliveryFeeForCity } from "@/lib/config";
 import { downloadReceipt, formatOrderDate, orderText, printReceipt } from "@/lib/orders";
@@ -18,6 +19,13 @@ export const Route = createFileRoute("/checkout")({
 });
 
 const EMPTY: CustomerProfile = { firstName: "", lastName: "", phone: "", email: "", address: "", city: "", state: "", pincode: "", country: "India" };
+
+const CHECKOUT_DESIGNS = [
+  { src: "/checkout-images/download_(14).jpg", alt: "Cristiano Ronaldo sticker design" },
+  { src: "/checkout-images/825261111_2437843427043660_4978825467053132475_n.jpg", alt: "Wasted typography sticker design" },
+  { src: "/checkout-images/825261112_927563593464909_5196713349723139728_n.jpg", alt: "Get's Luck sticker design" },
+  { src: "/checkout-images/825312432_1100611605717567_6528976419246974573_n.jpg", alt: "Cola can sticker design" },
+];
 
 function CheckoutPage() {
   const { cart, subtotal, freeDelivery, clearCart, hydrated, profile, saveProfile, saveOrder } = useStore();
@@ -50,7 +58,41 @@ function CheckoutPage() {
   if (hydrated && cart.length === 0) return <div className="mx-auto max-w-2xl px-5 py-20 text-center"><h1 className="mb-6 text-5xl">NOTHING TO CHECK OUT</h1><Link to="/stickers" className="inline-block border-4 border-ink bg-accent px-6 py-3 font-display text-xl uppercase hard-shadow press">Shop stickers</Link></div>;
 
   return (
-    <div className="mx-auto max-w-5xl px-5 py-12"><h1 className="mb-10 text-6xl sm:text-7xl">CHECKOUT</h1><div className="grid gap-10 lg:grid-cols-[1.2fr_1fr]">
+    <div className="mx-auto max-w-5xl px-5 py-12">
+      <h1 className="mb-10 text-6xl sm:text-7xl">CHECKOUT</h1>
+      <section className="mb-10 border-4 border-ink bg-neon-green p-5 hard-shadow" aria-labelledby="payment-title">
+        <div className="flex items-start gap-4">
+          <div className="grid size-12 shrink-0 place-items-center border-2 border-ink bg-white">
+            <ShieldCheck className="size-6" aria-hidden="true" />
+          </div>
+          <div>
+            <h2 id="payment-title" className="mb-2 text-2xl uppercase">Online payment only</h2>
+            <p className="max-w-2xl text-sm font-bold leading-relaxed">
+              We accept online payments only so every order stays simple and trackable. Place your order with confidence — we will confirm your details on WhatsApp and share secure payment instructions before processing it.
+            </p>
+            <p className="mt-3 flex items-center gap-2 font-mono text-[10px] font-extrabold tracking-widest uppercase">
+              <CreditCard className="size-4" aria-hidden="true" /> Safe checkout · Personal support · No cash on delivery
+            </p>
+          </div>
+        </div>
+      </section>
+      <section className="mb-10" aria-labelledby="designs-title">
+        <div className="mb-4 flex items-end justify-between gap-4">
+          <div>
+            <p className="font-mono text-[10px] font-extrabold tracking-widest uppercase text-accent">Made to stick</p>
+            <h2 id="designs-title" className="text-3xl uppercase">Fresh designs</h2>
+          </div>
+          <p className="hidden max-w-xs text-right text-xs font-bold text-muted-foreground sm:block">A few customer favourites from the PRINT&amp;PEEL wall.</p>
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          {CHECKOUT_DESIGNS.map((design) => (
+            <div key={design.src} className="aspect-square overflow-hidden border-4 border-ink bg-white hard-shadow-sm">
+              <img src={design.src} alt={design.alt} loading="lazy" className="h-full w-full object-contain p-2" />
+            </div>
+          ))}
+        </div>
+      </section>
+      <div className="grid gap-10 lg:grid-cols-[1.2fr_1fr]">
       <form className="grid gap-4 sm:grid-cols-2" onSubmit={(event) => { event.preventDefault(); const next: OrderRecord = { id: `PP-${Date.now().toString().slice(-6)}`, date: new Date().toISOString(), items: cart.map((item) => ({ ...item })), customer: details, subtotal, delivery, tax: 0, total }; saveProfile(details); saveOrder(next); setOrder(next); openWhatsApp(`${orderText(next)}${notes ? `\nNotes: ${notes}` : ""}\n\nPlease confirm my order.`); clearCart(); }}>
         {(Object.keys(EMPTY) as Array<keyof CustomerProfile>).map((key) => <label key={key} className={key === "address" ? "sm:col-span-2" : ""}><span className="mb-2 block font-mono text-[10px] font-extrabold tracking-widest uppercase">{key.replace(/([A-Z])/g, " $1")}</span><input required={key !== "email"} type={key === "email" ? "email" : "text"} inputMode={key === "phone" ? "tel" : key === "pincode" ? "numeric" : undefined} value={details[key]} onChange={(event) => setDetails((prev) => ({ ...prev, [key]: event.target.value }))} className={field} /></label>)}
         <label className="sm:col-span-2"><span className="mb-2 block font-mono text-[10px] font-extrabold tracking-widest uppercase">Order notes (optional)</span><textarea rows={2} value={notes} onChange={(event) => setNotes(event.target.value)} className={field} /></label>
