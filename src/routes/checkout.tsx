@@ -21,11 +21,10 @@ export const Route = createFileRoute("/checkout")({
 const EMPTY: CustomerProfile = { firstName: "", lastName: "", phone: "", email: "", address: "", city: "", state: "", pincode: "", country: "India" };
 
 const CHECKOUT_DESIGNS = [
-  { src: "/checkout-images/download_(14).jpg", alt: "Ronaldo Suiii celebration sticker design" },
-  { src: "/checkout-images/825261120_2011975886174447_3365795639405413428_n.jpg", alt: "Wasted sticker design" },
-  { src: "/checkout-images/825261111_2437843427043660_4978825467053132475_n.jpg", alt: "Get's Luck sticker design" },
-  { src: "/checkout-images/825261112_927563593464909_5196713349723139728_n.jpg", alt: "Shit Just Got Real sticker design" },
-  { src: "/checkout-images/825312432_1100611605717567_6528976419246974573_n.jpg", alt: "Diet Coke sticker design" },
+  { src: "/checkout-images/download_(14).jpg", alt: "Ronaldo Man Utd sticker design" },
+  { src: "/checkout-images/825261111_2437843427043660_4978825467053132475_n.jpg", alt: "Wasted GTA sticker design" },
+  { src: "/checkout-images/825261112_927563593464909_5196713349723139728_n.jpg", alt: "Fet's Luck sticker design" },
+  { src: "/checkout-images/825312432_1100611605717567_6528976419246974573_n.jpg", alt: "Shit Just Got Real maths sticker design" },
 ];
 
 function CheckoutPage() {
