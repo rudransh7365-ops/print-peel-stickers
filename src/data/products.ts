@@ -58,6 +58,10 @@ import sanAndreasGirlSticker1 from "@/assets/san-andreas-girl-sticker-1.jpg.asse
 import spiderManChibiSticker1 from "@/assets/spider-man-chibi-sticker-1.jpg.asset.json";
 import thanosInfinitySticker1 from "@/assets/thanos-infinity-sticker-1.jpg.asset.json";
 import yameteAnimeEyesSticker1 from "@/assets/yamete-anime-eyes-sticker-1.jpg.asset.json";
+import ronaldoManUtdSticker1 from "@/assets/ronaldo.png";
+import wastedSticker1 from "@/assets/wasted.png";
+import fetsLuckSticker1 from "@/assets/fets_luck.png";
+import shitJustGotRealSticker1 from "@/assets/shit_just_got_real.png";
 
 export type Category = "stickers" | "posters";
 
@@ -936,7 +940,7 @@ export const PRODUCTS: Product[] = [
     description: STICKER_DESC,
     price: 12,
     sizes: STICKER_SIZES,
-    images: ["/checkout-images/download_(14).jpg"],
+    images: [ronaldoManUtdSticker1],
     tags: ["Football", "Ronaldo", "Manchester United", "Sports"],
     recentlyAdded: true,
   },
@@ -948,7 +952,7 @@ export const PRODUCTS: Product[] = [
     description: STICKER_DESC,
     price: 12,
     sizes: STICKER_SIZES,
-    images: ["/checkout-images/825261111_2437843427043660_4978825467053132475_n.jpg"],
+    images: [wastedSticker1],
     tags: ["Meme", "Wasted", "GTA", "Gaming", "Typography"],
     recentlyAdded: true,
   },
@@ -960,7 +964,7 @@ export const PRODUCTS: Product[] = [
     description: STICKER_DESC,
     price: 12,
     sizes: STICKER_SIZES,
-    images: ["/checkout-images/825261112_927563593464909_5196713349723139728_n.jpg"],
+    images: [fetsLuckSticker1],
     tags: ["Typography", "Wordplay", "Funny", "Meme"],
     recentlyAdded: true,
   },
@@ -972,7 +976,7 @@ export const PRODUCTS: Product[] = [
     description: STICKER_DESC,
     price: 12,
     sizes: STICKER_SIZES,
-    images: ["/checkout-images/825312432_1100611605717567_6528976419246974573_n.jpg"],
+    images: [shitJustGotRealSticker1],
     tags: ["Maths", "Funny", "Quote", "Nerd", "Meme"],
     recentlyAdded: true,
   },
