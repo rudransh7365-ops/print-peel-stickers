@@ -76,6 +76,22 @@ import ronaldoManUtdSticker1 from "@/assets/ronaldo.png";
 import wastedSticker1 from "@/assets/wasted.png";
 import fetsLuckSticker1 from "@/assets/fets_luck.png";
 import shitJustGotRealSticker1 from "@/assets/shit_just_got_real.png";
+import gt350StickerNew from "@/assets/_Datsun_510_Wagon__Sticker_for_Sale_by_hafisdesign___Redbubble.jpg";
+import artistAtWorkStickerNew from "@/assets/Caution__Artist_At_Work_Sticker.jpg";
+import badBullStickerNew from "@/assets/download_(13).jpg";
+import lightningMcQueenStickerNew from "@/assets/download_(3).jpg";
+import hakunaMatataStickerNew from "@/assets/download_(5).jpg";
+import endOfBeginningStickerNew from "@/assets/end_of_beginning.jpg";
+import everythingUnderCtrlStickerNew from "@/assets/Everything_Is_Under_Ctrl_Sticker___Zoeys-extraordinary-playlist.jpg";
+import mrBeanStickerNew from "@/assets/Mr__Bean_stiker.jpg";
+import headphonesStickerNew from "@/assets/Music_Stickers_for_Sale___Redbubble.jpg";
+import sailorSongStickerNew from "@/assets/Sailor_Song_-_Gigi_Perez_poster_⚓.jpg";
+import sidhuMooseWalaStickerNew from "@/assets/Sidhu_Moose_Wala_💙.jpg";
+import starboyStickerNew from "@/assets/starboy.jpg";
+import supraStickerNew from "@/assets/sticker_ideas_for_car___Supra_Mk-4_(red_Candy)_Sticker___Jdm-legend-supra-mk4.jpg";
+import tensionLeneStickerNew from "@/assets/Tension_Lene_Ka_Nahin_Sticker.jpg";
+import aboutYouStickerNew from "@/assets/The_1975_About_You_by_jung-style___Cool_stickers,_Stickers,_Aesthetic_stickers.jpg";
+import verifiedIdiotStickerNew from "@/assets/Программа_обыгрывает_онлаин_казино.jpg";
 
 export type Category = "stickers" | "posters";
 
@@ -1162,6 +1178,198 @@ export const PRODUCTS: Product[] = [
     tags: ["Maths", "Funny", "Quote", "Nerd", "Meme"],
     recentlyAdded: true,
   },
+  {
+    id: "gt350-mustang-sticker-1",
+    name: "GT350 Mustang Sticker #1",
+    category: "stickers",
+    types: ["cars"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [gt350StickerNew],
+    tags: ["Cars", "Mustang", "GT350", "Sports Car"],
+    recentlyAdded: true,
+  },
+  {
+    id: "artist-at-work-sticker-1",
+    name: "Caution Artist at Work Sticker #1",
+    category: "stickers",
+    types: ["typography", "minimal"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [artistAtWorkStickerNew],
+    tags: ["Artist", "Creative", "Caution", "Typography"],
+    recentlyAdded: true,
+  },
+  {
+    id: "bad-bull-sticker-1",
+    name: "Bad Bull Sticker #1",
+    category: "stickers",
+    types: ["meme", "typography"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [badBullStickerNew],
+    tags: ["Bull", "Bad Bull", "Funny", "Meme"],
+    recentlyAdded: true,
+  },
+  {
+    id: "lightning-mcqueen-sticker-1",
+    name: "Lightning McQueen Sticker #1",
+    category: "stickers",
+    types: ["cars", "meme"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [lightningMcQueenStickerNew],
+    tags: ["Cars", "Lightning McQueen", "Disney", "Gaming"],
+    recentlyAdded: true,
+  },
+  {
+    id: "hakuna-matata-sticker-1",
+    name: "Hakuna Matata Sticker #1",
+    category: "stickers",
+    types: ["meme", "typography"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [hakunaMatataStickerNew],
+    tags: ["Hakuna Matata", "Disney", "Quote", "Meme"],
+    recentlyAdded: true,
+  },
+  {
+    id: "end-of-beginning-sticker-1",
+    name: "End of Beginning Sticker #1",
+    category: "stickers",
+    types: ["typography", "minimal"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [endOfBeginningStickerNew],
+    tags: ["Djo", "Music", "Song", "Aesthetic"],
+    recentlyAdded: true,
+  },
+  {
+    id: "everything-under-ctrl-sticker-1",
+    name: "Everything Is Under Ctrl Sticker #1",
+    category: "stickers",
+    types: ["typography", "meme"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [everythingUnderCtrlStickerNew],
+    tags: ["Ctrl", "Computer", "Typography", "Funny"],
+    recentlyAdded: true,
+  },
+  {
+    id: "mr-bean-sticker-1",
+    name: "Mr. Bean Sticker #1",
+    category: "stickers",
+    types: ["meme"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [mrBeanStickerNew],
+    tags: ["Mr Bean", "Comedy", "Funny", "Meme"],
+    recentlyAdded: true,
+  },
+  {
+    id: "headphones-sticker-1",
+    name: "Headphones Sticker #1",
+    category: "stickers",
+    types: ["music", "minimal"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [headphonesStickerNew],
+    tags: ["Music", "Headphones", "Audio", "Minimal"],
+    recentlyAdded: true,
+  },
+  {
+    id: "sailor-song-sticker-1",
+    name: "Sailor Song Sticker #1",
+    category: "stickers",
+    types: ["music", "minimal"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [sailorSongStickerNew],
+    tags: ["Sailor Song", "Gigi Perez", "Music", "Aesthetic"],
+    recentlyAdded: true,
+  },
+  {
+    id: "sidhu-moose-wala-sticker-1",
+    name: "Sidhu Moose Wala Warning Sticker #1",
+    category: "stickers",
+    types: ["music", "typography"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [sidhuMooseWalaStickerNew],
+    tags: ["Sidhu Moose Wala", "Music", "Warning", "Punjabi"],
+    recentlyAdded: true,
+  },
+  {
+    id: "starboy-sticker-1",
+    name: "Starboy Sticker #1",
+    category: "stickers",
+    types: ["music", "minimal"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [starboyStickerNew],
+    tags: ["Starboy", "The Weeknd", "Music", "Aesthetic"],
+    recentlyAdded: true,
+  },
+  {
+    id: "supra-mk4-sticker-1",
+    name: "Supra MK4 Sticker #1",
+    category: "stickers",
+    types: ["cars"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [supraStickerNew],
+    tags: ["Cars", "Supra", "JDM", "Toyota"],
+    recentlyAdded: true,
+  },
+  {
+    id: "tension-lene-ka-nahin-sticker-1",
+    name: "Tension Lene Ka Nahin Sticker #1",
+    category: "stickers",
+    types: ["meme", "typography"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [tensionLeneStickerNew],
+    tags: ["Hindi", "Funny", "Quote", "Meme"],
+    recentlyAdded: true,
+  },
+  {
+    id: "the-1975-about-you-sticker-1",
+    name: "The 1975 About You Sticker #1",
+    category: "stickers",
+    types: ["music", "minimal"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [aboutYouStickerNew],
+    tags: ["The 1975", "About You", "Music", "Aesthetic"],
+    recentlyAdded: true,
+  },
+  {
+    id: "verified-idiot-sticker-1",
+    name: "Verified Idiot Sticker #1",
+    category: "stickers",
+    types: ["meme", "typography"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [verifiedIdiotStickerNew],
+    tags: ["Verified", "Idiot", "Funny", "Meme"],
+    recentlyAdded: true,
+  },
 ];
 
 export const STICKER_TYPES = [
@@ -1173,6 +1381,7 @@ export const STICKER_TYPES = [
   "floral",
   "cars",
   "meme",
+  "music",
 ];
 
 export const getProduct = (id: string) => PRODUCTS.find((p) => p.id === id);
