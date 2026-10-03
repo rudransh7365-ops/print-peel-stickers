@@ -206,8 +206,7 @@ function CustomPage() {
             </div>
           </dl>
           <p className="mt-5 border-2 border-ink bg-white p-3 text-[11px] font-bold">
-            WhatsApp can&apos;t pick up files from your device automatically. Download your design
-            and attach it to the chat before sending the order.
+            Download your design after checkout so we can print it — we will follow up to collect the file if needed.
           </p>
         </aside>
       </div>

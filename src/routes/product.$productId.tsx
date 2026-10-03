@@ -204,7 +204,7 @@ function ProductPage() {
           <ul className="mt-8 space-y-2 border-4 border-ink bg-paper p-5 text-xs font-bold">
             <li>{product.category === "posters" ? "Premium self-adhesive matte finish" : "Premium laminated finish · water & scratch resistant"}</li>
             <li>Free delivery from ₹{FREE_DELIVERY_THRESHOLD}</li>
-            <li>Order is confirmed on WhatsApp before printing</li>
+            <li>Order is confirmed before printing</li>
           </ul>
         </div>
       </div>

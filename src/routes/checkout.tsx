@@ -3,10 +3,9 @@ import { CreditCard, ShieldCheck } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { DELIVERY_FEE_STANDARD, formatPrice, deliveryFeeForCity } from "@/lib/config";
-import { downloadReceipt, formatOrderDate, orderText, printReceipt } from "@/lib/orders";
+import { downloadReceipt, formatOrderDate, printReceipt } from "@/lib/orders";
 import { supabase } from "@/lib/supabase";
 import { useStore, type CustomerProfile, type OrderRecord } from "@/lib/store";
-import { openWhatsApp } from "@/lib/whatsapp";
 import ronaldoManUtdImg from "@/assets/ronaldo.png";
 import wastedImg from "@/assets/wasted.png";
 import fetsLuckImg from "@/assets/fets_luck.png";
@@ -15,9 +14,9 @@ import shitJustGotRealImg from "@/assets/shit_just_got_real.png";
 export const Route = createFileRoute("/checkout")({
   head: () => ({ meta: [
     { title: "Checkout — PRINT&PEEL" },
-    { name: "description", content: "Enter your delivery details and confirm your PRINT&PEEL order on WhatsApp." },
+    { name: "description", content: "Enter your delivery details and place your PRINT&PEEL order." },
     { property: "og:title", content: "Checkout — PRINT&PEEL" },
-    { property: "og:description", content: "Confirm your order on WhatsApp." },
+    { property: "og:description", content: "Place your order securely with PRINT&PEEL." },
     { property: "og:type", content: "website" },
     { name: "twitter:card", content: "summary_large_image" },
   ] }),
@@ -73,18 +72,15 @@ function CheckoutPage() {
     });
     if (error) {
       toast.error("Could not save your order", {
-        description: "Please try again or message us on WhatsApp.",
+        description: "Please try again in a moment.",
       });
       setSubmitting(false);
       return;
     }
-    toast.success("Order saved successfully!");
+    toast.success("Order placed successfully!");
     saveProfile(details);
     saveOrder(next);
     setOrder(next);
-    openWhatsApp(
-      `${orderText(next)}${notes ? `\nNotes: ${notes}` : ""}\n\nPlease confirm my order.`,
-    );
     clearCart();
     setSubmitting(false);
   };
@@ -107,7 +103,7 @@ function CheckoutPage() {
         <div className="mt-4 font-mono text-[11px] font-bold"><p>{order.customer.firstName} {order.customer.lastName}</p><p>{order.customer.phone}</p><p>{order.customer.email}</p><p>{order.customer.address}, {order.customer.city}, {order.customer.state} - {order.customer.pincode}, {order.customer.country}</p></div>
       </div>
       <div className="mt-6 flex flex-wrap gap-3"><button type="button" onClick={() => printReceipt(order)} className="border-4 border-ink bg-neon-green px-5 py-3 font-mono text-[10px] font-extrabold tracking-widest uppercase hard-shadow press">Print receipt</button><button type="button" onClick={() => downloadReceipt(order)} className="border-4 border-ink bg-white px-5 py-3 font-mono text-[10px] font-extrabold tracking-widest uppercase hard-shadow press">Download receipt</button><Link to="/orders" className="border-4 border-ink bg-white px-5 py-3 font-mono text-[10px] font-extrabold tracking-widest uppercase hard-shadow press">View orders</Link></div>
-      {customImages.length > 0 && <div className="mt-6 border-4 border-ink bg-paper p-5"><p className="mb-3 text-sm font-bold">Download custom designs and attach them in WhatsApp:</p><div className="flex flex-wrap gap-3">{customImages.map((item) => { const custom = item.custom; if (!custom?.imageDataUrl) return null; return <a key={item.key} href={custom.imageDataUrl} download={custom.imageName ?? "custom-design"} className="border-2 border-ink bg-white px-4 py-2 font-mono text-[10px] font-extrabold tracking-widest uppercase press">Download {custom.imageName ?? "design"}</a>; })}</div></div>}
+      {customImages.length > 0 && <div className="mt-6 border-4 border-ink bg-paper p-5"><p className="mb-3 text-sm font-bold">Download your custom designs:</p><div className="flex flex-wrap gap-3">{customImages.map((item) => { const custom = item.custom; if (!custom?.imageDataUrl) return null; return <a key={item.key} href={custom.imageDataUrl} download={custom.imageName ?? "custom-design"} className="border-2 border-ink bg-white px-4 py-2 font-mono text-[10px] font-extrabold tracking-widest uppercase press">Download {custom.imageName ?? "design"}</a>; })}</div></div>}
     </div>
   );
 
@@ -124,7 +120,7 @@ function CheckoutPage() {
           <div>
             <h2 id="payment-title" className="mb-2 text-2xl uppercase">Online payment only</h2>
             <p className="max-w-2xl text-sm font-bold leading-relaxed">
-              We accept online payments only so every order stays simple and trackable. Place your order with confidence — we will confirm your details on WhatsApp and share secure payment instructions before processing it.
+              We accept online payments only so every order stays simple and trackable. Place your order with confidence — we will confirm your details and share secure payment instructions before processing it.
             </p>
             <p className="mt-3 flex items-center gap-2 font-mono text-[10px] font-extrabold tracking-widest uppercase">
               <CreditCard className="size-4" aria-hidden="true" /> Safe checkout · Personal support · No cash on delivery
@@ -152,7 +148,7 @@ function CheckoutPage() {
       <form className="grid gap-4 sm:grid-cols-2" onSubmit={handleSubmit}>
         {(Object.keys(EMPTY) as Array<keyof CustomerProfile>).map((key) => <label key={key} className={key === "address" ? "sm:col-span-2" : ""}><span className="mb-2 block font-mono text-[10px] font-extrabold tracking-widest uppercase">{key.replace(/([A-Z])/g, " $1")}</span><input required={key !== "email"} type={key === "email" ? "email" : "text"} inputMode={key === "phone" ? "tel" : key === "pincode" ? "numeric" : undefined} value={details[key]} onChange={(event) => setDetails((prev) => ({ ...prev, [key]: event.target.value }))} className={field} /></label>)}
         <label className="sm:col-span-2"><span className="mb-2 block font-mono text-[10px] font-extrabold tracking-widest uppercase">Order notes (optional)</span><textarea rows={2} value={notes} onChange={(event) => setNotes(event.target.value)} className={field} /></label>
-        <button type="submit" disabled={submitting} className="w-full border-4 border-ink bg-accent px-6 py-5 font-display text-2xl text-accent-foreground uppercase hard-shadow press sm:col-span-2 disabled:opacity-60 disabled:cursor-not-allowed">{submitting ? "Placing order…" : "Place order on WhatsApp"}</button>
+        <button type="submit" disabled={submitting} className="w-full border-4 border-ink bg-accent px-6 py-5 font-display text-2xl text-accent-foreground uppercase hard-shadow press sm:col-span-2 disabled:opacity-60 disabled:cursor-not-allowed">{submitting ? "Placing order…" : "Place order"}</button>
       </form>
       <aside className="h-fit border-4 border-ink bg-paper p-6 hard-shadow lg:sticky lg:top-28"><h2 className="mb-5 text-3xl">Order summary</h2><ul className="mb-4 space-y-2 font-mono text-xs font-bold">{cart.map((item) => <li key={item.key} className="flex justify-between gap-3"><span>{item.name} · {item.size} × {item.qty}</span><span>{formatPrice(item.price * item.qty)}</span></li>)}</ul><div className="space-y-2 border-t-2 border-ink pt-3 font-mono text-xs font-bold"><p className="flex justify-between"><span>Subtotal</span><span>{formatPrice(subtotal)}</span></p><p className="flex justify-between"><span>Delivery</span><span>{freeDelivery ? "FREE" : formatPrice(delivery)}</span></p><p className="flex justify-between"><span>Tax</span><span>{formatPrice(0)}</span></p></div><div className="mt-3 flex justify-between border-t-2 border-ink pt-3 font-display text-2xl uppercase"><span>Total</span><span>{formatPrice(total)}</span></div></aside>
     </div></div>

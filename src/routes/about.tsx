@@ -42,7 +42,7 @@ function AboutPage() {
         </p>
         <p className="mt-4 max-w-xl text-sm font-medium text-muted-foreground">
           Got your own artwork? Upload it in the Custom section and we&apos;ll print it. Every order
-          is confirmed personally over WhatsApp before it goes to print.
+          is confirmed personally before it goes to print.
         </p>
         <button
           type="button"

@@ -13,7 +13,7 @@ const FAQS = [
   },
   {
     q: "How do I order?",
-    a: "Add what you want to the cart, fill in your delivery details at checkout, then tap ORDER ON WHATSAPP. Your full order opens as a pre-filled message.",
+    a: "Add what you want to the cart, fill in your delivery details at checkout, then tap Place Order. Your order is saved instantly and we will contact you to confirm payment and delivery.",
   },
   {
     q: "Can I create a custom sticker?",
@@ -21,11 +21,11 @@ const FAQS = [
   },
   {
     q: "How does delivery work?",
-    a: "Orders of ₹230 or more get free delivery. Below that, delivery charges apply and we confirm them with you on WhatsApp.",
+    a: "Orders of ₹230 or more get free delivery. Below that, delivery charges apply and are shown at checkout.",
   },
   {
-    q: "What happens after I order through WhatsApp?",
-    a: "We reply on the same chat to confirm your order, delivery and payment before printing.",
+    q: "What happens after I place my order?",
+    a: "We contact you to confirm your order, delivery and payment before printing.",
   },
   {
     q: "Can I order multiple stickers?",

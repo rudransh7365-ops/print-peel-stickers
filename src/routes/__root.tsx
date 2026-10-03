@@ -85,7 +85,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "Premium laminated vinyl stickers, self-adhesive posters and custom prints. Water resistant, scratch resistant, ordered over WhatsApp.",
+          "Premium laminated vinyl stickers, self-adhesive posters and custom prints. Water resistant, scratch resistant, delivered to your door.",
       },
       { property: "og:title", content: "PRINT&PEEL — Premium Stickers & Self-Adhesive Posters" },
       {

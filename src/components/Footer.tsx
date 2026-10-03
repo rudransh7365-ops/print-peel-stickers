@@ -66,7 +66,7 @@ export function Footer() {
               to="/cart"
               className="block w-full bg-neon-green py-3 text-center font-mono text-[10px] font-extrabold tracking-widest uppercase text-ink"
             >
-              WhatsApp Order
+              Place Order
             </Link>
           </div>
         </div>

@@ -8,7 +8,7 @@ export const Route = createFileRoute("/faq")({
       {
         name: "description",
         content:
-          "Sizes, durability, custom stickers, delivery and how ordering over WhatsApp works.",
+          "Sizes, durability, custom stickers, delivery and how ordering works.",
       },
       { property: "og:title", content: "FAQ — PRINT&PEEL" },
       { property: "og:description", content: "Sizes, durability, custom orders and delivery." },

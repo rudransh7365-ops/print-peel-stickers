@@ -8,7 +8,7 @@ export const Route = createFileRoute("/posters")({
       {
         name: "description",
         content:
-          "Premium self-adhesive matte posters in 1/4 A4, 1/2 A4 and full A4. Pick your size and order over WhatsApp.",
+          "Premium self-adhesive matte posters in 1/4 A4, 1/2 A4 and full A4. Pick your size and place your order.",
       },
       { property: "og:title", content: "Self-Adhesive Posters — PRINT&PEEL" },
       {
