@@ -1,9 +1,10 @@
-import { createClient, type SupabaseClient } from "@supabase/supabase-js";
+import { createClient } from "@supabase/supabase-js";
 
-const supabaseUrl = import.meta.env["VITE_SUPABASE_URL"] as string | undefined;
-const supabaseAnonKey = import.meta.env["VITE_SUPABASE_ANON_KEY"] as string | undefined;
+const supabaseUrl =
+  (import.meta.env["VITE_SUPABASE_URL"] as string | undefined) ||
+  "https://ccogfgpkostjofuushek.supabase.co";
+const supabaseAnonKey =
+  (import.meta.env["VITE_SUPABASE_ANON_KEY"] as string | undefined) ||
+  "sb_publishable_3JK1K6rsjWGDY5hQPQJx8g_f0DfyvUN";
 
-// Only create the client when credentials are configured; otherwise the app
-// keeps working with on-device order storage instead of crashing.
-export const supabase: SupabaseClient | null =
-  supabaseUrl && supabaseAnonKey ? createClient(supabaseUrl, supabaseAnonKey) : null;
+export const supabase = createClient(supabaseUrl, supabaseAnonKey);
