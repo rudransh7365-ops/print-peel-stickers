@@ -57,8 +57,8 @@ function CheckoutPage() {
       .map((item) => `${item.name} (${item.size}) x${item.qty}`)
       .join(", ");
     const fullName = `${details.firstName} ${details.lastName}`.trim();
-    // Direct field-to-column mapping (requires phone_no, email, items, total, pincode columns).
-    const directRow = {
+    // Each form field maps directly to its own column in "print peel studio".
+    const { error } = await supabase.from("print peel studio").insert({
       customer_name: fullName,
       phone_no: details.phone || null,
       email: details.email || null,
@@ -68,26 +68,7 @@ function CheckoutPage() {
       pincode: details.pincode || null,
       items: `Order ${next.id}: ${itemsSummary}${notes ? ` | Notes: ${notes}` : ""}`,
       total: next.total,
-    };
-    let { error } = await supabase.from("print peel studio").insert(directRow);
-    if (error) {
-      // Fallback for the legacy table shape (customer_name, address, city, state, pin_code only).
-      const legacy = await supabase.from("print peel studio").insert({
-        customer_name: fullName + ` · ${details.phone}`,
-        address: [
-          `Order ${next.id}`,
-          details.address,
-          `Items: ${itemsSummary}`,
-          `Total: ₹${next.total} (delivery ${next.delivery ? `₹${next.delivery}` : "FREE"})`,
-          details.email ? `Email: ${details.email}` : null,
-          notes ? `Notes: ${notes}` : null,
-        ].filter(Boolean).join(" | "),
-        city: details.city || null,
-        state: details.state || null,
-        pin_code: details.pincode || null,
-      });
-      error = legacy.error;
-    }
+    });
     if (error) {
       toast.error("Order saved on this device only", {
         description: "The online order store could not be reached. Your receipt is still saved here.",
