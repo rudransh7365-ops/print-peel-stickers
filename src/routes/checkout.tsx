@@ -53,22 +53,22 @@ function CheckoutPage() {
       total,
     };
     setSubmitting(true);
+    const itemsSummary = next.items
+      .map((item) => `${item.name} (${item.size}) x${item.qty}`)
+      .join(", ");
     const { error } = await supabase.from("print peel studio").insert({
-      order_id: next.id,
-      customer_name: `${details.firstName} ${details.lastName}`.trim(),
-      phone_no: details.phone,
-      email: details.email || null,
-      address: details.address || null,
+      customer_name: `${details.firstName} ${details.lastName}`.trim() + ` · ${details.phone}`,
+      address: [
+        `Order ${next.id}`,
+        details.address,
+        `Items: ${itemsSummary}`,
+        `Total: ₹${next.total} (delivery ${next.delivery ? `₹${next.delivery}` : "FREE"})`,
+        details.email ? `Email: ${details.email}` : null,
+        notes ? `Notes: ${notes}` : null,
+      ].filter(Boolean).join(" | "),
       city: details.city || null,
       state: details.state || null,
-      pincode: details.pincode || null,
-      country: details.country || null,
-      items: next.items,
-      subtotal: next.subtotal,
-      delivery: next.delivery,
-      tax: next.tax,
-      total: next.total,
-      notes: notes || null,
+      pin_code: details.pincode || null,
     });
     if (error) {
       toast.error("Order saved on this device only", {
