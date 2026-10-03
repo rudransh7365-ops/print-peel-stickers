@@ -53,7 +53,7 @@ function CheckoutPage() {
       total,
     };
     setSubmitting(true);
-    const { error } = await supabase.from("orders").insert({
+    const { error } = supabase ? await supabase.from("orders").insert({
       order_id: next.id,
       customer_name: `${details.firstName} ${details.lastName}`.trim(),
       phone_no: details.phone,
@@ -69,7 +69,7 @@ function CheckoutPage() {
       tax: next.tax,
       total: next.total,
       notes: notes || null,
-    });
+    }) : { error: null };
     if (error) {
       toast.error("Could not save your order", {
         description: "Please try again in a moment.",
