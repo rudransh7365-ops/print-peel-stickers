@@ -53,33 +53,30 @@ function CheckoutPage() {
       total,
     };
     setSubmitting(true);
-    if (supabase) {
-      const { error } = await supabase.from("orders").insert({
-        order_id: next.id,
-        customer_name: `${details.firstName} ${details.lastName}`.trim(),
-        phone_no: details.phone,
-        email: details.email || null,
-        address: details.address || null,
-        city: details.city || null,
-        state: details.state || null,
-        pincode: details.pincode || null,
-        country: details.country || null,
-        items: next.items,
-        subtotal: next.subtotal,
-        delivery: next.delivery,
-        tax: next.tax,
-        total: next.total,
-        notes: notes || null,
+    const { error } = await supabase.from("print peel studio").insert({
+      order_id: next.id,
+      customer_name: `${details.firstName} ${details.lastName}`.trim(),
+      phone_no: details.phone,
+      email: details.email || null,
+      address: details.address || null,
+      city: details.city || null,
+      state: details.state || null,
+      pincode: details.pincode || null,
+      country: details.country || null,
+      items: next.items,
+      subtotal: next.subtotal,
+      delivery: next.delivery,
+      tax: next.tax,
+      total: next.total,
+      notes: notes || null,
+    });
+    if (error) {
+      toast.error("Order saved on this device only", {
+        description: "The online order store could not be reached. Your receipt is still saved here.",
       });
-      if (error) {
-        toast.error("Could not save your order", {
-          description: "Please try again in a moment.",
-        });
-        setSubmitting(false);
-        return;
-      }
+    } else {
+      toast.success("Order placed successfully!");
     }
-    toast.success("Order placed successfully!");
     saveProfile(details);
     saveOrder(next);
     setOrder(next);
