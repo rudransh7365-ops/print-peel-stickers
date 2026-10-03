@@ -1,8 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { CreditCard, ShieldCheck } from "lucide-react";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 import { DELIVERY_FEE_STANDARD, formatPrice, deliveryFeeForCity } from "@/lib/config";
 import { downloadReceipt, formatOrderDate, orderText, printReceipt } from "@/lib/orders";
+import { supabase } from "@/lib/supabase";
 import { useStore, type CustomerProfile, type OrderRecord } from "@/lib/store";
 import { openWhatsApp } from "@/lib/whatsapp";
 import ronaldoManUtdImg from "@/assets/ronaldo.png";
@@ -36,7 +38,57 @@ function CheckoutPage() {
   const [details, setDetails] = useState<CustomerProfile>(EMPTY);
   const [notes, setNotes] = useState("");
   const [order, setOrder] = useState<OrderRecord | null>(null);
+  const [submitting, setSubmitting] = useState(false);
   useEffect(() => { if (profile) setDetails(profile); }, [profile]);
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    const next: OrderRecord = {
+      id: `PP-${Date.now().toString().slice(-6)}`,
+      date: new Date().toISOString(),
+      items: cart.map((item) => ({ ...item })),
+      customer: details,
+      subtotal,
+      delivery,
+      tax: 0,
+      total,
+    };
+    setSubmitting(true);
+    const { error } = await supabase.from("orders").insert({
+      order_id: next.id,
+      customer_name: `${details.firstName} ${details.lastName}`.trim(),
+      phone_no: details.phone,
+      email: details.email || null,
+      address: details.address || null,
+      city: details.city || null,
+      state: details.state || null,
+      pincode: details.pincode || null,
+      country: details.country || null,
+      items: next.items,
+      subtotal: next.subtotal,
+      delivery: next.delivery,
+      tax: next.tax,
+      total: next.total,
+      notes: notes || null,
+    });
+    if (error) {
+      toast.error("Could not save your order", {
+        description: "Please try again or message us on WhatsApp.",
+      });
+      setSubmitting(false);
+      return;
+    }
+    toast.success("Order saved successfully!");
+    saveProfile(details);
+    saveOrder(next);
+    setOrder(next);
+    openWhatsApp(
+      `${orderText(next)}${notes ? `\nNotes: ${notes}` : ""}\n\nPlease confirm my order.`,
+    );
+    clearCart();
+    setSubmitting(false);
+  };
+
   const city = details.city ?? "";
   const baseDelivery = city ? deliveryFeeForCity(city) : DELIVERY_FEE_STANDARD;
   const delivery = freeDelivery ? 0 : baseDelivery;
@@ -97,10 +149,10 @@ function CheckoutPage() {
         </div>
       </section>
       <div className="grid gap-10 lg:grid-cols-[1.2fr_1fr]">
-      <form className="grid gap-4 sm:grid-cols-2" onSubmit={(event) => { event.preventDefault(); const next: OrderRecord = { id: `PP-${Date.now().toString().slice(-6)}`, date: new Date().toISOString(), items: cart.map((item) => ({ ...item })), customer: details, subtotal, delivery, tax: 0, total }; saveProfile(details); saveOrder(next); setOrder(next); openWhatsApp(`${orderText(next)}${notes ? `\nNotes: ${notes}` : ""}\n\nPlease confirm my order.`); clearCart(); }}>
+      <form className="grid gap-4 sm:grid-cols-2" onSubmit={handleSubmit}>
         {(Object.keys(EMPTY) as Array<keyof CustomerProfile>).map((key) => <label key={key} className={key === "address" ? "sm:col-span-2" : ""}><span className="mb-2 block font-mono text-[10px] font-extrabold tracking-widest uppercase">{key.replace(/([A-Z])/g, " $1")}</span><input required={key !== "email"} type={key === "email" ? "email" : "text"} inputMode={key === "phone" ? "tel" : key === "pincode" ? "numeric" : undefined} value={details[key]} onChange={(event) => setDetails((prev) => ({ ...prev, [key]: event.target.value }))} className={field} /></label>)}
         <label className="sm:col-span-2"><span className="mb-2 block font-mono text-[10px] font-extrabold tracking-widest uppercase">Order notes (optional)</span><textarea rows={2} value={notes} onChange={(event) => setNotes(event.target.value)} className={field} /></label>
-        <button type="submit" className="w-full border-4 border-ink bg-accent px-6 py-5 font-display text-2xl text-accent-foreground uppercase hard-shadow press sm:col-span-2">Place order on WhatsApp</button>
+        <button type="submit" disabled={submitting} className="w-full border-4 border-ink bg-accent px-6 py-5 font-display text-2xl text-accent-foreground uppercase hard-shadow press sm:col-span-2 disabled:opacity-60 disabled:cursor-not-allowed">{submitting ? "Placing order…" : "Place order on WhatsApp"}</button>
       </form>
       <aside className="h-fit border-4 border-ink bg-paper p-6 hard-shadow lg:sticky lg:top-28"><h2 className="mb-5 text-3xl">Order summary</h2><ul className="mb-4 space-y-2 font-mono text-xs font-bold">{cart.map((item) => <li key={item.key} className="flex justify-between gap-3"><span>{item.name} · {item.size} × {item.qty}</span><span>{formatPrice(item.price * item.qty)}</span></li>)}</ul><div className="space-y-2 border-t-2 border-ink pt-3 font-mono text-xs font-bold"><p className="flex justify-between"><span>Subtotal</span><span>{formatPrice(subtotal)}</span></p><p className="flex justify-between"><span>Delivery</span><span>{freeDelivery ? "FREE" : formatPrice(delivery)}</span></p><p className="flex justify-between"><span>Tax</span><span>{formatPrice(0)}</span></p></div><div className="mt-3 flex justify-between border-t-2 border-ink pt-3 font-display text-2xl uppercase"><span>Total</span><span>{formatPrice(total)}</span></div></aside>
     </div></div>
