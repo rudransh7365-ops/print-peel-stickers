@@ -57,7 +57,6 @@ function CheckoutPage() {
       .map((item) => `${item.name} (${item.size}) x${item.qty}`)
       .join(", ");
     const fullName = `${details.firstName} ${details.lastName}`.trim();
-    // Each form field maps directly to its own column in "print peel studio".
     const { error } = await supabase.from("print peel studio").insert({
       customer_name: fullName,
       phone_no: details.phone || null,
@@ -70,12 +69,13 @@ function CheckoutPage() {
       total: next.total,
     });
     if (error) {
-      toast.error("Order saved on this device only", {
-        description: "The online order store could not be reached. Your receipt is still saved here.",
+      toast.error("Could not save your order", {
+        description: "Please try again in a moment.",
       });
-    } else {
-      toast.success("Order placed successfully!");
+      setSubmitting(false);
+      return;
     }
+    toast.success("Order placed successfully!");
     saveProfile(details);
     saveOrder(next);
     setOrder(next);
