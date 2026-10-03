@@ -53,29 +53,31 @@ function CheckoutPage() {
       total,
     };
     setSubmitting(true);
-    const { error } = await supabase.from("orders").insert({
-      order_id: next.id,
-      customer_name: `${details.firstName} ${details.lastName}`.trim(),
-      phone_no: details.phone,
-      email: details.email || null,
-      address: details.address || null,
-      city: details.city || null,
-      state: details.state || null,
-      pincode: details.pincode || null,
-      country: details.country || null,
-      items: next.items,
-      subtotal: next.subtotal,
-      delivery: next.delivery,
-      tax: next.tax,
-      total: next.total,
-      notes: notes || null,
-    });
-    if (error) {
-      toast.error("Could not save your order", {
-        description: "Please try again in a moment.",
+    if (supabase) {
+      const { error } = await supabase.from("orders").insert({
+        order_id: next.id,
+        customer_name: `${details.firstName} ${details.lastName}`.trim(),
+        phone_no: details.phone,
+        email: details.email || null,
+        address: details.address || null,
+        city: details.city || null,
+        state: details.state || null,
+        pincode: details.pincode || null,
+        country: details.country || null,
+        items: next.items,
+        subtotal: next.subtotal,
+        delivery: next.delivery,
+        tax: next.tax,
+        total: next.total,
+        notes: notes || null,
       });
-      setSubmitting(false);
-      return;
+      if (error) {
+        toast.error("Could not save your order", {
+          description: "Please try again in a moment.",
+        });
+        setSubmitting(false);
+        return;
+      }
     }
     toast.success("Order placed successfully!");
     saveProfile(details);
