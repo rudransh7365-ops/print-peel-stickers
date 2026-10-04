@@ -15,7 +15,7 @@ export function Footer() {
           {BRAND.tagline}
         </p>
 
-        <div className="mb-12 grid grid-cols-2 gap-8 sm:grid-cols-3">
+        <div className="mb-12 grid grid-cols-2 gap-8 sm:grid-cols-4">
           <div className="space-y-2">
             <p className="font-mono text-[10px] tracking-widest uppercase text-neon-blue">Shop</p>
             <Link to="/" className="block text-sm font-extrabold uppercase">
@@ -46,8 +46,25 @@ export function Footer() {
               Wishlist
             </Link>
           </div>
-          <div className="col-span-2 space-y-3 sm:col-span-1">
-            <p className="font-mono text-[10px] tracking-widest uppercase text-accent">Support</p>
+          <div className="space-y-2">
+            <p className="font-mono text-[10px] tracking-widest uppercase text-accent">
+              Legal &amp; Policies
+            </p>
+            <Link to="/privacy" className="block text-sm font-extrabold uppercase">
+              Privacy Policy
+            </Link>
+            <Link to="/terms" className="block text-sm font-extrabold uppercase">
+              Terms &amp; Conditions
+            </Link>
+            <Link to="/shipping" className="block text-sm font-extrabold uppercase">
+              Shipping Policy
+            </Link>
+            <Link to="/refunds" className="block text-sm font-extrabold uppercase">
+              Cancellation &amp; Refund
+            </Link>
+          </div>
+          <div className="space-y-3">
+            <p className="font-mono text-[10px] tracking-widest uppercase text-neon-blue">Support</p>
             <button
               type="button"
               onClick={() => openWhatsApp(enquiryMessage())}
@@ -68,6 +85,15 @@ export function Footer() {
             >
               Place Order
             </Link>
+            <a
+              href="mailto:printandpeel@gmail.com"
+              className="block text-[11px] font-extrabold uppercase text-white/60 hover:text-white"
+            >
+              printandpeel@gmail.com
+            </a>
+            <p className="text-[11px] font-medium text-white/40">
+              Gwalior, Madhya Pradesh, India
+            </p>
           </div>
         </div>
 

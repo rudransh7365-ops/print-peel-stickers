@@ -17,9 +17,13 @@ import { Route as CustomRouteImport } from './routes/custom'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as OrdersRouteImport } from './routes/orders'
 import { Route as PostersRouteImport } from './routes/posters'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as RefundsRouteImport } from './routes/refunds'
 import { Route as SetupsRouteImport } from './routes/setups'
+import { Route as ShippingRouteImport } from './routes/shipping'
 import { Route as StickersRouteImport } from './routes/stickers'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as WishlistRouteImport } from './routes/wishlist'
 import { Route as ProductProductIdRouteImport } from './routes/product.$productId'
 
@@ -63,9 +67,19 @@ const PostersRoute = PostersRouteImport.update({
   path: '/posters',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProfileRoute = ProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RefundsRoute = RefundsRouteImport.update({
+  id: '/refunds',
+  path: '/refunds',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SetupsRoute = SetupsRouteImport.update({
@@ -73,9 +87,19 @@ const SetupsRoute = SetupsRouteImport.update({
   path: '/setups',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ShippingRoute = ShippingRouteImport.update({
+  id: '/shipping',
+  path: '/shipping',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const StickersRoute = StickersRouteImport.update({
   id: '/stickers',
   path: '/stickers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
 const WishlistRoute = WishlistRouteImport.update({
@@ -98,9 +122,13 @@ export interface FileRoutesByFullPath {
   '/faq': typeof FaqRoute
   '/orders': typeof OrdersRoute
   '/posters': typeof PostersRoute
+  '/privacy': typeof PrivacyRoute
   '/profile': typeof ProfileRoute
+  '/refunds': typeof RefundsRoute
   '/setups': typeof SetupsRoute
+  '/shipping': typeof ShippingRoute
   '/stickers': typeof StickersRoute
+  '/terms': typeof TermsRoute
   '/wishlist': typeof WishlistRoute
   '/product/$productId': typeof ProductProductIdRoute
 }
@@ -113,9 +141,13 @@ export interface FileRoutesByTo {
   '/faq': typeof FaqRoute
   '/orders': typeof OrdersRoute
   '/posters': typeof PostersRoute
+  '/privacy': typeof PrivacyRoute
   '/profile': typeof ProfileRoute
+  '/refunds': typeof RefundsRoute
   '/setups': typeof SetupsRoute
+  '/shipping': typeof ShippingRoute
   '/stickers': typeof StickersRoute
+  '/terms': typeof TermsRoute
   '/wishlist': typeof WishlistRoute
   '/product/$productId': typeof ProductProductIdRoute
 }
@@ -129,9 +161,13 @@ export interface FileRoutesById {
   '/faq': typeof FaqRoute
   '/orders': typeof OrdersRoute
   '/posters': typeof PostersRoute
+  '/privacy': typeof PrivacyRoute
   '/profile': typeof ProfileRoute
+  '/refunds': typeof RefundsRoute
   '/setups': typeof SetupsRoute
+  '/shipping': typeof ShippingRoute
   '/stickers': typeof StickersRoute
+  '/terms': typeof TermsRoute
   '/wishlist': typeof WishlistRoute
   '/product/$productId': typeof ProductProductIdRoute
 }
@@ -146,9 +182,13 @@ export interface FileRouteTypes {
     | '/faq'
     | '/orders'
     | '/posters'
+    | '/privacy'
     | '/profile'
+    | '/refunds'
     | '/setups'
+    | '/shipping'
     | '/stickers'
+    | '/terms'
     | '/wishlist'
     | '/product/$productId'
   fileRoutesByTo: FileRoutesByTo
@@ -161,9 +201,13 @@ export interface FileRouteTypes {
     | '/faq'
     | '/orders'
     | '/posters'
+    | '/privacy'
     | '/profile'
+    | '/refunds'
     | '/setups'
+    | '/shipping'
     | '/stickers'
+    | '/terms'
     | '/wishlist'
     | '/product/$productId'
   id:
@@ -176,9 +220,13 @@ export interface FileRouteTypes {
     | '/faq'
     | '/orders'
     | '/posters'
+    | '/privacy'
     | '/profile'
+    | '/refunds'
     | '/setups'
+    | '/shipping'
     | '/stickers'
+    | '/terms'
     | '/wishlist'
     | '/product/$productId'
   fileRoutesById: FileRoutesById
@@ -192,9 +240,13 @@ export interface RootRouteChildren {
   FaqRoute: typeof FaqRoute
   OrdersRoute: typeof OrdersRoute
   PostersRoute: typeof PostersRoute
+  PrivacyRoute: typeof PrivacyRoute
   ProfileRoute: typeof ProfileRoute
+  RefundsRoute: typeof RefundsRoute
   SetupsRoute: typeof SetupsRoute
+  ShippingRoute: typeof ShippingRoute
   StickersRoute: typeof StickersRoute
+  TermsRoute: typeof TermsRoute
   WishlistRoute: typeof WishlistRoute
   ProductProductIdRoute: typeof ProductProductIdRoute
 }
@@ -257,11 +309,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PostersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/profile': {
       id: '/profile'
       path: '/profile'
       fullPath: '/profile'
       preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/refunds': {
+      id: '/refunds'
+      path: '/refunds'
+      fullPath: '/refunds'
+      preLoaderRoute: typeof RefundsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/setups': {
@@ -271,11 +337,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SetupsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/shipping': {
+      id: '/shipping'
+      path: '/shipping'
+      fullPath: '/shipping'
+      preLoaderRoute: typeof ShippingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/stickers': {
       id: '/stickers'
       path: '/stickers'
       fullPath: '/stickers'
       preLoaderRoute: typeof StickersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/wishlist': {
@@ -304,9 +384,13 @@ const rootRouteChildren: RootRouteChildren = {
   FaqRoute: FaqRoute,
   OrdersRoute: OrdersRoute,
   PostersRoute: PostersRoute,
+  PrivacyRoute: PrivacyRoute,
   ProfileRoute: ProfileRoute,
+  RefundsRoute: RefundsRoute,
   SetupsRoute: SetupsRoute,
+  ShippingRoute: ShippingRoute,
   StickersRoute: StickersRoute,
+  TermsRoute: TermsRoute,
   WishlistRoute: WishlistRoute,
   ProductProductIdRoute: ProductProductIdRoute,
 }
