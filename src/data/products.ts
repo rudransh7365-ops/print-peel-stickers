@@ -1466,18 +1466,6 @@ export const PRODUCTS: Product[] = [
     tags: ["Minimal", "Art", "Abstract", "Floating"],
     recentlyAdded: true,
   },
-  {
-    id: "download-three-sticker-1",
-    name: "Lightning McQueen Sticker #2",
-    category: "stickers",
-    types: ["cars", "meme"],
-    description: STICKER_DESC,
-    price: 12,
-    sizes: STICKER_SIZES,
-    images: ["/stickers/download_(3).jpg"],
-    tags: ["Cars", "Meme", "Racing", "Lightning McQueen"],
-    recentlyAdded: true,
-  },
 ];
 
 export const STICKER_TYPES = [
