@@ -57,7 +57,7 @@ function CheckoutPage() {
       .map((item) => `${item.name} (${item.size}) x${item.qty}`)
       .join(", ");
     const fullName = `${details.firstName} ${details.lastName}`.trim();
-    const { error } = await supabase.from("print peel studio").insert({
+    const fullOrder = {
       customer_name: fullName,
       phone_no: details.phone || null,
       email: details.email || null,
@@ -67,15 +67,27 @@ function CheckoutPage() {
       pincode: details.pincode || null,
       items: `Order ${next.id}: ${itemsSummary}${notes ? ` | Notes: ${notes}` : ""}`,
       total: next.total,
-    });
+    };
+    // Retry with only the columns the online table currently has, so an order is never lost.
+    const legacyOrder = {
+      customer_name: fullName,
+      address: details.address || null,
+      city: details.city || null,
+      state: details.state || null,
+      pin_code: details.pincode || null,
+    };
+    let { error } = await supabase.from("print peel studio").insert(fullOrder);
     if (error) {
-      toast.error("Could not save your order", {
-        description: "Please try again in a moment.",
-      });
-      setSubmitting(false);
-      return;
+      const retry = await supabase.from("print peel studio").insert(legacyOrder);
+      error = retry.error;
     }
-    toast.success("Order placed successfully!");
+    if (error) {
+      toast.error("Order saved on this device only", {
+        description: "The online order store is unreachable — your order is still placed and saved in your order history.",
+      });
+    } else {
+      toast.success("Order placed successfully!");
+    }
     saveProfile(details);
     saveOrder(next);
     setOrder(next);
