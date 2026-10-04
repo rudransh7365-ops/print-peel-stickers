@@ -14,4 +14,4 @@
 - [x] Add Let It Flow Cola Sticker #1 as a self-adhesive poster.
 - [x] Charge ₹50 delivery for GWL/Gwalior and ₹90 elsewhere, while retaining free delivery.
 - [x] Map each checkout field to its own column in the print peel studio table.
-- [ ] Validate all new catalogue items and checkout delivery totals in the browser.
+- [x] Validate all new catalogue items and checkout delivery totals in the browser.
