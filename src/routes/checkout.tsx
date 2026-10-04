@@ -59,26 +59,28 @@ function CheckoutPage() {
     const fullName = `${details.firstName} ${details.lastName}`.trim();
     const fullOrder = {
       customer_name: fullName,
-      phone_no: details.phone || null,
-      email: details.email || null,
-      address: details.address || null,
-      city: details.city || null,
-      state: details.state || null,
-      pincode: details.pincode || null,
+      phone_no: String(details.phone || ""),
+      email: String(details.email || ""),
+      address: String(details.address || ""),
+      city: String(details.city || ""),
+      state: String(details.state || ""),
+      pin_code: String(details.pincode || ""),
       items: `Order ${next.id}: ${itemsSummary}${notes ? ` | Notes: ${notes}` : ""}`,
       total: next.total,
     };
     // Retry with only the columns the online table currently has, so an order is never lost.
     const legacyOrder = {
       customer_name: fullName,
-      address: details.address || null,
-      city: details.city || null,
-      state: details.state || null,
-      pin_code: details.pincode || null,
+      address: String(details.address || ""),
+      city: String(details.city || ""),
+      state: String(details.state || ""),
+      pin_code: String(details.pincode || ""),
     };
     let { error } = await supabase.from("print peel studio").insert(fullOrder);
     if (error) {
+      console.error("Supabase insert error:", error);
       const retry = await supabase.from("print peel studio").insert(legacyOrder);
+      if (retry.error) console.error("Supabase insert error (fallback):", retry.error);
       error = retry.error;
     }
     if (error) {
