@@ -116,7 +116,7 @@ export type Product = {
 
 const STICKER_SIZES: SizeOption[] = [
   { label: "3 × 3 inch", price: 12 },
-  { label: "5 × 5 inch", price: 15 },
+  { label: "4 × 4 inch", price: 18 },
 ];
 
 const POSTER_SIZES: SizeOption[] = [

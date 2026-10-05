@@ -9,7 +9,7 @@ const FAQS = [
   },
   {
     q: "What sizes are available?",
-    a: "Stickers come in 3 × 3 inch and 5 × 5 inch. Self-adhesive posters come in 1/4 A4, 1/2 A4 and full A4. Custom sizes are possible in the Custom section.",
+    a: "Stickers come in 3 × 3 inch and 4 × 4 inch. Self-adhesive posters come in 1/4 A4, 1/2 A4 and full A4. Custom sizes are possible in the Custom section.",
   },
   {
     q: "How do I order?",
