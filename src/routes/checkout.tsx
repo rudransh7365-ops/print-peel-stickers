@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { CreditCard, MapPin, ShieldCheck } from "lucide-react";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { DELIVERY_FEE_STANDARD, formatPrice, deliveryFeeForCity, isServiceableCity } from "@/lib/config";
 import { downloadReceipt, formatOrderDate, printReceipt } from "@/lib/orders";
@@ -183,8 +183,17 @@ function CheckoutPage() {
       </section>
       <div className="grid gap-10 lg:grid-cols-[1.2fr_1fr]">
       <form className="grid gap-4 sm:grid-cols-2" onSubmit={(e) => { if (!serviceable) { e.preventDefault(); return; } void handleSubmit(e); }}>
-        <button type="button" onClick={useCurrentLocation} disabled={locating} className="flex items-center justify-center gap-2 border-4 border-ink bg-neon-green px-4 py-3 font-mono text-[10px] font-extrabold tracking-widest uppercase hard-shadow-sm press sm:col-span-2 disabled:opacity-60"><MapPin className="size-4" aria-hidden="true" />{locating ? "Finding your location…" : "Use my current location"}</button>
-        {(Object.keys(EMPTY) as Array<keyof CustomerProfile>).map((key) => <label key={key} className={key === "address" ? "sm:col-span-2" : ""}><span className="mb-2 block font-mono text-[10px] font-extrabold tracking-widest uppercase">{key.replace(/([A-Z])/g, " $1")}</span><input required={key !== "email"} type={key === "email" ? "email" : "text"} inputMode={key === "phone" ? "tel" : key === "pincode" ? "numeric" : undefined} value={details[key]} onChange={(event) => setDetails((prev) => ({ ...prev, [key]: event.target.value }))} className={field} />{key === "city" && !serviceable && <span className="mt-2 block text-xs font-bold text-destructive">We are not servicing in this area yet — we will soon be available in your area!</span>}</label>)}
+        {(Object.keys(EMPTY) as Array<keyof CustomerProfile>).map((key) => (
+          <Fragment key={key}>
+            {key === "address" && (
+              <button type="button" onClick={useCurrentLocation} disabled={locating} className="flex w-full items-center justify-center gap-3 border-4 border-ink bg-neon-green px-5 py-4 text-center font-mono text-xs font-extrabold tracking-widest uppercase hard-shadow press sm:col-span-2 disabled:opacity-60">
+                <MapPin className="size-5 shrink-0" aria-hidden="true" />
+                <span>{locating ? "Finding your location…" : "Use my current location"}</span>
+              </button>
+            )}
+            <label className={key === "address" ? "sm:col-span-2" : ""}><span className="mb-2 block font-mono text-[10px] font-extrabold tracking-widest uppercase">{key.replace(/([A-Z])/g, " $1")}</span><input required={key !== "email"} type={key === "email" ? "email" : "text"} inputMode={key === "phone" ? "tel" : key === "pincode" ? "numeric" : undefined} value={details[key]} onChange={(event) => setDetails((prev) => ({ ...prev, [key]: event.target.value }))} className={field} />{key === "city" && !serviceable && <span className="mt-2 block text-xs font-bold text-destructive">We are not servicing in this area yet — we will soon be available in your area!</span>}</label>
+          </Fragment>
+        ))}
         <label className="sm:col-span-2"><span className="mb-2 block font-mono text-[10px] font-extrabold tracking-widest uppercase">Order notes (optional)</span><textarea rows={2} value={notes} onChange={(event) => setNotes(event.target.value)} className={field} /></label>
         {serviceable ? (
           <button type="submit" disabled={submitting} className="w-full border-4 border-ink bg-accent px-6 py-5 font-display text-2xl text-accent-foreground uppercase hard-shadow press sm:col-span-2 disabled:opacity-60 disabled:cursor-not-allowed">{submitting ? "Placing order…" : "Place order"}</button>
