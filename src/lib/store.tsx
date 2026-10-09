@@ -75,7 +75,9 @@ type Store = {
   hydrated: boolean;
 };
 
-const StoreContext = createContext<Store | null>(null);
+// Keep one context instance across hot reloads so providers and consumers always match.
+const g = globalThis as unknown as { __ppStoreContext?: React.Context<Store | null> };
+const StoreContext = (g.__ppStoreContext ??= createContext<Store | null>(null));
 
 function read<T>(key: string, fallback: T): T {
   try {
