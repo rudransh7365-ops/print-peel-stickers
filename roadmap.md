@@ -15,3 +15,4 @@
 - [x] Charge ₹50 delivery for GWL/Gwalior and ₹90 elsewhere, while retaining free delivery.
 - [x] Map each checkout field to its own column in the print peel studio table.
 - [x] Validate all new catalogue items and checkout delivery totals in the browser.
+- [x] Add the ten newly uploaded stickers (money stack, warning happiness, Joker, Diesel Power, Starry Night, Apologies In Cash, DiCaprio toast, Peaky Blinders, Diesel Fuel Only, Spotify).
