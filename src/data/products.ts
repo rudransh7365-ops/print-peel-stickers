@@ -88,6 +88,16 @@ import starboyStickerNew from "@/assets/starboy.jpg";
 import tensionLeneStickerNew from "@/assets/Tension_Lene_Ka_Nahin_Sticker.jpg";
 import aboutYouStickerNew from "@/assets/The_1975_About_You_by_jung-style___Cool_stickers,_Stickers,_Aesthetic_stickers.jpg";
 import verifiedIdiotStickerNew from "@/assets/Программа_обыгрывает_онлаин_казино.jpg";
+import moneyStackSticker1 from "@/assets/money-stack-sticker-1.jpg.asset.json";
+import warningHappinessSticker1 from "@/assets/warning-happiness-sticker-1.jpg.asset.json";
+import jokerSticker1 from "@/assets/joker-sticker-1.jpg.asset.json";
+import dieselPowerSticker1 from "@/assets/diesel-power-sticker-1.jpg.asset.json";
+import starryNightSticker1 from "@/assets/starry-night-sticker-1.jpg.asset.json";
+import apologiesInCashSticker1 from "@/assets/apologies-in-cash-sticker-1.jpg.asset.json";
+import dicaprioToastSticker1 from "@/assets/dicaprio-toast-sticker-1.jpg.asset.json";
+import peakyBlindersSticker1 from "@/assets/peaky-blinders-sticker-1.jpg.asset.json";
+import dieselFuelOnlySticker1 from "@/assets/diesel-fuel-only-sticker-1.jpg.asset.json";
+import spotifyMusicSticker1 from "@/assets/spotify-music-sticker-1.jpg.asset.json";
 
 export type Category = "stickers" | "posters";
 
@@ -1460,6 +1470,126 @@ export const PRODUCTS: Product[] = [
     sizes: STICKER_SIZES,
     images: ["/stickers/sticker_artist___Floating_Stickers_for_Sale.jpg"],
     tags: ["Minimal", "Art", "Abstract", "Floating"],
+    recentlyAdded: true,
+  },
+  {
+    id: "money-stack-sticker-1",
+    name: "Money Stack Sticker #1",
+    category: "stickers",
+    types: ["meme"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [moneyStackSticker1.url],
+    tags: ["Money", "Cash", "Stack", "Hustle"],
+    recentlyAdded: true,
+  },
+  {
+    id: "warning-happiness-sticker-1",
+    name: "Warning Extreme Happiness Sticker #1",
+    category: "stickers",
+    types: ["typography", "meme"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [warningHappinessSticker1.url],
+    tags: ["Warning", "Happiness", "Typography", "Funny"],
+    recentlyAdded: true,
+  },
+  {
+    id: "joker-sticker-1",
+    name: "Joker Sticker #1",
+    category: "stickers",
+    types: ["meme"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [jokerSticker1.url],
+    tags: ["Joker", "Movie", "DC", "Batman"],
+    recentlyAdded: true,
+  },
+  {
+    id: "diesel-power-sticker-1",
+    name: "Diesel Power Sticker #1",
+    category: "stickers",
+    types: ["cars", "typography"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [dieselPowerSticker1.url],
+    tags: ["Cars", "Diesel", "Skull", "Power", "JDM"],
+    recentlyAdded: true,
+  },
+  {
+    id: "starry-night-sticker-1",
+    name: "Starry Night Van Gogh Sticker #1",
+    category: "stickers",
+    types: ["minimal"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [starryNightSticker1.url],
+    tags: ["Art", "Van Gogh", "Starry Night", "Painting"],
+    recentlyAdded: true,
+  },
+  {
+    id: "apologies-in-cash-sticker-1",
+    name: "Apologies In Cash Sticker #1",
+    category: "stickers",
+    types: ["typography", "meme"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [apologiesInCashSticker1.url],
+    tags: ["Money", "Cash", "Typography", "Funny"],
+    recentlyAdded: true,
+  },
+  {
+    id: "dicaprio-toast-sticker-1",
+    name: "DiCaprio Toast Sticker #1",
+    category: "stickers",
+    types: ["meme"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [dicaprioToastSticker1.url],
+    tags: ["Meme", "Movie", "DiCaprio", "Toast", "Laughing"],
+    recentlyAdded: true,
+  },
+  {
+    id: "peaky-blinders-sticker-1",
+    name: "Peaky Blinders Sticker #1",
+    category: "stickers",
+    types: ["meme"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [peakyBlindersSticker1.url],
+    tags: ["Peaky Blinders", "Tommy Shelby", "Movie", "TV"],
+    recentlyAdded: true,
+  },
+  {
+    id: "diesel-fuel-only-sticker-1",
+    name: "Diesel Fuel Only Sticker #1",
+    category: "stickers",
+    types: ["cars", "typography"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [dieselFuelOnlySticker1.url],
+    tags: ["Cars", "Diesel", "Fuel", "Typography"],
+    recentlyAdded: true,
+  },
+  {
+    id: "spotify-music-sticker-1",
+    name: "Spotify Music Sticker #1",
+    category: "stickers",
+    types: ["minimal", "music"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [spotifyMusicSticker1.url],
+    tags: ["Music", "Spotify", "Logo", "Minimal"],
     recentlyAdded: true,
   },
 ];
