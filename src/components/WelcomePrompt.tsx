@@ -9,6 +9,7 @@ const EMPTY: CustomerProfile = {
   phone: "",
   email: "",
   address: "",
+  landmark: "",
   city: "",
   state: "",
   pincode: "",

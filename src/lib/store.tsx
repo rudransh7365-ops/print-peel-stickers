@@ -35,6 +35,7 @@ export type CustomerProfile = {
   phone: string;
   email: string;
   address: string;
+  landmark: string;
   city: string;
   state: string;
   pincode: string;
