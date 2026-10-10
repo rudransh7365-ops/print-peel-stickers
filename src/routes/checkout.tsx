@@ -23,7 +23,7 @@ export const Route = createFileRoute("/checkout")({
   component: CheckoutPage,
 });
 
-const EMPTY: CustomerProfile = { firstName: "", lastName: "", phone: "", email: "", address: "", city: "", state: "", pincode: "", country: "India" };
+const EMPTY: CustomerProfile = { firstName: "", lastName: "", phone: "", email: "", address: "", landmark: "", city: "", state: "", pincode: "", country: "India" };
 
 const CHECKOUT_DESIGNS = [
   { src: ronaldoManUtdImg, alt: "Ronaldo Man Utd sticker design" },
