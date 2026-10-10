@@ -39,6 +39,7 @@ function CheckoutPage() {
   const [order, setOrder] = useState<OrderRecord | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [locating, setLocating] = useState(false);
+  const [gps, setGps] = useState<{ lat: number; lon: number } | null>(null);
   useEffect(() => { if (profile) setDetails(profile); }, [profile]);
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -104,6 +105,7 @@ function CheckoutPage() {
     if (!navigator.geolocation) { toast.error("Location is not supported on this device"); return; }
     setLocating(true);
     navigator.geolocation.getCurrentPosition(async ({ coords }) => {
+      setGps({ lat: coords.latitude, lon: coords.longitude });
       try {
         const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${coords.latitude}&lon=${coords.longitude}&addressdetails=1`, { headers: { "Accept-Language": "en" } });
         const data = await res.json();
