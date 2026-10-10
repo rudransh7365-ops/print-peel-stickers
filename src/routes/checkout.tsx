@@ -44,6 +44,15 @@ function CheckoutPage() {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    const required: [string, string | undefined][] = [
+      ["First name", details.firstName], ["Phone", details.phone], ["Email", details.email],
+      ["Address", details.address], ["City", details.city], ["State", details.state], ["PIN code", details.pincode],
+    ];
+    const missing = required.filter(([, v]) => !String(v ?? "").trim()).map(([k]) => k);
+    if (missing.length) { toast.error("Please fill in all details", { description: `Missing: ${missing.join(", ")}` }); return; }
+    if (!/^\d{10}$/.test(String(details.phone).replace(/\D/g, "").slice(-10))) { toast.error("Please enter a valid 10-digit phone number"); return; }
+    if (!/^\d{6}$/.test(String(details.pincode).trim())) { toast.error("Please enter a valid 6-digit PIN code"); return; }
+    if (cart.length === 0) { toast.error("Your cart is empty"); return; }
     const next: OrderRecord = {
       id: `PP-${Date.now().toString().slice(-6)}`,
       date: new Date().toISOString(),
@@ -61,6 +70,8 @@ function CheckoutPage() {
     const fullName = `${details.firstName} ${details.lastName}`.trim();
     const mapsLink = gps ? `https://www.google.com/maps?q=${gps.lat},${gps.lon}` : "";
     const fullAddress = `${details.landmark ? `${details.landmark}, ` : ""}${details.address}${mapsLink ? ` | Exact location: ${mapsLink}` : ""}`;
+    // Exact columns of the "print peel studio" table:
+    // customer_name, phone_no, email, address, city, state, pincode, items, total
     const fullOrder = {
       customer_name: fullName,
       phone_no: String(details.phone || ""),
@@ -68,32 +79,31 @@ function CheckoutPage() {
       address: fullAddress,
       city: String(details.city || ""),
       state: String(details.state || ""),
-      pin_code: String(details.pincode || ""),
+      pincode: String(details.pincode || ""),
       items: `Order ${next.id}: ${itemsSummary}${notes ? ` | Notes: ${notes}` : ""}`,
-      total: next.total,
+      total: Number(next.total) || 0,
     };
-    // Retry with only the columns the online table currently has, so an order is never lost.
-    const legacyOrder = {
-      customer_name: fullName,
-      address: fullAddress,
-      city: String(details.city || ""),
-      state: String(details.state || ""),
-      pin_code: String(details.pincode || ""),
-    };
-    let { error } = await supabase.from("print peel studio").insert(fullOrder);
-    if (error) {
-      console.error("Supabase insert error:", error);
-      const retry = await supabase.from("print peel studio").insert(legacyOrder);
-      if (retry.error) console.error("Supabase insert error (fallback):", retry.error);
-      error = retry.error;
-    }
-    if (error) {
-      toast.error("Order saved on this device only", {
-        description: "The online order store is unreachable — your order is still placed and saved in your order history.",
+    try {
+      const { error } = await supabase.from("print peel studio").insert(fullOrder);
+      if (error) {
+        console.error("Supabase insert error:", error);
+        toast.error("Could not save your order", {
+          description: `${error.message}${error.code ? ` (code ${error.code})` : ""}${error.hint ? ` — ${error.hint}` : ""}`,
+          duration: 10000,
+        });
+        setSubmitting(false);
+        return;
+      }
+    } catch (err) {
+      console.error("Supabase insert error:", err);
+      toast.error("Could not save your order", {
+        description: err instanceof Error ? err.message : String(err),
+        duration: 10000,
       });
-    } else {
-      toast.success("Order placed successfully!");
+      setSubmitting(false);
+      return;
     }
+    toast.success("Order placed successfully!", { description: `Order ID ${next.id}` });
     saveProfile(details);
     saveOrder(next);
     setOrder(next);
