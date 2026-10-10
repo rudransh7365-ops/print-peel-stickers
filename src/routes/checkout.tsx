@@ -59,11 +59,13 @@ function CheckoutPage() {
       .map((item) => `${item.name} (${item.size}) x${item.qty}`)
       .join(", ");
     const fullName = `${details.firstName} ${details.lastName}`.trim();
+    const mapsLink = gps ? `https://www.google.com/maps?q=${gps.lat},${gps.lon}` : "";
+    const fullAddress = `${details.landmark ? `${details.landmark}, ` : ""}${details.address}${mapsLink ? ` | Exact location: ${mapsLink}` : ""}`;
     const fullOrder = {
       customer_name: fullName,
       phone_no: String(details.phone || ""),
       email: String(details.email || ""),
-      address: String(details.address || ""),
+      address: fullAddress,
       city: String(details.city || ""),
       state: String(details.state || ""),
       pin_code: String(details.pincode || ""),
@@ -73,7 +75,7 @@ function CheckoutPage() {
     // Retry with only the columns the online table currently has, so an order is never lost.
     const legacyOrder = {
       customer_name: fullName,
-      address: String(details.address || ""),
+      address: fullAddress,
       city: String(details.city || ""),
       state: String(details.state || ""),
       pin_code: String(details.pincode || ""),
