@@ -44,6 +44,15 @@ function CheckoutPage() {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    const required: [string, string | undefined][] = [
+      ["First name", details.firstName], ["Phone", details.phone], ["Email", details.email],
+      ["Address", details.address], ["City", details.city], ["State", details.state], ["PIN code", details.pincode],
+    ];
+    const missing = required.filter(([, v]) => !String(v ?? "").trim()).map(([k]) => k);
+    if (missing.length) { toast.error("Please fill in all details", { description: `Missing: ${missing.join(", ")}` }); return; }
+    if (!/^\d{10}$/.test(String(details.phone).replace(/\D/g, "").slice(-10))) { toast.error("Please enter a valid 10-digit phone number"); return; }
+    if (!/^\d{6}$/.test(String(details.pincode).trim())) { toast.error("Please enter a valid 6-digit PIN code"); return; }
+    if (cart.length === 0) { toast.error("Your cart is empty"); return; }
     const next: OrderRecord = {
       id: `PP-${Date.now().toString().slice(-6)}`,
       date: new Date().toISOString(),
