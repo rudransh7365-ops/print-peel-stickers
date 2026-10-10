@@ -16,7 +16,7 @@ export const Route = createFileRoute("/profile")({
   component: ProfilePage,
 });
 
-const EMPTY: CustomerProfile = { firstName: "", lastName: "", phone: "", email: "", address: "", city: "", state: "", pincode: "", country: "India" };
+const EMPTY: CustomerProfile = { firstName: "", lastName: "", phone: "", email: "", address: "", landmark: "", city: "", state: "", pincode: "", country: "India" };
 
 function ProfilePage() {
   const { profile, saveProfile, hydrated } = useStore();
