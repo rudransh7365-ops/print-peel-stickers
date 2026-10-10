@@ -27,7 +27,7 @@ export function orderText(order: OrderRecord) {
     `${order.customer.firstName} ${order.customer.lastName}`.trim(),
     order.customer.phone,
     order.customer.email,
-    `${order.customer.address}, ${order.customer.city}, ${order.customer.state} - ${order.customer.pincode}`,
+    `${order.customer.landmark ? `${order.customer.landmark}, ` : ""}${order.customer.address}, ${order.customer.city}, ${order.customer.state} - ${order.customer.pincode}`,
     order.customer.country,
   ]
     .filter(Boolean)
