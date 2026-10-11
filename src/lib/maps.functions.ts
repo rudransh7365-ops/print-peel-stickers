@@ -48,8 +48,8 @@ function build(comps: Comp[], formatted: string, lat: number, lon: number): Reso
     return "";
   };
   const street = [get("premise", "street_number"), get("route")].filter(Boolean).join(", ");
-  const area = get("sublocality_level_2", "neighborhood", "sublocality_level_1", "sublocality");
-  const parts = [street, area, get("sublocality_level_1") !== area ? get("sublocality_level_1") : ""].filter(Boolean);
+  const area = get("neighborhood", "sublocality_level_2", "sublocality_level_1", "sublocality");
+  const parts = [...new Set([street, get("neighborhood"), get("sublocality_level_2"), get("sublocality_level_1")].filter(Boolean))];
   return {
     address: parts.join(", ") || formatted,
     area,
