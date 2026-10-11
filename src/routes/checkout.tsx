@@ -224,15 +224,34 @@ function CheckoutPage() {
           ))}
         </div>
       </section>
+      {authReady && !token && <CheckoutSignIn />}
       <div className="grid gap-10 lg:grid-cols-[1.2fr_1fr]">
+      {authReady && !token ? <p className="border-4 border-ink bg-paper p-5 text-sm font-bold">Sign in above to enter your delivery address.</p> : (
       <form className="grid gap-4 sm:grid-cols-2" onSubmit={(e) => { if (!serviceable) { e.preventDefault(); return; } void handleSubmit(e); }}>
         {(Object.keys(EMPTY) as Array<keyof CustomerProfile>).map((key) => (
           <Fragment key={key}>
             {key === "address" && (
-              <button type="button" onClick={useCurrentLocation} disabled={locating} className="flex w-full items-center justify-center gap-3 border-4 border-ink bg-neon-green px-5 py-4 text-center font-mono text-xs font-extrabold tracking-widest uppercase hard-shadow press sm:col-span-2 disabled:opacity-60">
-                <MapPin className="size-5 shrink-0" aria-hidden="true" />
-                <span>{locating ? "Finding your location…" : "Use my current location"}</span>
-              </button>
+              <div className="grid gap-3 sm:col-span-2">
+                <button type="button" onClick={useCurrentLocation} disabled={locating} className="flex w-full items-center justify-center gap-3 border-4 border-ink bg-neon-green px-5 py-4 text-center font-mono text-xs font-extrabold tracking-widest uppercase hard-shadow press disabled:opacity-60">
+                  <MapPin className="size-5 shrink-0" aria-hidden="true" />
+                  <span>{locating ? "Finding your location…" : "Use my current location"}</span>
+                </button>
+                <label className="relative block">
+                  <span className="mb-2 block font-mono text-[10px] font-extrabold tracking-widest uppercase">Or search your colony / area in Gwalior</span>
+                  <span className="relative block">
+                    <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2" aria-hidden="true" />
+                    <input type="text" value={query} onChange={(e) => onSearchInput(e.target.value)} placeholder="e.g. Amarkantak Colony" autoComplete="off" className={`${field} pl-9`} />
+                  </span>
+                  {suggestions.length > 0 && (
+                    <ul className="absolute z-20 mt-1 w-full border-4 border-ink bg-white hard-shadow-sm">
+                      {suggestions.map((s) => (
+                        <li key={s.placeId}><button type="button" onClick={() => void pickSuggestion(s)} className="block w-full px-4 py-3 text-left text-sm font-bold hover:bg-paper">{s.text}</button></li>
+                      ))}
+                    </ul>
+                  )}
+                </label>
+                {gps && <p className="font-mono text-[10px] font-extrabold tracking-widest uppercase text-muted-foreground">Exact pin saved: {gps.lat.toFixed(5)}, {gps.lon.toFixed(5)}</p>}
+              </div>
             )}
             <label className={key === "address" || key === "landmark" ? "sm:col-span-2" : ""}><span className="mb-2 block font-mono text-[10px] font-extrabold tracking-widest uppercase">{key === "landmark" ? "House / flat no. & landmark (so we reach your exact house)" : key.replace(/([A-Z])/g, " $1")}</span><input required={key !== "email"} type={key === "email" ? "email" : "text"} inputMode={key === "phone" ? "tel" : key === "pincode" ? "numeric" : undefined} placeholder={key === "landmark" ? "e.g. H.No. 42, near City Mall, Thatipur" : undefined} value={details[key]} onChange={(event) => setDetails((prev) => ({ ...prev, [key]: event.target.value }))} className={field} />{key === "city" && !serviceable && <span className="mt-2 block text-xs font-bold text-destructive">We are not servicing in this area yet — we will soon be available in your area!</span>}</label>
           </Fragment>
