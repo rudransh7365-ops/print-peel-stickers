@@ -8,3 +8,4 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+- Google Maps address lookups (autocomplete, details, reverse geocode) run only in signed-in server functions in src/lib/maps.functions.ts via the connector gateway — billable calls must never be public or browser-side.
