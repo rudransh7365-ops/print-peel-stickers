@@ -2,7 +2,6 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { CreditCard, MapPin, Search, ShieldCheck } from "lucide-react";
 import { Fragment, useEffect, useRef, useState } from "react";
-import { CheckoutSignIn } from "@/components/CheckoutSignIn";
 import { autocompleteAddress, placeDetails, reverseGeocode, type ResolvedAddress } from "@/lib/maps.functions";
 import { toast } from "sonner";
 import { DELIVERY_FEE_STANDARD, formatPrice, deliveryFeeForCity, isServiceableCity } from "@/lib/config";
@@ -43,8 +42,6 @@ function CheckoutPage() {
   const [submitting, setSubmitting] = useState(false);
   const [locating, setLocating] = useState(false);
   const [gps, setGps] = useState<{ lat: number; lon: number } | null>(null);
-  const [token, setToken] = useState<string | null>(null);
-  const [authReady, setAuthReady] = useState(false);
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState<{ placeId: string; text: string }[]>([]);
   const sessionRef = useRef("");
@@ -54,11 +51,6 @@ function CheckoutPage() {
   const detailsFn = useServerFn(placeDetails);
   const reverseFn = useServerFn(reverseGeocode);
   useEffect(() => { if (profile) setDetails(profile); }, [profile]);
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => { setToken(data.session?.access_token ?? null); setAuthReady(true); });
-    const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => { setToken(session?.access_token ?? null); setAuthReady(true); });
-    return () => sub.subscription.unsubscribe();
-  }, []);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -88,8 +80,6 @@ function CheckoutPage() {
     const fullName = `${details.firstName} ${details.lastName}`.trim();
     const mapsLink = gps ? `https://www.google.com/maps?q=${gps.lat},${gps.lon}` : "";
     const fullAddress = `${details.landmark ? `${details.landmark}, ` : ""}${details.address}${mapsLink ? ` | Exact location: ${mapsLink}` : ""}`;
-    // Exact columns of the "print peel studio" table:
-    // customer_name, phone_no, email, address, city, state, pincode, items, total
     const fullOrder = {
       customer_name: fullName,
       phone_no: String(details.phone || ""),
@@ -143,13 +133,11 @@ function CheckoutPage() {
     }));
   };
   const useCurrentLocation = () => {
-    if (!token) { toast.error("Please sign in first"); return; }
     if (!navigator.geolocation) { toast.error("Location is not supported on this device"); return; }
     setLocating(true);
     navigator.geolocation.getCurrentPosition(async ({ coords }) => {
       try {
-        const r = await reverseFn({ data: { token, lat: coords.latitude, lon: coords.longitude } });
-        // keep the device's exact GPS point for the delivery link
+        const r = await reverseFn({ data: { lat: coords.latitude, lon: coords.longitude } });
         applyResolved({ ...r, lat: coords.latitude, lon: coords.longitude });
         toast.success("Address filled from your location", { description: "Please add your house no. & landmark below." });
       } catch (err) {
@@ -161,12 +149,12 @@ function CheckoutPage() {
   const onSearchInput = (value: string) => {
     setQuery(value);
     window.clearTimeout(debounceRef.current);
-    if (!token || value.trim().length < 2) { setSuggestions([]); return; }
+    if (value.trim().length < 2) { setSuggestions([]); return; }
     if (!sessionRef.current) sessionRef.current = crypto.randomUUID();
     const reqId = ++reqRef.current;
     debounceRef.current = window.setTimeout(async () => {
       try {
-        const list = await autocompleteFn({ data: { token, input: value, sessionToken: sessionRef.current } });
+        const list = await autocompleteFn({ data: { input: value, sessionToken: sessionRef.current } });
         if (reqId === reqRef.current) setSuggestions(list);
       } catch (err) {
         if (reqId === reqRef.current) { setSuggestions([]); toast.error(err instanceof Error ? err.message : "Search failed"); }
@@ -174,10 +162,9 @@ function CheckoutPage() {
     }, 300);
   };
   const pickSuggestion = async (s: { placeId: string; text: string }) => {
-    if (!token) return;
     setSuggestions([]); setQuery(s.text); setLocating(true);
     try {
-      const r = await detailsFn({ data: { token, placeId: s.placeId, sessionToken: sessionRef.current } });
+      const r = await detailsFn({ data: { placeId: s.placeId, sessionToken: sessionRef.current } });
       applyResolved(r);
       toast.success("Address filled", { description: "Please add your house no. & landmark below." });
     } catch (err) {
@@ -242,9 +229,7 @@ function CheckoutPage() {
           ))}
         </div>
       </section>
-      {authReady && !token && <CheckoutSignIn />}
       <div className="grid gap-10 lg:grid-cols-[1.2fr_1fr]">
-      {authReady && !token ? <p className="border-4 border-ink bg-paper p-5 text-sm font-bold">Sign in above to enter your delivery address.</p> : (
       <form className="grid gap-4 sm:grid-cols-2" onSubmit={(e) => { if (!serviceable) { e.preventDefault(); return; } void handleSubmit(e); }}>
         {(Object.keys(EMPTY) as Array<keyof CustomerProfile>).map((key) => (
           <Fragment key={key}>
@@ -281,7 +266,6 @@ function CheckoutPage() {
           <div role="alert" className="w-full border-4 border-ink bg-paper px-6 py-5 text-center sm:col-span-2"><p className="font-display text-2xl uppercase">Not servicing in this area</p><p className="mt-1 text-sm font-bold">We currently deliver only in Gwalior. We will soon be available in your area!</p></div>
         )}
       </form>
-      )}
       <aside className="h-fit border-4 border-ink bg-paper p-6 hard-shadow lg:sticky lg:top-28"><h2 className="mb-5 text-3xl">Order summary</h2><ul className="mb-4 space-y-2 font-mono text-xs font-bold">{cart.map((item) => <li key={item.key} className="flex justify-between gap-3"><span>{item.name} · {item.size} × {item.qty}</span><span>{formatPrice(item.price * item.qty)}</span></li>)}</ul><div className="space-y-2 border-t-2 border-ink pt-3 font-mono text-xs font-bold"><p className="flex justify-between"><span>Subtotal</span><span>{formatPrice(subtotal)}</span></p><p className="flex justify-between"><span>Delivery</span><span>{freeDelivery ? "FREE" : formatPrice(delivery)}</span></p><p className="flex justify-between"><span>Tax</span><span>{formatPrice(0)}</span></p></div><div className="mt-3 flex justify-between border-t-2 border-ink pt-3 font-display text-2xl uppercase"><span>Total</span><span>{formatPrice(total)}</span></div></aside>
     </div></div>
   );

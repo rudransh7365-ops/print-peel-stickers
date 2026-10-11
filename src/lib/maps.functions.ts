@@ -1,8 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 
 const GATEWAY_URL = "https://connector-gateway.lovable.dev/google_maps";
-const SUPABASE_URL = "https://ccogfgpkostjofuushek.supabase.co";
-const SUPABASE_KEY = "sb_publishable_3JK1K6rsjWGDY5hQPQJx8g_f0DfyvUN";
 
 // Gwalior, Madhya Pradesh bounding box
 const GWALIOR = { low: { latitude: 26.1, longitude: 78.0 }, high: { latitude: 26.35, longitude: 78.35 } };
@@ -16,14 +14,6 @@ export type ResolvedAddress = {
   lat: number;
   lon: number;
 };
-
-async function requireUser(token: unknown) {
-  if (typeof token !== "string" || token.length < 20) throw new Error("Please sign in to use address search");
-  const res = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
-    headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${token}` },
-  });
-  if (!res.ok) throw new Error("Your sign-in has expired. Please sign in again.");
-}
 
 function headers(extra: Record<string, string> = {}) {
   const lovable = process.env["LOVABLE_API_KEY"];
@@ -61,12 +51,11 @@ function build(comps: Comp[], formatted: string, lat: number, lon: number): Reso
 }
 
 export const autocompleteAddress = createServerFn({ method: "POST" })
-  .inputValidator((d: { token: string; input: string; sessionToken: string }) => {
+  .inputValidator((d: { input: string; sessionToken: string }) => {
     const input = String(d.input ?? "").trim().slice(0, 120);
-    return { token: d.token, input, sessionToken: String(d.sessionToken ?? "").slice(0, 64) };
+    return { input, sessionToken: String(d.sessionToken ?? "").slice(0, 64) };
   })
   .handler(async ({ data }) => {
-    await requireUser(data.token);
     if (data.input.length < 2) return [] as { placeId: string; text: string }[];
     const res = await fetch(`${GATEWAY_URL}/places/v1/places:autocomplete`, {
       method: "POST",
@@ -89,13 +78,12 @@ export const autocompleteAddress = createServerFn({ method: "POST" })
   });
 
 export const placeDetails = createServerFn({ method: "POST" })
-  .inputValidator((d: { token: string; placeId: string; sessionToken: string }) => {
+  .inputValidator((d: { placeId: string; sessionToken: string }) => {
     const placeId = String(d.placeId ?? "");
     if (!/^[A-Za-z0-9_-]{10,300}$/.test(placeId)) throw new Error("Invalid place");
-    return { token: d.token, placeId, sessionToken: String(d.sessionToken ?? "").slice(0, 64) };
+    return { placeId, sessionToken: String(d.sessionToken ?? "").slice(0, 64) };
   })
   .handler(async ({ data }) => {
-    await requireUser(data.token);
     const qs = data.sessionToken ? `?sessionToken=${encodeURIComponent(data.sessionToken)}` : "";
     const res = await fetch(`${GATEWAY_URL}/places/v1/places/${data.placeId}${qs}`, {
       headers: headers({ "X-Goog-FieldMask": "id,displayName,formattedAddress,location,addressComponents" }),
@@ -124,12 +112,11 @@ async function reverse(lat: number, lon: number): Promise<ResolvedAddress> {
 }
 
 export const reverseGeocode = createServerFn({ method: "POST" })
-  .inputValidator((d: { token: string; lat: number; lon: number }) => {
+  .inputValidator((d: { lat: number; lon: number }) => {
     const lat = Number(d.lat), lon = Number(d.lon);
     if (!Number.isFinite(lat) || !Number.isFinite(lon) || Math.abs(lat) > 90 || Math.abs(lon) > 180) throw new Error("Invalid location");
-    return { token: d.token, lat, lon };
+    return { lat, lon };
   })
   .handler(async ({ data }) => {
-    await requireUser(data.token);
     return reverse(data.lat, data.lon);
   });
