@@ -113,29 +113,58 @@ function CheckoutPage() {
 
   const city = details.city ?? "";
   const serviceable = !city.trim() || isServiceableCity(city);
+  const applyResolved = (r: ResolvedAddress) => {
+    setGps({ lat: r.lat, lon: r.lon });
+    setDetails((prev) => ({
+      ...prev,
+      address: r.address || prev.address,
+      city: r.city || prev.city,
+      state: r.state || prev.state,
+      pincode: r.pincode || prev.pincode,
+      country: "India",
+    }));
+  };
   const useCurrentLocation = () => {
+    if (!token) { toast.error("Please sign in first"); return; }
     if (!navigator.geolocation) { toast.error("Location is not supported on this device"); return; }
     setLocating(true);
     navigator.geolocation.getCurrentPosition(async ({ coords }) => {
-      setGps({ lat: coords.latitude, lon: coords.longitude });
       try {
-        const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${coords.latitude}&lon=${coords.longitude}&addressdetails=1`, { headers: { "Accept-Language": "en" } });
-        const data = await res.json();
-        const a = data.address ?? {};
-        const street = [a.house_number, a.road, a.neighbourhood ?? a.suburb].filter(Boolean).join(", ");
-        setDetails((prev) => ({
-          ...prev,
-          address: street || data.display_name || prev.address,
-          city: a.city ?? a.town ?? a.village ?? a.county ?? prev.city,
-          state: a.state ?? prev.state,
-          pincode: a.postcode ?? prev.pincode,
-          country: a.country ?? prev.country,
-        }));
-        toast.success("Address filled from your location");
-      } catch {
-        toast.error("Could not look up your address");
+        const r = await reverseFn({ data: { token, lat: coords.latitude, lon: coords.longitude } });
+        // keep the device's exact GPS point for the delivery link
+        applyResolved({ ...r, lat: coords.latitude, lon: coords.longitude });
+        toast.success("Address filled from your location", { description: "Please add your house no. & landmark below." });
+      } catch (err) {
+        setGps({ lat: coords.latitude, lon: coords.longitude });
+        toast.error("Could not look up your address", { description: err instanceof Error ? err.message : undefined });
       } finally { setLocating(false); }
-    }, () => { setLocating(false); toast.error("Please allow location access to use this"); }, { enableHighAccuracy: true, timeout: 15000 });
+    }, () => { setLocating(false); toast.error("Please allow location access to use this"); }, { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 });
+  };
+  const onSearchInput = (value: string) => {
+    setQuery(value);
+    window.clearTimeout(debounceRef.current);
+    if (!token || value.trim().length < 2) { setSuggestions([]); return; }
+    if (!sessionRef.current) sessionRef.current = crypto.randomUUID();
+    const reqId = ++reqRef.current;
+    debounceRef.current = window.setTimeout(async () => {
+      try {
+        const list = await autocompleteFn({ data: { token, input: value, sessionToken: sessionRef.current } });
+        if (reqId === reqRef.current) setSuggestions(list);
+      } catch (err) {
+        if (reqId === reqRef.current) { setSuggestions([]); toast.error(err instanceof Error ? err.message : "Search failed"); }
+      }
+    }, 300);
+  };
+  const pickSuggestion = async (s: { placeId: string; text: string }) => {
+    if (!token) return;
+    setSuggestions([]); setQuery(s.text); setLocating(true);
+    try {
+      const r = await detailsFn({ data: { token, placeId: s.placeId, sessionToken: sessionRef.current } });
+      applyResolved(r);
+      toast.success("Address filled", { description: "Please add your house no. & landmark below." });
+    } catch (err) {
+      toast.error("Could not load this address", { description: err instanceof Error ? err.message : undefined });
+    } finally { sessionRef.current = ""; setLocating(false); }
   };
   const baseDelivery = city ? deliveryFeeForCity(city) : DELIVERY_FEE_STANDARD;
   const delivery = freeDelivery ? 0 : baseDelivery;
