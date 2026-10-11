@@ -1,6 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { CreditCard, MapPin, ShieldCheck } from "lucide-react";
-import { Fragment, useEffect, useState } from "react";
+import { useServerFn } from "@tanstack/react-start";
+import { CreditCard, MapPin, Search, ShieldCheck } from "lucide-react";
+import { Fragment, useEffect, useRef, useState } from "react";
+import { CheckoutSignIn } from "@/components/CheckoutSignIn";
+import { autocompleteAddress, placeDetails, reverseGeocode, type ResolvedAddress } from "@/lib/maps.functions";
 import { toast } from "sonner";
 import { DELIVERY_FEE_STANDARD, formatPrice, deliveryFeeForCity, isServiceableCity } from "@/lib/config";
 import { downloadReceipt, formatOrderDate, printReceipt } from "@/lib/orders";
@@ -40,7 +43,22 @@ function CheckoutPage() {
   const [submitting, setSubmitting] = useState(false);
   const [locating, setLocating] = useState(false);
   const [gps, setGps] = useState<{ lat: number; lon: number } | null>(null);
+  const [token, setToken] = useState<string | null>(null);
+  const [authReady, setAuthReady] = useState(false);
+  const [query, setQuery] = useState("");
+  const [suggestions, setSuggestions] = useState<{ placeId: string; text: string }[]>([]);
+  const sessionRef = useRef("");
+  const reqRef = useRef(0);
+  const debounceRef = useRef<number | undefined>(undefined);
+  const autocompleteFn = useServerFn(autocompleteAddress);
+  const detailsFn = useServerFn(placeDetails);
+  const reverseFn = useServerFn(reverseGeocode);
   useEffect(() => { if (profile) setDetails(profile); }, [profile]);
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => { setToken(data.session?.access_token ?? null); setAuthReady(true); });
+    const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => { setToken(session?.access_token ?? null); setAuthReady(true); });
+    return () => sub.subscription.unsubscribe();
+  }, []);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -263,6 +281,7 @@ function CheckoutPage() {
           <div role="alert" className="w-full border-4 border-ink bg-paper px-6 py-5 text-center sm:col-span-2"><p className="font-display text-2xl uppercase">Not servicing in this area</p><p className="mt-1 text-sm font-bold">We currently deliver only in Gwalior. We will soon be available in your area!</p></div>
         )}
       </form>
+      )}
       <aside className="h-fit border-4 border-ink bg-paper p-6 hard-shadow lg:sticky lg:top-28"><h2 className="mb-5 text-3xl">Order summary</h2><ul className="mb-4 space-y-2 font-mono text-xs font-bold">{cart.map((item) => <li key={item.key} className="flex justify-between gap-3"><span>{item.name} · {item.size} × {item.qty}</span><span>{formatPrice(item.price * item.qty)}</span></li>)}</ul><div className="space-y-2 border-t-2 border-ink pt-3 font-mono text-xs font-bold"><p className="flex justify-between"><span>Subtotal</span><span>{formatPrice(subtotal)}</span></p><p className="flex justify-between"><span>Delivery</span><span>{freeDelivery ? "FREE" : formatPrice(delivery)}</span></p><p className="flex justify-between"><span>Tax</span><span>{formatPrice(0)}</span></p></div><div className="mt-3 flex justify-between border-t-2 border-ink pt-3 font-display text-2xl uppercase"><span>Total</span><span>{formatPrice(total)}</span></div></aside>
     </div></div>
   );
