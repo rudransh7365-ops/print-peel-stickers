@@ -16,3 +16,4 @@
 - [x] Map each checkout field to its own column in the print peel studio table.
 - [x] Validate all new catalogue items and checkout delivery totals in the browser.
 - [x] Add the ten newly uploaded stickers (money stack, warning happiness, Joker, Diesel Power, Starry Night, Apologies In Cash, DiCaprio toast, Peaky Blinders, Diesel Fuel Only, Spotify).
+- [x] Add the ten newly uploaded stickers (born to ride bicycle, music is my medicine, Toothless & Light Fury, emotional damage, Harry Potter trio, Platform 9¾, laptop horcrux, focus, NFS Most Wanted, NOS nitrous).
