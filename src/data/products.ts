@@ -98,6 +98,16 @@ import dicaprioToastSticker1 from "@/assets/dicaprio-toast-sticker-1.jpg.asset.j
 import peakyBlindersSticker1 from "@/assets/peaky-blinders-sticker-1.jpg.asset.json";
 import dieselFuelOnlySticker1 from "@/assets/diesel-fuel-only-sticker-1.jpg.asset.json";
 import spotifyMusicSticker1 from "@/assets/spotify-music-sticker-1.jpg.asset.json";
+import bornToRideBicycleSticker1 from "@/assets/born-to-ride-bicycle-sticker-1.jpg.asset.json";
+import musicIsMyMedicineSticker1 from "@/assets/music-is-my-medicine-sticker-1.jpg.asset.json";
+import toothlessLightFuryDragonsSticker1 from "@/assets/toothless-light-fury-dragons-sticker-1.jpg.asset.json";
+import emotionalDamageSticker1 from "@/assets/emotional-damage-sticker-1.jpg.asset.json";
+import harryPotterTrioSticker1 from "@/assets/harry-potter-trio-sticker-1.jpg.asset.json";
+import platform934Sticker1 from "@/assets/platform-934-sticker-1.jpg.asset.json";
+import thisLaptopIsAHorcruxSticker1 from "@/assets/this-laptop-is-a-horcrux-sticker-1.jpg.asset.json";
+import focusTypographySticker1 from "@/assets/focus-typography-sticker-1.jpg.asset.json";
+import nfsMostWantedSticker1 from "@/assets/nfs-most-wanted-sticker-1.jpg.asset.json";
+import nosNitrousSticker1 from "@/assets/nos-nitrous-sticker-1.jpg.asset.json";
 
 export type Category = "stickers" | "posters";
 
@@ -1592,6 +1602,126 @@ export const PRODUCTS: Product[] = [
     tags: ["Music", "Spotify", "Logo", "Minimal"],
     recentlyAdded: true,
   },
+  {
+    id: "born-to-ride-bicycle-sticker-1",
+    name: "Born To Ride Bicycle Sticker #1",
+    category: "stickers",
+    types: ["sports", "typography"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [bornToRideBicycleSticker1.url],
+    tags: ["Bicycle", "Cycling", "Biker", "Born To Ride"],
+    recentlyAdded: true,
+  },
+  {
+    id: "music-is-my-medicine-sticker-1",
+    name: "Music Is My Medicine Sticker #1",
+    category: "stickers",
+    types: ["music", "typography"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [musicIsMyMedicineSticker1.url],
+    tags: ["Music", "Medicine", "Earbuds", "Quote"],
+    recentlyAdded: true,
+  },
+  {
+    id: "toothless-light-fury-dragons-sticker-1",
+    name: "Toothless & Light Fury Dragons Sticker #1",
+    category: "stickers",
+    types: ["movies"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [toothlessLightFuryDragonsSticker1.url],
+    tags: ["Dragons", "Toothless", "How To Train Your Dragon", "Fan Art"],
+    recentlyAdded: true,
+  },
+  {
+    id: "emotional-damage-sticker-1",
+    name: "Emotional Damage Sticker #1",
+    category: "stickers",
+    types: ["meme", "typography"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [emotionalDamageSticker1.url],
+    tags: ["Emotional Damage", "Meme", "Warning", "Quote"],
+    recentlyAdded: true,
+  },
+  {
+    id: "harry-potter-trio-sticker-1",
+    name: "Harry Potter Trio Sticker #1",
+    category: "stickers",
+    types: ["movies", "minimal"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [harryPotterTrioSticker1.url],
+    tags: ["Harry Potter", "Hermione", "Ron", "Hogwarts"],
+    recentlyAdded: true,
+  },
+  {
+    id: "platform-934-sticker-1",
+    name: "Platform 9¾ Sticker #1",
+    category: "stickers",
+    types: ["movies", "minimal"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [platform934Sticker1.url],
+    tags: ["Harry Potter", "Platform 9 3/4", "Hogwarts", "Sign"],
+    recentlyAdded: true,
+  },
+  {
+    id: "this-laptop-is-a-horcrux-sticker-1",
+    name: "This Laptop Is A Horcrux Sticker #1",
+    category: "stickers",
+    types: ["movies", "typography"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [thisLaptopIsAHorcruxSticker1.url],
+    tags: ["Harry Potter", "Horcrux", "Laptop", "Quote"],
+    recentlyAdded: true,
+  },
+  {
+    id: "focus-typography-sticker-1",
+    name: "Focus Typography Sticker #1",
+    category: "stickers",
+    types: ["typography", "minimal"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [focusTypographySticker1.url],
+    tags: ["Focus", "Typography", "3D", "Motivation"],
+    recentlyAdded: true,
+  },
+  {
+    id: "nfs-most-wanted-sticker-1",
+    name: "Need For Speed Most Wanted Sticker #1",
+    category: "stickers",
+    types: ["games", "cars"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [nfsMostWantedSticker1.url],
+    tags: ["Need For Speed", "Most Wanted", "Gaming", "Cars"],
+    recentlyAdded: true,
+  },
+  {
+    id: "nos-nitrous-sticker-1",
+    name: "NOS Nitrous Sticker #1",
+    category: "stickers",
+    types: ["cars", "typography"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [nosNitrousSticker1.url],
+    tags: ["NOS", "Nitrous", "Cars", "Racing"],
+    recentlyAdded: true,
+  },
 ];
 
 export const STICKER_TYPES = [
@@ -1604,6 +1734,8 @@ export const STICKER_TYPES = [
   "cars",
   "meme",
   "music",
+  "movies",
+  "games",
 ];
 
 export const getProduct = (id: string) => PRODUCTS.find((p) => p.id === id);
