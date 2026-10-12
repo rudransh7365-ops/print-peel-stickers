@@ -118,6 +118,16 @@ import sourPortraitSticker1 from "@/assets/sour-portrait-sticker-1.jpg.asset.jso
 import dejaVuCassetteSticker1 from "@/assets/deja-vu-cassette-sticker-1.jpg.asset.json";
 import overthinkerVerifiedSticker1 from "@/assets/overthinker-verified-sticker-1.jpg.asset.json";
 import weDontTalkAnymoreSticker1 from "@/assets/we-dont-talk-anymore-sticker-1.jpg.asset.json";
+import riskIsAlwaysBetterThanRegretPoster1 from "@/assets/risk-is-always-better-than-regret-poster-1.jpg.asset.json";
+import itsNotOverUntilIWinPoster1 from "@/assets/its-not-over-until-i-win-poster-1.jpg.asset.json";
+import toyotaSupraSpecPoster1 from "@/assets/toyota-supra-spec-poster-1.jpg.asset.json";
+import spiderManBlackSuitPoster1 from "@/assets/spider-man-black-suit-poster-1.jpg.asset.json";
+import ferrariF1Poster1 from "@/assets/ferrari-f1-poster-1.jpg.asset.json";
+import porscheSpiderManPoster1 from "@/assets/porsche-spider-man-poster-1.jpg.asset.json";
+import porsche911Gt3SpecPoster1 from "@/assets/porsche-911-gt3-spec-poster-1.jpg.asset.json";
+import noMusicNoLifePoster1 from "@/assets/no-music-no-life-poster-1.jpg.asset.json";
+import blackHolePoster1 from "@/assets/black-hole-poster-1.jpg.asset.json";
+import kingKohliPoster1 from "@/assets/king-kohli-poster-1.jpg.asset.json";
 
 export type Category = "stickers" | "posters";
 
