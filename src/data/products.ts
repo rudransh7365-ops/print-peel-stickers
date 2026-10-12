@@ -108,6 +108,16 @@ import thisLaptopIsAHorcruxSticker1 from "@/assets/this-laptop-is-a-horcrux-stic
 import focusTypographySticker1 from "@/assets/focus-typography-sticker-1.jpg.asset.json";
 import nfsMostWantedSticker1 from "@/assets/nfs-most-wanted-sticker-1.jpg.asset.json";
 import nosNitrousSticker1 from "@/assets/nos-nitrous-sticker-1.jpg.asset.json";
+import noLimitsBikeSticker1 from "@/assets/no-limits-bike-sticker-1.jpg.asset.json";
+import mPowerSticker1 from "@/assets/m-power-sticker-1.jpg.asset.json";
+import booktrovertSticker1 from "@/assets/booktrovert-sticker-1.jpg.asset.json";
+import recordSticker1 from "@/assets/record-sticker-1.jpg.asset.json";
+import percyJacksonBookSpinesSticker1 from "@/assets/percy-jackson-book-spines-sticker-1.jpg.asset.json";
+import juiceCigaretteAnimeSticker1 from "@/assets/juice-cigarette-anime-sticker-1.jpg.asset.json";
+import sourPortraitSticker1 from "@/assets/sour-portrait-sticker-1.jpg.asset.json";
+import dejaVuCassetteSticker1 from "@/assets/deja-vu-cassette-sticker-1.jpg.asset.json";
+import overthinkerVerifiedSticker1 from "@/assets/overthinker-verified-sticker-1.jpg.asset.json";
+import weDontTalkAnymoreSticker1 from "@/assets/we-dont-talk-anymore-sticker-1.jpg.asset.json";
 
 export type Category = "stickers" | "posters";
 
