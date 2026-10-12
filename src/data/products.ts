@@ -1861,6 +1861,7 @@ export const PRODUCTS: Product[] = [
     images: [weDontTalkAnymoreSticker1.url],
     tags: ["We Don't Talk Anymore", "Lyrics", "Music", "Aesthetic"],
     recentlyAdded: true,
+  },
   {
     id: "risk-is-always-better-than-regret-poster-1",
     name: "Risk Is Always Better Than Regret Self-Adhesive Poster #1",
