@@ -18,3 +18,4 @@
 - [x] Add the ten newly uploaded stickers (money stack, warning happiness, Joker, Diesel Power, Starry Night, Apologies In Cash, DiCaprio toast, Peaky Blinders, Diesel Fuel Only, Spotify).
 - [x] Add the ten newly uploaded stickers (born to ride bicycle, music is my medicine, Toothless & Light Fury, emotional damage, Harry Potter trio, Platform 9¾, laptop horcrux, focus, NFS Most Wanted, NOS nitrous).
 - [x] Add the ten newly uploaded stickers (No Limits bike, M Power, Booktrovert, Record, Percy Jackson spines, Juice Cigarette anime, Sour portrait, Deja Vu cassette, Overthinker verified, We Don't Talk Anymore).
+- [x] Add the ten newly uploaded designs to the posters section only (risk/regret quote, until I win, Supra spec, Spider-Man black suit, Ferrari F1, Porsche Spider-Man, Porsche 911 GT3 spec, no music no life, black hole, King Kohli).
