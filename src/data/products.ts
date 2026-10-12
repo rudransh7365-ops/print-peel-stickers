@@ -108,6 +108,16 @@ import thisLaptopIsAHorcruxSticker1 from "@/assets/this-laptop-is-a-horcrux-stic
 import focusTypographySticker1 from "@/assets/focus-typography-sticker-1.jpg.asset.json";
 import nfsMostWantedSticker1 from "@/assets/nfs-most-wanted-sticker-1.jpg.asset.json";
 import nosNitrousSticker1 from "@/assets/nos-nitrous-sticker-1.jpg.asset.json";
+import noLimitsBikeSticker1 from "@/assets/no-limits-bike-sticker-1.jpg.asset.json";
+import mPowerSticker1 from "@/assets/m-power-sticker-1.jpg.asset.json";
+import booktrovertSticker1 from "@/assets/booktrovert-sticker-1.jpg.asset.json";
+import recordSticker1 from "@/assets/record-sticker-1.jpg.asset.json";
+import percyJacksonBookSpinesSticker1 from "@/assets/percy-jackson-book-spines-sticker-1.jpg.asset.json";
+import juiceCigaretteAnimeSticker1 from "@/assets/juice-cigarette-anime-sticker-1.jpg.asset.json";
+import sourPortraitSticker1 from "@/assets/sour-portrait-sticker-1.jpg.asset.json";
+import dejaVuCassetteSticker1 from "@/assets/deja-vu-cassette-sticker-1.jpg.asset.json";
+import overthinkerVerifiedSticker1 from "@/assets/overthinker-verified-sticker-1.jpg.asset.json";
+import weDontTalkAnymoreSticker1 from "@/assets/we-dont-talk-anymore-sticker-1.jpg.asset.json";
 
 export type Category = "stickers" | "posters";
 
@@ -1722,6 +1732,126 @@ export const PRODUCTS: Product[] = [
     tags: ["NOS", "Nitrous", "Cars", "Racing"],
     recentlyAdded: true,
   },
+  {
+    id: "no-limits-bike-sticker-1",
+    name: "No Limits Bike Sticker #1",
+    category: "stickers",
+    types: ["typography", "sports"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [noLimitsBikeSticker1.url],
+    tags: ["No Limits", "Bike", "Typography", "Motivation"],
+    recentlyAdded: true,
+  },
+  {
+    id: "m-power-sticker-1",
+    name: "M Power Sticker #1",
+    category: "stickers",
+    types: ["cars", "typography"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [mPowerSticker1.url],
+    tags: ["M Power", "Motorsport", "Racing", "Cars"],
+    recentlyAdded: true,
+  },
+  {
+    id: "booktrovert-sticker-1",
+    name: "Booktrovert Sticker #1",
+    category: "stickers",
+    types: ["books", "floral"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [booktrovertSticker1.url],
+    tags: ["Booktrovert", "Books", "Reading", "Floral"],
+    recentlyAdded: true,
+  },
+  {
+    id: "record-sticker-1",
+    name: "Record Sticker #1",
+    category: "stickers",
+    types: ["music", "minimal"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [recordSticker1.url],
+    tags: ["Vinyl", "Record", "Music", "Retro"],
+    recentlyAdded: true,
+  },
+  {
+    id: "percy-jackson-book-spines-sticker-1",
+    name: "Percy Jackson Book Spines Sticker #1",
+    category: "stickers",
+    types: ["books", "minimal"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [percyJacksonBookSpinesSticker1.url],
+    tags: ["Percy Jackson", "Books", "Reading", "Fantasy"],
+    recentlyAdded: true,
+  },
+  {
+    id: "juice-cigarette-anime-sticker-1",
+    name: "Juice Cigarette Anime Sticker #1",
+    category: "stickers",
+    types: ["anime", "minimal"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [juiceCigaretteAnimeSticker1.url],
+    tags: ["Anime", "Retro", "Illustration", "Aesthetic"],
+    recentlyAdded: true,
+  },
+  {
+    id: "sour-portrait-sticker-1",
+    name: "Sour Portrait Sticker #1",
+    category: "stickers",
+    types: ["music", "minimal"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [sourPortraitSticker1.url],
+    tags: ["Sour", "Portrait", "Pop", "Music"],
+    recentlyAdded: true,
+  },
+  {
+    id: "deja-vu-cassette-sticker-1",
+    name: "Deja Vu Cassette Sticker #1",
+    category: "stickers",
+    types: ["music", "typography"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [dejaVuCassetteSticker1.url],
+    tags: ["Deja Vu", "Cassette", "Lyrics", "Music"],
+    recentlyAdded: true,
+  },
+  {
+    id: "overthinker-verified-sticker-1",
+    name: "Overthinker Verified Sticker #1",
+    category: "stickers",
+    types: ["meme", "minimal"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [overthinkerVerifiedSticker1.url],
+    tags: ["Overthinker", "Verified", "Meme", "Minimal"],
+    recentlyAdded: true,
+  },
+  {
+    id: "we-dont-talk-anymore-sticker-1",
+    name: "We Don't Talk Anymore Sticker #1",
+    category: "stickers",
+    types: ["music", "typography"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [weDontTalkAnymoreSticker1.url],
+    tags: ["We Don't Talk Anymore", "Lyrics", "Music", "Aesthetic"],
+    recentlyAdded: true,
+  },
 ];
 
 export const STICKER_TYPES = [
@@ -1736,6 +1866,7 @@ export const STICKER_TYPES = [
   "music",
   "movies",
   "games",
+  "books",
 ];
 
 export const getProduct = (id: string) => PRODUCTS.find((p) => p.id === id);
