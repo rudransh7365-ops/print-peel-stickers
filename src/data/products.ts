@@ -128,6 +128,16 @@ import porsche911Gt3SpecPoster1 from "@/assets/porsche-911-gt3-spec-poster-1.jpg
 import noMusicNoLifePoster1 from "@/assets/no-music-no-life-poster-1.jpg.asset.json";
 import blackHolePoster1 from "@/assets/black-hole-poster-1.jpg.asset.json";
 import kingKohliPoster1 from "@/assets/king-kohli-poster-1.jpg.asset.json";
+import monsterEnergySticker1 from "@/assets/monster-energy-sticker-1.jpg.asset.json";
+import einsteinSaltbaeSticker1 from "@/assets/einstein-saltbae-sticker-1.jpg.asset.json";
+import arnoldWorkHardSticker1 from "@/assets/arnold-work-hard-sticker-1.jpg.asset.json";
+import catDeadliftSticker1 from "@/assets/cat-deadlift-sticker-1.jpg.asset.json";
+import getInLoserGymSticker1 from "@/assets/get-in-loser-gym-sticker-1.jpg.asset.json";
+import muhammadAliBoxingSticker1 from "@/assets/muhammad-ali-boxing-sticker-1.jpg.asset.json";
+import andromedaGalaxySticker1 from "@/assets/andromeda-galaxy-sticker-1.jpg.asset.json";
+import gymModeOnSticker1 from "@/assets/gym-mode-on-sticker-1.jpg.asset.json";
+import noDaysOffSticker1 from "@/assets/no-days-off-sticker-1.jpg.asset.json";
+import redBullSticker1 from "@/assets/red-bull-sticker-1.jpg.asset.json";
 
 export type Category = "stickers" | "posters";
 
@@ -1982,12 +1992,133 @@ export const PRODUCTS: Product[] = [
     tags: ["Virat Kohli", "Cricket", "Motivation", "Sports"],
     recentlyAdded: true,
   },
+  {
+    id: "monster-energy-sticker-1",
+    name: "Monster Energy Sticker #1",
+    category: "stickers",
+    types: ["typography", "minimal"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [monsterEnergySticker1.url],
+    tags: ["Monster Energy", "Energy Drink", "Logo", "Street"],
+    recentlyAdded: true,
+  },
+  {
+    id: "einstein-saltbae-sticker-1",
+    name: "Einstein Salt Bae Sticker #1",
+    category: "stickers",
+    types: ["meme"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [einsteinSaltbaeSticker1.url],
+    tags: ["Einstein", "Salt Bae", "Physics", "Science"],
+    recentlyAdded: true,
+  },
+  {
+    id: "arnold-work-hard-sticker-1",
+    name: "Work Hard Arnold Sticker #1",
+    category: "stickers",
+    types: ["fitness", "typography"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [arnoldWorkHardSticker1.url],
+    tags: ["Arnold", "Bodybuilding", "Work Hard", "Gym"],
+    recentlyAdded: true,
+  },
+  {
+    id: "cat-deadlift-sticker-1",
+    name: "Cat Deadlift Sticker #1",
+    category: "stickers",
+    types: ["fitness", "meme"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [catDeadliftSticker1.url],
+    tags: ["Cat", "Deadlift", "Gym", "Line Art"],
+    recentlyAdded: true,
+  },
+  {
+    id: "get-in-loser-gym-sticker-1",
+    name: "Get In Loser Gym Sticker #1",
+    category: "stickers",
+    types: ["fitness", "typography"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [getInLoserGymSticker1.url],
+    tags: ["Get In Loser", "Gym", "Mean Girls", "Typography"],
+    recentlyAdded: true,
+  },
+  {
+    id: "muhammad-ali-boxing-sticker-1",
+    name: "Muhammad Ali Boxing Sticker #1",
+    category: "stickers",
+    types: ["sports"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [muhammadAliBoxingSticker1.url],
+    tags: ["Muhammad Ali", "Boxing", "Legend", "Sports"],
+    recentlyAdded: true,
+  },
+  {
+    id: "andromeda-galaxy-sticker-1",
+    name: "Andromeda Galaxy Sticker #1",
+    category: "stickers",
+    types: ["minimal"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [andromedaGalaxySticker1.url],
+    tags: ["Andromeda", "Galaxy", "Space", "Astronomy"],
+    recentlyAdded: true,
+  },
+  {
+    id: "gym-mode-on-sticker-1",
+    name: "Gym Mode On Sticker #1",
+    category: "stickers",
+    types: ["fitness", "typography"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [gymModeOnSticker1.url],
+    tags: ["Gym Mode", "Fitness", "Motivation", "Typography"],
+    recentlyAdded: true,
+  },
+  {
+    id: "no-days-off-sticker-1",
+    name: "No Days Off Sticker #1",
+    category: "stickers",
+    types: ["fitness", "typography"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [noDaysOffSticker1.url],
+    tags: ["No Days Off", "Gym", "Bodybuilding", "Motivation"],
+    recentlyAdded: true,
+  },
+  {
+    id: "red-bull-sticker-1",
+    name: "Red Bull Sticker #1",
+    category: "stickers",
+    types: ["minimal", "cars"],
+    description: STICKER_DESC,
+    price: 12,
+    sizes: STICKER_SIZES,
+    images: [redBullSticker1.url],
+    tags: ["Red Bull", "Energy Drink", "Racing", "Logo"],
+    recentlyAdded: true,
+  },
 ];
 
 export const STICKER_TYPES = [
   "anime",
   "football",
   "sports",
+  "fitness",
   "typography",
   "minimal",
   "floral",
