@@ -4,7 +4,7 @@ import { CreditCard, MapPin, Search, ShieldCheck } from "lucide-react";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { autocompleteAddress, placeDetails, reverseGeocode, type ResolvedAddress } from "@/lib/maps.functions";
 import { toast } from "sonner";
-import { DELIVERY_FEE_STANDARD, formatPrice, deliveryFeeForCity, isServiceableCity } from "@/lib/config";
+import { DELIVERY_FEE_STANDARD, formatPrice, deliveryFeeForCity } from "@/lib/config";
 import { downloadReceipt, formatOrderDate, printReceipt } from "@/lib/orders";
 import { supabase } from "@/lib/supabase";
 import { useStore, type CustomerProfile, type OrderRecord } from "@/lib/store";
@@ -120,7 +120,6 @@ function CheckoutPage() {
   };
 
   const city = details.city ?? "";
-  const serviceable = !city.trim() || isServiceableCity(city);
   const applyResolved = (r: ResolvedAddress) => {
     setGps({ lat: r.lat, lon: r.lon });
     setDetails((prev) => ({
@@ -230,7 +229,7 @@ function CheckoutPage() {
         </div>
       </section>
       <div className="grid gap-10 lg:grid-cols-[1.2fr_1fr]">
-      <form className="grid gap-4 sm:grid-cols-2" onSubmit={(e) => { if (!serviceable) { e.preventDefault(); return; } void handleSubmit(e); }}>
+      <form className="grid gap-4 sm:grid-cols-2" onSubmit={(e) => { e.preventDefault(); void handleSubmit(e); }}>
         {(Object.keys(EMPTY) as Array<keyof CustomerProfile>).map((key) => (
           <Fragment key={key}>
             {key === "address" && (
@@ -256,15 +255,11 @@ function CheckoutPage() {
                 {gps && <p className="font-mono text-[10px] font-extrabold tracking-widest uppercase text-muted-foreground">Exact pin saved: {gps.lat.toFixed(5)}, {gps.lon.toFixed(5)}</p>}
               </div>
             )}
-            <label className={key === "address" || key === "landmark" ? "sm:col-span-2" : ""}><span className="mb-2 block font-mono text-[10px] font-extrabold tracking-widest uppercase">{key === "landmark" ? "House / flat no. & landmark (so we reach your exact house)" : key.replace(/([A-Z])/g, " $1")}</span><input required={key !== "email"} type={key === "email" ? "email" : "text"} inputMode={key === "phone" ? "tel" : key === "pincode" ? "numeric" : undefined} placeholder={key === "landmark" ? "e.g. H.No. 42, near City Mall, Thatipur" : undefined} value={details[key]} onChange={(event) => setDetails((prev) => ({ ...prev, [key]: event.target.value }))} className={field} />{key === "city" && !serviceable && <span className="mt-2 block text-xs font-bold text-destructive">We are not servicing in this area yet — we will soon be available in your area!</span>}</label>
+            <label className={key === "address" || key === "landmark" ? "sm:col-span-2" : ""}><span className="mb-2 block font-mono text-[10px] font-extrabold tracking-widest uppercase">{key === "landmark" ? "House / flat no. & landmark (so we reach your exact house)" : key.replace(/([A-Z])/g, " $1")}</span><input required={key !== "email"} type={key === "email" ? "email" : "text"} inputMode={key === "phone" ? "tel" : key === "pincode" ? "numeric" : undefined} placeholder={key === "landmark" ? "e.g. H.No. 42, near City Mall, Thatipur" : undefined} value={details[key]} onChange={(event) => setDetails((prev) => ({ ...prev, [key]: event.target.value }))} className={field} /></label>
           </Fragment>
         ))}
         <label className="sm:col-span-2"><span className="mb-2 block font-mono text-[10px] font-extrabold tracking-widest uppercase">Order notes (optional)</span><textarea rows={2} value={notes} onChange={(event) => setNotes(event.target.value)} className={field} /></label>
-        {serviceable ? (
-          <button type="submit" disabled={submitting} className="w-full border-4 border-ink bg-accent px-6 py-5 font-display text-2xl text-accent-foreground uppercase hard-shadow press sm:col-span-2 disabled:opacity-60 disabled:cursor-not-allowed">{submitting ? "Placing order…" : "Place order"}</button>
-        ) : (
-          <div role="alert" className="w-full border-4 border-ink bg-paper px-6 py-5 text-center sm:col-span-2"><p className="font-display text-2xl uppercase">Not servicing in this area</p><p className="mt-1 text-sm font-bold">We currently deliver only in Gwalior. We will soon be available in your area!</p></div>
-        )}
+        <button type="submit" disabled={submitting} className="w-full border-4 border-ink bg-accent px-6 py-5 font-display text-2xl text-accent-foreground uppercase hard-shadow press sm:col-span-2 disabled:opacity-60 disabled:cursor-not-allowed">{submitting ? "Placing order…" : "Place order"}</button>
       </form>
       <aside className="h-fit border-4 border-ink bg-paper p-6 hard-shadow lg:sticky lg:top-28"><h2 className="mb-5 text-3xl">Order summary</h2><ul className="mb-4 space-y-2 font-mono text-xs font-bold">{cart.map((item) => <li key={item.key} className="flex justify-between gap-3"><span>{item.name} · {item.size} × {item.qty}</span><span>{formatPrice(item.price * item.qty)}</span></li>)}</ul><div className="space-y-2 border-t-2 border-ink pt-3 font-mono text-xs font-bold"><p className="flex justify-between"><span>Subtotal</span><span>{formatPrice(subtotal)}</span></p><p className="flex justify-between"><span>Delivery</span><span>{freeDelivery ? "FREE" : formatPrice(delivery)}</span></p><p className="flex justify-between"><span>Tax</span><span>{formatPrice(0)}</span></p></div><div className="mt-3 flex justify-between border-t-2 border-ink pt-3 font-display text-2xl uppercase"><span>Total</span><span>{formatPrice(total)}</span></div></aside>
     </div></div>
