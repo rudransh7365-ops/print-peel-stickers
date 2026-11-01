@@ -9,3 +9,5 @@
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
 - Google Maps address lookups (autocomplete, details, reverse geocode) run only in signed-in server functions in src/lib/maps.functions.ts via the connector gateway — billable calls must never be public or browser-side.
+
+- Orders are stored in the Lovable Cloud database table `public.orders` (guest checkout inserts with the anon key under RLS INSERT policies); do not reintroduce hardcoded fallback credentials or a differently-named table.
