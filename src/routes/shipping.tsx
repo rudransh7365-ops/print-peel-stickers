@@ -51,8 +51,8 @@ function ShippingPage() {
         <section>
           <h2 className="mb-3 text-xl font-extrabold">3. Shipping Rates</h2>
           <ul className="list-disc space-y-1 pl-5 font-medium text-muted-foreground">
-            <li>Gwalior (local delivery): ₹50</li>
-            <li>Rest of India: ₹90</li>
+            <li>Gwalior (local delivery): ₹40</li>
+            <li>Rest of India: ₹80</li>
             <li>Free delivery on all orders above ₹180</li>
           </ul>
         </section>
