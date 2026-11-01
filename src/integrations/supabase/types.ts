@@ -14,7 +14,63 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      orders: {
+        Row: {
+          address: string
+          city: string
+          created_at: string
+          customer_name: string
+          delivery_charge: number
+          email: string
+          google_maps_link: string
+          id: string
+          is_free_delivery: boolean
+          items: string
+          payment_method: string
+          phone_no: string
+          pincode: string
+          state: string
+          subtotal: number
+          total: number
+        }
+        Insert: {
+          address: string
+          city: string
+          created_at?: string
+          customer_name: string
+          delivery_charge?: number
+          email: string
+          google_maps_link?: string
+          id?: string
+          is_free_delivery?: boolean
+          items: string
+          payment_method?: string
+          phone_no: string
+          pincode: string
+          state: string
+          subtotal?: number
+          total?: number
+        }
+        Update: {
+          address?: string
+          city?: string
+          created_at?: string
+          customer_name?: string
+          delivery_charge?: number
+          email?: string
+          google_maps_link?: string
+          id?: string
+          is_free_delivery?: boolean
+          items?: string
+          payment_method?: string
+          phone_no?: string
+          pincode?: string
+          state?: string
+          subtotal?: number
+          total?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
