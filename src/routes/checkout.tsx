@@ -80,20 +80,25 @@ function CheckoutPage() {
       .join(", ");
     const fullName = `${details.firstName} ${details.lastName}`.trim();
     const mapsLink = gps ? `https://www.google.com/maps?q=${gps.lat},${gps.lon}` : "";
-    const fullAddress = `${details.landmark ? `${details.landmark}, ` : ""}${details.address}${mapsLink ? ` | Exact location: ${mapsLink}` : ""}`;
+    const fullAddress = `${details.landmark ? `${details.landmark}, ` : ""}${details.address}`;
     const fullOrder = {
       customer_name: fullName,
       phone_no: String(details.phone || ""),
       email: String(details.email || ""),
       address: fullAddress,
+      google_maps_link: mapsLink,
       city: String(details.city || ""),
       state: String(details.state || ""),
       pincode: String(details.pincode || ""),
       items: `Order ${next.id}: ${itemsSummary}${notes ? ` | Notes: ${notes}` : ""}`,
+      subtotal: Number(next.subtotal) || 0,
+      delivery_charge: Number(next.delivery) || 0,
       total: Number(next.total) || 0,
+      payment_method: paymentMethod,
+      is_free_delivery: freeDelivery && delivery === 0,
     };
     try {
-      const { error } = await supabase.from("print peel studio").insert(fullOrder);
+      const { error } = await supabase.from("orders").insert(fullOrder);
       if (error) {
         console.error("Supabase insert error:", error);
         toast.error("Could not save your order", {
@@ -260,6 +265,7 @@ function CheckoutPage() {
           </Fragment>
         ))}
         <label className="sm:col-span-2"><span className="mb-2 block font-mono text-[10px] font-extrabold tracking-widest uppercase">Order notes (optional)</span><textarea rows={2} value={notes} onChange={(event) => setNotes(event.target.value)} className={field} /></label>
+        <label className="sm:col-span-2"><span className="mb-2 block font-mono text-[10px] font-extrabold tracking-widest uppercase">Payment method (online payment only)</span><select value={paymentMethod} onChange={(event) => setPaymentMethod(event.target.value)} className={field}>{["UPI", "Card", "Net banking"].map((m) => <option key={m} value={m}>{m}</option>)}</select></label>
         <button type="submit" disabled={submitting} className="w-full border-4 border-ink bg-accent px-6 py-5 font-display text-2xl text-accent-foreground uppercase hard-shadow press sm:col-span-2 disabled:opacity-60 disabled:cursor-not-allowed">{submitting ? "Placing order…" : "Place order"}</button>
       </form>
       <aside className="h-fit border-4 border-ink bg-paper p-6 hard-shadow lg:sticky lg:top-28"><h2 className="mb-5 text-3xl">Order summary</h2><ul className="mb-4 space-y-2 font-mono text-xs font-bold">{cart.map((item) => <li key={item.key} className="flex justify-between gap-3"><span>{item.name} · {item.size} × {item.qty}</span><span>{formatPrice(item.price * item.qty)}</span></li>)}</ul><div className="space-y-2 border-t-2 border-ink pt-3 font-mono text-xs font-bold"><p className="flex justify-between"><span>Subtotal</span><span>{formatPrice(subtotal)}</span></p><p className="flex justify-between"><span>Delivery</span><span>{freeDelivery ? "FREE" : formatPrice(delivery)}</span></p><p className="flex justify-between"><span>Tax</span><span>{formatPrice(0)}</span></p></div><div className="mt-3 flex justify-between border-t-2 border-ink pt-3 font-display text-2xl uppercase"><span>Total</span><span>{formatPrice(total)}</span></div></aside>
