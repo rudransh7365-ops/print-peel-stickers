@@ -12,8 +12,8 @@ export const BRAND = {
 
 /** Free delivery threshold in ₹ — change here and the whole site follows. */
 export const FREE_DELIVERY_THRESHOLD = 180;
-export const DELIVERY_FEE_LOCAL = 50;
-export const DELIVERY_FEE_STANDARD = 90;
+export const DELIVERY_FEE_LOCAL = 40;
+export const DELIVERY_FEE_STANDARD = 80;
 
 export const CURRENCY = "₹";
 
