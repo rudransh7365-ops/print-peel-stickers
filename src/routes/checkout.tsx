@@ -63,6 +63,7 @@ function CheckoutPage() {
     if (missing.length) { toast.error("Please fill in all details", { description: `Missing: ${missing.join(", ")}` }); return; }
     if (!/^\d{10}$/.test(String(details.phone).replace(/\D/g, "").slice(-10))) { toast.error("Please enter a valid 10-digit phone number"); return; }
     if (!/^\d{6}$/.test(String(details.pincode).trim())) { toast.error("Please enter a valid 6-digit PIN code"); return; }
+    if (!gps) { toast.error("Location capture is required to place your order", { description: "Tap “Use my current location” above the address field first." }); return; }
     if (cart.length === 0) { toast.error("Your cart is empty"); return; }
     const next: OrderRecord = {
       id: `PP-${Date.now().toString().slice(-6)}`,
@@ -179,6 +180,7 @@ function CheckoutPage() {
   const baseDelivery = city ? deliveryFeeForCity(city) : DELIVERY_FEE_STANDARD;
   const delivery = freeDelivery ? 0 : baseDelivery;
   const total = subtotal + delivery;
+  const locationCaptured = gps !== null;
   const field = "w-full border-4 border-ink bg-paper px-4 py-3 text-sm font-bold outline-none focus:border-accent";
   const customImages = (order?.items ?? cart).filter((item) => item.custom?.imageDataUrl);
 
@@ -242,7 +244,7 @@ function CheckoutPage() {
               <div className="grid gap-3 sm:col-span-2">
                 <button type="button" onClick={useCurrentLocation} disabled={locating} className="flex w-full items-center justify-center gap-3 border-4 border-ink bg-neon-green px-5 py-4 text-center font-mono text-xs font-extrabold tracking-widest uppercase hard-shadow press disabled:opacity-60">
                   <MapPin className="size-5 shrink-0" aria-hidden="true" />
-                  <span>{locating ? "Finding your location…" : "Use my current location"}</span>
+                  <span>{locating ? "Finding your location…" : locationCaptured ? "Location captured ✓ — tap to recapture" : "Use my current location (required)"}</span>
                 </button>
                 <label className="relative block">
                   <span className="mb-2 block font-mono text-[10px] font-extrabold tracking-widest uppercase">Or search your colony / area in Gwalior</span>
@@ -266,7 +268,8 @@ function CheckoutPage() {
         ))}
         <label className="sm:col-span-2"><span className="mb-2 block font-mono text-[10px] font-extrabold tracking-widest uppercase">Order notes (optional)</span><textarea rows={2} value={notes} onChange={(event) => setNotes(event.target.value)} className={field} /></label>
         <label className="sm:col-span-2"><span className="mb-2 block font-mono text-[10px] font-extrabold tracking-widest uppercase">Payment method (online payment only)</span><select value={paymentMethod} onChange={(event) => setPaymentMethod(event.target.value)} className={field}>{["UPI", "Card", "Net banking"].map((m) => <option key={m} value={m}>{m}</option>)}</select></label>
-        <button type="submit" disabled={submitting} className="w-full border-4 border-ink bg-accent px-6 py-5 font-display text-2xl text-accent-foreground uppercase hard-shadow press sm:col-span-2 disabled:opacity-60 disabled:cursor-not-allowed">{submitting ? "Placing order…" : "Place order"}</button>
+        {!locationCaptured && <p className="sm:col-span-2 border-2 border-dashed border-ink bg-paper px-4 py-3 font-mono text-[10px] font-extrabold tracking-widest uppercase text-muted-foreground">Location capture is required to place your order — tap the green button above the address field.</p>}
+        <button type="submit" disabled={submitting || !locationCaptured} aria-disabled={!locationCaptured} className="w-full border-4 border-ink bg-accent px-6 py-5 font-display text-2xl text-accent-foreground uppercase hard-shadow press sm:col-span-2 disabled:opacity-60 disabled:cursor-not-allowed">{submitting ? "Placing order…" : locationCaptured ? "Place order" : "Capture your location to place order"}</button>
       </form>
       <aside className="h-fit border-4 border-ink bg-paper p-6 hard-shadow lg:sticky lg:top-28"><h2 className="mb-5 text-3xl">Order summary</h2><ul className="mb-4 space-y-2 font-mono text-xs font-bold">{cart.map((item) => <li key={item.key} className="flex justify-between gap-3"><span>{item.name} · {item.size} × {item.qty}</span><span>{formatPrice(item.price * item.qty)}</span></li>)}</ul><div className="space-y-2 border-t-2 border-ink pt-3 font-mono text-xs font-bold"><p className="flex justify-between"><span>Subtotal</span><span>{formatPrice(subtotal)}</span></p><p className="flex justify-between"><span>Delivery</span><span>{freeDelivery ? "FREE" : formatPrice(delivery)}</span></p><p className="flex justify-between"><span>Tax</span><span>{formatPrice(0)}</span></p></div><div className="mt-3 flex justify-between border-t-2 border-ink pt-3 font-display text-2xl uppercase"><span>Total</span><span>{formatPrice(total)}</span></div></aside>
     </div></div>
