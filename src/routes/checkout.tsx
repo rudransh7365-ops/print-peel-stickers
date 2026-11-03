@@ -63,6 +63,7 @@ function CheckoutPage() {
     if (missing.length) { toast.error("Please fill in all details", { description: `Missing: ${missing.join(", ")}` }); return; }
     if (!/^\d{10}$/.test(String(details.phone).replace(/\D/g, "").slice(-10))) { toast.error("Please enter a valid 10-digit phone number"); return; }
     if (!/^\d{6}$/.test(String(details.pincode).trim())) { toast.error("Please enter a valid 6-digit PIN code"); return; }
+    if (!gps) { toast.error("Location capture is required to place your order", { description: "Tap “Use my current location” above the address field first." }); return; }
     if (cart.length === 0) { toast.error("Your cart is empty"); return; }
     const next: OrderRecord = {
       id: `PP-${Date.now().toString().slice(-6)}`,
@@ -242,7 +243,7 @@ function CheckoutPage() {
               <div className="grid gap-3 sm:col-span-2">
                 <button type="button" onClick={useCurrentLocation} disabled={locating} className="flex w-full items-center justify-center gap-3 border-4 border-ink bg-neon-green px-5 py-4 text-center font-mono text-xs font-extrabold tracking-widest uppercase hard-shadow press disabled:opacity-60">
                   <MapPin className="size-5 shrink-0" aria-hidden="true" />
-                  <span>{locating ? "Finding your location…" : "Use my current location"}</span>
+                  <span>{locating ? "Finding your location…" : locationCaptured ? "Location captured ✓ — tap to recapture" : "Use my current location (required)"}</span>
                 </button>
                 <label className="relative block">
                   <span className="mb-2 block font-mono text-[10px] font-extrabold tracking-widest uppercase">Or search your colony / area in Gwalior</span>
