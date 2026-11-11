@@ -6,7 +6,8 @@ import { autocompleteAddress, placeDetails, reverseGeocode, type ResolvedAddress
 import { toast } from "sonner";
 import { DELIVERY_FEE_STANDARD, FREE_DELIVERY_THRESHOLD, formatPrice, deliveryFeeForCity } from "@/lib/config";
 import { downloadReceipt, formatOrderDate, printReceipt } from "@/lib/orders";
-import { supabase } from "@/integrations/supabase/client";
+import { placeOrder } from "@/lib/checkout.functions";
+import { isServiceableCity } from "@/lib/config";
 import { useStore, type CustomerProfile, type OrderRecord } from "@/lib/store";
 import ronaldoManUtdImg from "@/assets/ronaldo.png";
 import wastedImg from "@/assets/wasted.png";
@@ -51,6 +52,7 @@ function CheckoutPage() {
   const autocompleteFn = useServerFn(autocompleteAddress);
   const detailsFn = useServerFn(placeDetails);
   const reverseFn = useServerFn(reverseGeocode);
+  const placeOrderFn = useServerFn(placeOrder);
   useEffect(() => { if (profile) setDetails(profile); }, [profile]);
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -64,66 +66,46 @@ function CheckoutPage() {
     if (!/^\d{10}$/.test(String(details.phone).replace(/\D/g, "").slice(-10))) { toast.error("Please enter a valid 10-digit phone number"); return; }
     if (!/^\d{6}$/.test(String(details.pincode).trim())) { toast.error("Please enter a valid 6-digit PIN code"); return; }
     if (!gps) { toast.error("Location capture is required to place your order", { description: "Tap “Use my current location” above the address field first." }); return; }
+    if (!isServiceableCity(details.city)) { toast.error("We are not delivering to this area yet", { description: "We will be available in your area soon. Please enter a Gwalior address." }); return; }
     if (cart.length === 0) { toast.error("Your cart is empty"); return; }
-    const next: OrderRecord = {
-      id: `PP-${Date.now().toString().slice(-6)}`,
-      date: new Date().toISOString(),
-      items: cart.map((item) => ({ ...item })),
-      customer: details,
-      subtotal,
-      delivery,
-      tax: 0,
-      total,
-    };
     setSubmitting(true);
-    const itemsSummary = next.items
-      .map((item) => `${item.name} (${item.size}) x${item.qty}`)
-      .join(", ");
-    const fullName = `${details.firstName} ${details.lastName}`.trim();
     const mapsLink = gps ? `https://www.google.com/maps?q=${gps.lat},${gps.lon}` : "";
     const fullAddress = `${details.landmark ? `${details.landmark}, ` : ""}${details.address}`;
-    const fullOrder = {
-      customer_name: fullName,
-      phone_no: String(details.phone || ""),
-      email: String(details.email || ""),
-      address: fullAddress,
-      google_maps_link: mapsLink,
-      city: String(details.city || ""),
-      state: String(details.state || ""),
-      pincode: String(details.pincode || ""),
-      items: `Order ${next.id}: ${itemsSummary}${notes ? ` | Notes: ${notes}` : ""}`,
-      subtotal: Number(next.subtotal) || 0,
-      delivery_charge: Number(next.delivery) || 0,
-      total: Number(next.total) || 0,
-      payment_method: paymentMethod,
-      is_free_delivery: freeDelivery && delivery === 0,
-    };
     try {
-      const { error } = await supabase.from("orders").insert(fullOrder);
-      if (error) {
-        console.error("Supabase insert error:", error);
-        toast.error("Could not save your order", {
-          description: `${error.message}${error.code ? ` (code ${error.code})` : ""}${error.hint ? ` — ${error.hint}` : ""}`,
-          duration: 10000,
-        });
-        setSubmitting(false);
-        return;
-      }
+      const result = await placeOrderFn({ data: {
+        orderId: `PP-${Date.now().toString().slice(-6)}`,
+        items: cart.map(({ key, productId, size, qty }) => ({ key, productId, size, qty })),
+        customerName: `${details.firstName} ${details.lastName}`.trim(),
+        phone: details.phone,
+        email: details.email,
+        address: fullAddress,
+        googleMapsLink: mapsLink,
+        city: details.city,
+        state: details.state,
+        pincode: details.pincode,
+        paymentMethod: paymentMethod as "UPI" | "Card" | "Net banking",
+        notes,
+      } });
+      const next: OrderRecord = {
+        id: result.orderId,
+        date: new Date().toISOString(),
+        items: result.items.map((item) => ({ ...item, key: item.key ?? `${item.productId}-${item.size}` })),
+        customer: details,
+        subtotal: result.subtotal,
+        delivery: result.delivery,
+        tax: 0,
+        total: result.total,
+      };
+      toast.success("Order placed successfully!", { description: `Order ID ${next.id}` });
+      saveProfile(details);
+      saveOrder(next);
+      setOrder(next);
+      clearCart();
     } catch (err) {
-      console.error("Supabase insert error:", err);
-      toast.error("Could not save your order", {
-        description: err instanceof Error ? err.message : String(err),
-        duration: 10000,
-      });
+      toast.error("Could not place your order", { description: err instanceof Error ? err.message : "Please try again." });
+    } finally {
       setSubmitting(false);
-      return;
     }
-    toast.success("Order placed successfully!", { description: `Order ID ${next.id}` });
-    saveProfile(details);
-    saveOrder(next);
-    setOrder(next);
-    clearCart();
-    setSubmitting(false);
   };
 
   const city = details.city ?? "";
@@ -142,13 +124,14 @@ function CheckoutPage() {
     if (!navigator.geolocation) { toast.error("Location is not supported on this device"); return; }
     setLocating(true);
     navigator.geolocation.getCurrentPosition(async ({ coords }) => {
+      setGps({ lat: coords.latitude, lon: coords.longitude });
       try {
         const r = await reverseFn({ data: { lat: coords.latitude, lon: coords.longitude } });
         applyResolved({ ...r, lat: coords.latitude, lon: coords.longitude });
-        toast.success("Address filled from your location", { description: "Please add your house no. & landmark below." });
+        toast.success("Location captured", { description: "Address filled. Add your house number and landmark below." });
       } catch (err) {
-        setGps({ lat: coords.latitude, lon: coords.longitude });
-        toast.error("Could not look up your address", { description: err instanceof Error ? err.message : undefined });
+        console.warn("Optional address lookup failed; exact GPS pin was saved.", err);
+        toast.success("Location captured", { description: "Your exact map pin is saved. Fill in your street address and landmark below." });
       } finally { setLocating(false); }
     }, () => { setLocating(false); toast.error("Please allow location access to use this"); }, { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 });
   };
@@ -181,6 +164,7 @@ function CheckoutPage() {
   const delivery = freeDelivery ? 0 : baseDelivery;
   const total = subtotal + delivery;
   const locationCaptured = gps !== null;
+  const serviceable = isServiceableCity(city);
   const field = "w-full border-4 border-ink bg-paper px-4 py-3 text-sm font-bold outline-none focus:border-accent";
   const customImages = (order?.items ?? cart).filter((item) => item.custom?.imageDataUrl);
 
@@ -269,7 +253,8 @@ function CheckoutPage() {
         <label className="sm:col-span-2"><span className="mb-2 block font-mono text-[10px] font-extrabold tracking-widest uppercase">Order notes (optional)</span><textarea rows={2} value={notes} onChange={(event) => setNotes(event.target.value)} className={field} /></label>
         <label className="sm:col-span-2"><span className="mb-2 block font-mono text-[10px] font-extrabold tracking-widest uppercase">Payment method (online payment only)</span><select value={paymentMethod} onChange={(event) => setPaymentMethod(event.target.value)} className={field}>{["UPI", "Card", "Net banking"].map((m) => <option key={m} value={m}>{m}</option>)}</select></label>
         {!locationCaptured && <p className="sm:col-span-2 border-2 border-dashed border-ink bg-paper px-4 py-3 font-mono text-[10px] font-extrabold tracking-widest uppercase text-muted-foreground">Location capture is required to place your order — tap the green button above the address field.</p>}
-        <button type="submit" disabled={submitting || !locationCaptured} aria-disabled={!locationCaptured} className="w-full border-4 border-ink bg-accent px-6 py-5 font-display text-2xl text-accent-foreground uppercase hard-shadow press sm:col-span-2 disabled:opacity-60 disabled:cursor-not-allowed">{submitting ? "Placing order…" : locationCaptured ? "Place order" : "Capture your location to place order"}</button>
+        {!serviceable && city.trim() && <p role="status" className="sm:col-span-2 border-2 border-ink bg-paper px-4 py-3 font-mono text-[10px] font-extrabold tracking-widest uppercase">We are not servicing this area yet. We will be available soon. Orders are currently delivered in Gwalior only.</p>}
+        <button type="submit" disabled={submitting || !locationCaptured || !serviceable} aria-disabled={!locationCaptured || !serviceable} className="w-full border-4 border-ink bg-accent px-6 py-5 font-display text-2xl text-accent-foreground uppercase hard-shadow press sm:col-span-2 disabled:opacity-60 disabled:cursor-not-allowed">{submitting ? "Placing order…" : !serviceable ? "Gwalior delivery only" : locationCaptured ? "Place order" : "Capture your location to place order"}</button>
       </form>
       <aside className="h-fit border-4 border-ink bg-paper p-6 hard-shadow lg:sticky lg:top-28"><h2 className="mb-5 text-3xl">Order summary</h2><ul className="mb-4 space-y-2 font-mono text-xs font-bold">{cart.map((item) => <li key={item.key} className="flex justify-between gap-3"><span>{item.name} · {item.size} × {item.qty}</span><span>{formatPrice(item.price * item.qty)}</span></li>)}</ul><div className="space-y-2 border-t-2 border-ink pt-3 font-mono text-xs font-bold"><p className="flex justify-between"><span>Subtotal</span><span>{formatPrice(subtotal)}</span></p><p className="flex justify-between"><span>Delivery</span><span>{freeDelivery ? "FREE" : formatPrice(delivery)}</span></p><p className="flex justify-between"><span>Tax</span><span>{formatPrice(0)}</span></p></div><div className="mt-3 flex justify-between border-t-2 border-ink pt-3 font-display text-2xl uppercase"><span>Total</span><span>{formatPrice(total)}</span></div></aside>
     </div></div>
