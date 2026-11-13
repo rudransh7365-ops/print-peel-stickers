@@ -2,12 +2,6 @@ import { createServerFn } from "@tanstack/react-start";
 
 const GATEWAY_URL = "https://connector-gateway.lovable.dev/google_maps";
 
-// Gwalior, Madhya Pradesh bounding box
-const GWALIOR = {
-  low: { latitude: 26.1, longitude: 78.0 },
-  high: { latitude: 26.35, longitude: 78.35 },
-};
-
 export type ResolvedAddress = {
   address: string;
   area: string;
@@ -83,7 +77,6 @@ export const autocompleteAddress = createServerFn({ method: "POST" })
         input: data.input,
         sessionToken: data.sessionToken || undefined,
         includedRegionCodes: ["in"],
-        locationRestriction: { rectangle: GWALIOR },
       }),
     });
     const json = await check(res);

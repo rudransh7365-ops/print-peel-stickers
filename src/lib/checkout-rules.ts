@@ -1,10 +1,5 @@
 import { PRODUCTS } from "@/data/products";
-import {
-  DELIVERY_FEE_STANDARD,
-  FREE_DELIVERY_THRESHOLD,
-  deliveryFeeForCity,
-  isServiceableCity,
-} from "@/lib/config";
+import { DELIVERY_FEE_STANDARD, FREE_DELIVERY_THRESHOLD, deliveryFeeForCity } from "@/lib/config";
 
 export type CheckoutItemInput = {
   key?: string;
@@ -14,8 +9,6 @@ export type CheckoutItemInput = {
 };
 
 export function calculateVerifiedOrder(items: CheckoutItemInput[], city: string) {
-  if (!isServiceableCity(city))
-    throw new Error("We are not delivering to this area yet. Please enter a Gwalior address.");
   if (items.length === 0 || items.length > 100)
     throw new Error("Your cart is empty or could not be verified.");
 

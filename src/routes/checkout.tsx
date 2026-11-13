@@ -9,13 +9,7 @@ import {
   type ResolvedAddress,
 } from "@/lib/maps.functions";
 import { toast } from "sonner";
-import {
-  DELIVERY_FEE_STANDARD,
-  FREE_DELIVERY_THRESHOLD,
-  formatPrice,
-  deliveryFeeForCity,
-  isServiceableCity,
-} from "@/lib/config";
+import { DELIVERY_FEE_STANDARD, formatPrice, deliveryFeeForCity } from "@/lib/config";
 import { downloadReceipt, formatOrderDate, printReceipt } from "@/lib/orders";
 import { placeOrder } from "@/lib/checkout.functions";
 import { useStore, type CustomerProfile, type OrderRecord } from "@/lib/store";
@@ -106,12 +100,6 @@ function CheckoutPage() {
     }
     if (!/^\d{6}$/.test(String(details.pincode).trim())) {
       toast.error("Please enter a valid 6-digit PIN code");
-      return;
-    }
-    if (!isServiceableCity(details.city)) {
-      toast.error("We are not delivering to this area yet", {
-        description: "We will be available in your area soon. Please enter a Gwalior address.",
-      });
       return;
     }
     if (cart.length === 0) {
@@ -255,7 +243,6 @@ function CheckoutPage() {
   const delivery = freeDelivery ? 0 : baseDelivery;
   const total = subtotal + delivery;
   const locationCaptured = gps !== null;
-  const serviceable = isServiceableCity(city);
   const field =
     "w-full border-4 border-ink bg-paper px-4 py-3 text-sm font-bold outline-none focus:border-accent";
   const customImages = (order?.items ?? cart).filter((item) => item.custom?.imageDataUrl);
@@ -456,7 +443,7 @@ function CheckoutPage() {
                   </button>
                   <label className="relative block">
                     <span className="mb-2 block font-mono text-[10px] font-extrabold tracking-widest uppercase">
-                      Or search your colony / area in Gwalior
+                      Or search your area
                     </span>
                     <span className="relative block">
                       <Search
@@ -549,22 +536,12 @@ function CheckoutPage() {
               Location pin is optional. You can continue with your typed delivery address.
             </p>
           )}
-          {!serviceable && city.trim() && (
-            <p
-              role="status"
-              className="sm:col-span-2 border-2 border-ink bg-paper px-4 py-3 font-mono text-[10px] font-extrabold tracking-widest uppercase"
-            >
-              We are not servicing this area yet. We will be available soon. Orders are currently
-              delivered in Gwalior only.
-            </p>
-          )}
           <button
             type="submit"
-            disabled={submitting || !serviceable}
-            aria-disabled={!serviceable}
+            disabled={submitting}
             className="w-full border-4 border-ink bg-accent px-6 py-5 font-display text-2xl text-accent-foreground uppercase hard-shadow press sm:col-span-2 disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            {submitting ? "Placing order…" : !serviceable ? "Gwalior delivery only" : "Place order"}
+            {submitting ? "Placing order…" : "Place order"}
           </button>
         </form>
         <aside className="h-fit border-4 border-ink bg-paper p-6 hard-shadow lg:sticky lg:top-28">

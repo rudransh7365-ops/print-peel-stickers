@@ -19,10 +19,9 @@ export const CURRENCY = "₹";
 
 export const formatPrice = (n: number) => `${CURRENCY}${n}`;
 
-/** We currently deliver only in Gwalior. */
-export function isServiceableCity(city: string): boolean {
-  const lower = city.trim().toLowerCase();
-  return lower.includes("gwl") || lower.includes("gwalior");
+/** We deliver nationwide across India. */
+export function isServiceableCity(_city: string): boolean {
+  return true;
 }
 
 /** Returns the delivery fee based on the customer's city. */
