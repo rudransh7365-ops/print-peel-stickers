@@ -91,7 +91,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:title", content: "PRINT&PEEL — Premium Stickers & Self-Adhesive Posters" },
       {
         property: "og:description",
-        content: "Print it. Peel it. Make it yours. Premium stickers, self-adhesive posters & custom prints.",
+        content:
+          "Print it. Peel it. Make it yours. Premium stickers, self-adhesive posters & custom prints.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

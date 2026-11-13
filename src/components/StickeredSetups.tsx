@@ -49,7 +49,10 @@ const SCENES: Scene[] = [
     object: "Notebook cover",
     photo: notebook,
     placements: [
-      { productId: "tulip-envelope-sticker-1", style: "left-[30%] top-[40%] w-[26%] rotate-[-6deg]" },
+      {
+        productId: "tulip-envelope-sticker-1",
+        style: "left-[30%] top-[40%] w-[26%] rotate-[-6deg]",
+      },
       {
         productId: "hibiscus-bloom-sticker-1",
         style: "left-[52%] top-[58%] w-[22%] rotate-[10deg]",

@@ -24,7 +24,8 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "PRINT&PEEL — Premium Stickers & Self-Adhesive Posters" },
       {
         property: "og:description",
-        content: "Bold laminated stickers and self-adhesive posters. Print it. Peel it. Make it yours.",
+        content:
+          "Bold laminated stickers and self-adhesive posters. Print it. Peel it. Make it yours.",
       },
     ],
   }),

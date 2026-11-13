@@ -6,27 +6,49 @@ import { calculateVerifiedOrder } from "@/lib/checkout-rules";
 
 const schema = z.object({
   orderId: z.string().regex(/^PP-\d{6}$/),
-  items: z.array(z.object({
-    key: z.string().max(200).optional(),
-    productId: z.string().min(1).max(160),
-    size: z.string().min(1).max(80),
-    qty: z.number().int().min(1).max(99),
-  }).strict()).min(1).max(100),
+  items: z
+    .array(
+      z
+        .object({
+          key: z.string().max(200).optional(),
+          productId: z.string().min(1).max(160),
+          size: z.string().min(1).max(80),
+          qty: z.number().int().min(1).max(99),
+        })
+        .strict(),
+    )
+    .min(1)
+    .max(100),
   customerName: z.string().trim().min(1).max(160),
-  phone: z.string().trim().regex(/^[+\d()\s-]{10,24}$/),
+  phone: z
+    .string()
+    .trim()
+    .regex(/^[+\d()\s-]{10,24}$/),
   email: z.string().trim().email().max(255),
   address: z.string().trim().min(1).max(500),
-  googleMapsLink: z.string().url().max(1000).refine((value) => {
-    try {
-      const url = new URL(value);
-      return url.protocol === "https:" && url.hostname === "www.google.com" && url.pathname.startsWith("/maps");
-    } catch {
-      return false;
-    }
-  }, "Please capture your current location again."),
+  googleMapsLink: z
+    .string()
+    .url()
+    .max(1000)
+    .refine((value) => {
+      try {
+        const url = new URL(value);
+        return (
+          url.protocol === "https:" &&
+          url.hostname === "www.google.com" &&
+          url.pathname.startsWith("/maps")
+        );
+      } catch {
+        return false;
+      }
+    }, "Invalid map link.")
+    .or(z.literal("")),
   city: z.string().trim().min(1).max(120),
   state: z.string().trim().min(1).max(120),
-  pincode: z.string().trim().regex(/^\d{6}$/),
+  pincode: z
+    .string()
+    .trim()
+    .regex(/^\d{6}$/),
   paymentMethod: z.enum(["UPI", "Card", "Net banking"]),
   notes: z.string().max(1000),
 });
@@ -37,22 +59,24 @@ export const placeOrder = createServerFn({ method: "POST" })
     const totals = calculateVerifiedOrder(data.items, data.city);
     const url = process.env["SUPABASE_URL"];
     const key = process.env["SUPABASE_PUBLISHABLE_KEY"];
-    if (!url || !key) throw new Error("Order service is not available right now. Please try again shortly.");
+    if (!url || !key)
+      throw new Error("Order service is not available right now. Please try again shortly.");
 
     const supabase = createClient<Database>(url, key, {
       auth: { persistSession: false, autoRefreshToken: false },
       global: {
         fetch: (input, init) => {
           const headers = new Headers(init?.headers);
-          if (key.startsWith("sb_") && headers.get("Authorization") === `Bearer ${key}`) headers.delete("Authorization");
+          if (key.startsWith("sb_") && headers.get("Authorization") === `Bearer ${key}`)
+            headers.delete("Authorization");
           headers.set("apikey", key);
           return fetch(input, { ...init, headers });
         },
       },
     });
 
-    const items = JSON.stringify({ order_id: data.orderId, items: totals.items, notes: data.notes });
     const { error } = await supabase.from("orders").insert({
+      order_id: data.orderId,
       customer_name: data.customerName,
       phone_no: data.phone.replace(/\D/g, "").slice(-10),
       email: data.email,
@@ -61,10 +85,13 @@ export const placeOrder = createServerFn({ method: "POST" })
       city: data.city,
       state: data.state,
       pincode: data.pincode,
-      items,
+      country: "India",
+      items: { order_id: data.orderId, items: totals.items, notes: data.notes },
       subtotal: totals.subtotal,
-      delivery_charge: totals.delivery,
+      delivery: totals.delivery,
+      tax: 0,
       total: totals.total,
+      notes: `${data.paymentMethod}${data.notes ? ` — ${data.notes}` : ""}`,
       payment_method: data.paymentMethod,
       is_free_delivery: totals.delivery === 0,
     });

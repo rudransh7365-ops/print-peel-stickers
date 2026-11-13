@@ -8,5 +8,4 @@ export function openWhatsApp(message: string) {
 export const enquiryMessage = (topic?: string) =>
   `Hi PRINT&PEEL, I have an enquiry about ${topic ?? "your stickers and self-adhesive posters"}.`;
 
-export const complaintMessage = () =>
-  `Hi PRINT&PEEL, I need help with an order.`;
+export const complaintMessage = () => `Hi PRINT&PEEL, I need help with an order.`;

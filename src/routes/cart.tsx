@@ -8,16 +8,23 @@ export const Route = createFileRoute("/cart")({
   head: () => ({
     meta: [
       { title: "Your Cart — PRINT&PEEL" },
-      { name: "description", content: "Review your stickers and self-adhesive posters before checkout." },
+      {
+        name: "description",
+        content: "Review your stickers and self-adhesive posters before checkout.",
+      },
       { property: "og:title", content: "Your Cart — PRINT&PEEL" },
-      { property: "og:description", content: "Review your stickers and self-adhesive posters before checkout." },
+      {
+        property: "og:description",
+        content: "Review your stickers and self-adhesive posters before checkout.",
+      },
     ],
   }),
   component: CartPage,
 });
 
 function CartPage() {
-  const { cart, setQty, removeFromCart, clearCart, subtotal, freeDelivery, hydrated, profile } = useStore();
+  const { cart, setQty, removeFromCart, clearCart, subtotal, freeDelivery, hydrated, profile } =
+    useStore();
   const city = profile?.city ?? "";
   const baseDelivery = city ? deliveryFeeForCity(city) : DELIVERY_FEE_STANDARD;
   const delivery = freeDelivery ? 0 : baseDelivery;
@@ -117,9 +124,7 @@ function CartPage() {
             </div>
             <div className="mb-4 flex justify-between gap-4 font-mono text-xs font-bold text-muted-foreground">
               <span>Delivery</span>
-              <span className="text-right">
-                {freeDelivery ? "FREE" : formatPrice(delivery)}
-              </span>
+              <span className="text-right">{freeDelivery ? "FREE" : formatPrice(delivery)}</span>
             </div>
             <div className="mb-6 flex justify-between border-t-2 border-ink pt-4 font-display text-2xl uppercase">
               <span>Total</span>

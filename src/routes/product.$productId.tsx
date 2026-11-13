@@ -15,7 +15,12 @@ export const Route = createFileRoute("/product/$productId")({
   },
   head: ({ loaderData }) => {
     if (!loaderData) {
-      return { meta: [{ title: "Product unavailable — PRINT&PEEL" }, { name: "robots", content: "noindex" }] };
+      return {
+        meta: [
+          { title: "Product unavailable — PRINT&PEEL" },
+          { name: "robots", content: "noindex" },
+        ],
+      };
     }
     const { product } = loaderData;
     const title = `${product.name} — PRINT&PEEL`;
@@ -89,12 +94,7 @@ function ProductPage() {
                   aria-pressed={i === image}
                   className={`size-20 border-4 bg-white p-1 ${i === image ? "border-accent" : "border-ink"}`}
                 >
-                  <img
-                    src={img}
-                    alt=""
-                    loading="lazy"
-                    className="h-full w-full object-contain"
-                  />
+                  <img src={img} alt="" loading="lazy" className="h-full w-full object-contain" />
                 </button>
               ))}
             </div>
@@ -197,12 +197,19 @@ function ProductPage() {
               aria-label={saved ? "Remove from wishlist" : "Save to wishlist"}
               className="grid size-[60px] place-items-center border-4 border-ink bg-white hard-shadow press"
             >
-              <Heart className={`size-5 ${saved ? "fill-accent text-accent" : ""}`} aria-hidden="true" />
+              <Heart
+                className={`size-5 ${saved ? "fill-accent text-accent" : ""}`}
+                aria-hidden="true"
+              />
             </button>
           </div>
 
           <ul className="mt-8 space-y-2 border-4 border-ink bg-paper p-5 text-xs font-bold">
-            <li>{product.category === "posters" ? "Premium self-adhesive matte finish" : "Premium laminated finish · water & scratch resistant"}</li>
+            <li>
+              {product.category === "posters"
+                ? "Premium self-adhesive matte finish"
+                : "Premium laminated finish · water & scratch resistant"}
+            </li>
             <li>Free delivery from ₹{FREE_DELIVERY_THRESHOLD}</li>
             <li>Order is confirmed before printing</li>
           </ul>

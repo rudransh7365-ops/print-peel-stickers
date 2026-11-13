@@ -12,7 +12,10 @@ export function StickerSizeConfirmation({
   onSelect: (index: number) => void;
 }) {
   return (
-    <section className="mb-8 border-4 border-ink bg-paper p-5" aria-labelledby="sticker-size-heading">
+    <section
+      className="mb-8 border-4 border-ink bg-paper p-5"
+      aria-labelledby="sticker-size-heading"
+    >
       <div className="mb-5 flex items-start justify-between gap-4">
         <div>
           <p className="font-mono text-[9px] font-extrabold tracking-widest uppercase text-accent">

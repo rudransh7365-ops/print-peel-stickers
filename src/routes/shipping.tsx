@@ -26,9 +26,7 @@ function ShippingPage() {
         Legal
       </p>
       <h1 className="mb-8 text-5xl sm:text-6xl">Shipping Policy</h1>
-      <p className="mb-6 text-sm font-medium text-muted-foreground">
-        Last updated: October 2026
-      </p>
+      <p className="mb-6 text-sm font-medium text-muted-foreground">Last updated: October 2026</p>
 
       <div className="space-y-8 text-sm leading-relaxed">
         <section>
@@ -43,8 +41,8 @@ function ShippingPage() {
           <h2 className="mb-3 text-xl font-extrabold">2. Delivery Partner</h2>
           <p className="font-medium text-muted-foreground">
             We ship all orders through Delhivery, one of India&apos;s largest logistics networks.
-            Once your order is dispatched, you will receive a tracking number via WhatsApp or
-            email so you can follow your package in real time.
+            Once your order is dispatched, you will receive a tracking number via WhatsApp or email
+            so you can follow your package in real time.
           </p>
         </section>
 
@@ -60,17 +58,17 @@ function ShippingPage() {
         <section>
           <h2 className="mb-3 text-xl font-extrabold">4. Expected Delivery Time</h2>
           <p className="font-medium text-muted-foreground">
-            After dispatch, deliveries typically take 3–7 business days depending on your
-            location. Remote or rural areas may take slightly longer. You can track your
-            shipment using the tracking number provided once your order is dispatched.
+            After dispatch, deliveries typically take 3–7 business days depending on your location.
+            Remote or rural areas may take slightly longer. You can track your shipment using the
+            tracking number provided once your order is dispatched.
           </p>
         </section>
 
         <section>
           <h2 className="mb-3 text-xl font-extrabold">5. Order Tracking</h2>
           <p className="font-medium text-muted-foreground">
-            Once your order is handed over to Delhivery, we will share a tracking link with you.
-            If you have not received tracking details within 48 hours of your order confirmation,
+            Once your order is handed over to Delhivery, we will share a tracking link with you. If
+            you have not received tracking details within 48 hours of your order confirmation,
             please contact us at{" "}
             <a
               href="mailto:printandpeel@gmail.com"

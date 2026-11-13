@@ -41,8 +41,7 @@ export function CatalogPage({
     const s = q.trim().toLowerCase();
     let list = base.filter((p) => {
       const matchQ =
-        !s ||
-        [p.name, p.description, ...p.tags, ...p.types].join(" ").toLowerCase().includes(s);
+        !s || [p.name, p.description, ...p.tags, ...p.types].join(" ").toLowerCase().includes(s);
       const matchType = !type || p.types.includes(type);
       const matchSize = !size || p.sizes.some((x) => x.label === size);
       return matchQ && matchType && matchSize;

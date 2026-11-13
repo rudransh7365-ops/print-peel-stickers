@@ -2136,9 +2136,6 @@ export const searchProducts = (q: string) => {
   const s = q.trim().toLowerCase();
   if (!s) return [];
   return PRODUCTS.filter((p) =>
-    [p.name, p.category, p.description, ...p.tags, ...p.types]
-      .join(" ")
-      .toLowerCase()
-      .includes(s),
+    [p.name, p.category, p.description, ...p.tags, ...p.types].join(" ").toLowerCase().includes(s),
   );
 };

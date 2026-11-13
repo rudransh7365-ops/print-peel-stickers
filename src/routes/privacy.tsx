@@ -26,9 +26,7 @@ function PrivacyPage() {
         Legal
       </p>
       <h1 className="mb-8 text-5xl sm:text-6xl">Privacy Policy</h1>
-      <p className="mb-6 text-sm font-medium text-muted-foreground">
-        Last updated: October 2026
-      </p>
+      <p className="mb-6 text-sm font-medium text-muted-foreground">Last updated: October 2026</p>
 
       <div className="space-y-8 text-sm leading-relaxed">
         <section>
@@ -50,18 +48,18 @@ function PrivacyPage() {
           <p className="font-medium text-muted-foreground">
             Your data is collected strictly for the purpose of processing and fulfilling your
             orders. This includes confirming your order, printing and packaging your items, and
-            shipping them to your address. We may also use your phone number or email to contact
-            you regarding your order status or if there are any issues with your delivery.
+            shipping them to your address. We may also use your phone number or email to contact you
+            regarding your order status or if there are any issues with your delivery.
           </p>
         </section>
 
         <section>
           <h2 className="mb-3 text-xl font-extrabold">3. Data Storage &amp; Security</h2>
           <p className="font-medium text-muted-foreground">
-            Your order information is stored securely in our database hosted on Supabase, a
-            managed PostgreSQL platform with industry-standard encryption and access controls.
-            We do not store payment card details — all transactions are processed through
-            secure third-party payment gateways.
+            Your order information is stored securely in our database hosted on Supabase, a managed
+            PostgreSQL platform with industry-standard encryption and access controls. We do not
+            store payment card details — all transactions are processed through secure third-party
+            payment gateways.
           </p>
         </section>
 
@@ -69,9 +67,9 @@ function PrivacyPage() {
           <h2 className="mb-3 text-xl font-extrabold">4. Third-Party Logistics</h2>
           <p className="font-medium text-muted-foreground">
             To deliver your orders, we share your name, phone number and shipping address with
-            Delhivery, our third-party logistics partner. This information is shared solely for
-            the purpose of delivering your package to your doorstep. Delhivery handles your data
-            in accordance with their own privacy policy.
+            Delhivery, our third-party logistics partner. This information is shared solely for the
+            purpose of delivering your package to your doorstep. Delhivery handles your data in
+            accordance with their own privacy policy.
           </p>
         </section>
 
@@ -80,7 +78,10 @@ function PrivacyPage() {
           <ul className="list-disc space-y-1 pl-5 font-medium text-muted-foreground">
             <li>We do not sell or rent your personal data to anyone.</li>
             <li>We do not use your data for unsolicited marketing or spam.</li>
-            <li>We do not share your data with any party other than what is required to fulfill your order.</li>
+            <li>
+              We do not share your data with any party other than what is required to fulfill your
+              order.
+            </li>
           </ul>
         </section>
 
@@ -95,8 +96,8 @@ function PrivacyPage() {
         <section>
           <h2 className="mb-3 text-xl font-extrabold">7. Contact</h2>
           <p className="font-medium text-muted-foreground">
-            If you have any questions about this Privacy Policy or how we handle your data, email
-            us at{" "}
+            If you have any questions about this Privacy Policy or how we handle your data, email us
+            at{" "}
             <a
               href="mailto:printandpeel@gmail.com"
               className="font-extrabold text-accent underline"

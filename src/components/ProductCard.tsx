@@ -13,12 +13,20 @@ function badgeOf(p: Product) {
   return null;
 }
 
-export function ProductCard({ product, dark = false, selectedSize }: { product: Product; dark?: boolean; selectedSize?: string | null }) {
+export function ProductCard({
+  product,
+  dark = false,
+  selectedSize,
+}: {
+  product: Product;
+  dark?: boolean;
+  selectedSize?: string | null;
+}) {
   const { addToCart, toggleWishlist, isWishlisted } = useStore();
   const badge = badgeOf(product);
   const saved = isWishlisted(product.id);
   const size = selectedSize
-    ? product.sizes.find((s) => s.label === selectedSize) ?? product.sizes[0]
+    ? (product.sizes.find((s) => s.label === selectedSize) ?? product.sizes[0])
     : product.sizes[0];
   if (!size) return null;
 
@@ -37,7 +45,9 @@ export function ProductCard({ product, dark = false, selectedSize }: { product: 
         <button
           type="button"
           onClick={() => toggleWishlist(product.id)}
-          aria-label={saved ? `Remove ${product.name} from wishlist` : `Save ${product.name} to wishlist`}
+          aria-label={
+            saved ? `Remove ${product.name} from wishlist` : `Save ${product.name} to wishlist`
+          }
           aria-pressed={saved}
           className="absolute top-2 right-2 z-10 grid size-9 place-items-center border-2 border-ink bg-white transition-transform active:scale-90"
         >

@@ -7,7 +7,10 @@ export const Route = createFileRoute("/wishlist")({
   head: () => ({
     meta: [
       { title: "Wishlist — PRINT&PEEL" },
-      { name: "description", content: "The stickers and self-adhesive posters you saved for later." },
+      {
+        name: "description",
+        content: "The stickers and self-adhesive posters you saved for later.",
+      },
       { property: "og:title", content: "Wishlist — PRINT&PEEL" },
       { property: "og:description", content: "Your saved stickers and self-adhesive posters." },
     ],

@@ -26,17 +26,15 @@ function TermsPage() {
         Legal
       </p>
       <h1 className="mb-8 text-5xl sm:text-6xl">Terms &amp; Conditions</h1>
-      <p className="mb-6 text-sm font-medium text-muted-foreground">
-        Last updated: October 2026
-      </p>
+      <p className="mb-6 text-sm font-medium text-muted-foreground">Last updated: October 2026</p>
 
       <div className="space-y-8 text-sm leading-relaxed">
         <section>
           <h2 className="mb-3 text-xl font-extrabold">1. Acceptance of Terms</h2>
           <p className="font-medium text-muted-foreground">
-            By accessing or using the PRINT&amp;PEEL website, you agree to be bound by these
-            Terms &amp; Conditions. If you do not agree with any part of these terms, please do
-            not use our website or place orders.
+            By accessing or using the PRINT&amp;PEEL website, you agree to be bound by these Terms
+            &amp; Conditions. If you do not agree with any part of these terms, please do not use
+            our website or place orders.
           </p>
         </section>
 
@@ -44,25 +42,29 @@ function TermsPage() {
           <h2 className="mb-3 text-xl font-extrabold">2. Website Usage</h2>
           <ul className="list-disc space-y-1 pl-5 font-medium text-muted-foreground">
             <li>You must provide accurate and complete information when placing an order.</li>
-            <li>You are responsible for ensuring the shipping address is correct before confirming your order.</li>
+            <li>
+              You are responsible for ensuring the shipping address is correct before confirming
+              your order.
+            </li>
             <li>You may not use our website for any unlawful or fraudulent purpose.</li>
             <li>We reserve the right to refuse or cancel any order at our discretion.</li>
           </ul>
         </section>
 
         <section>
-          <h2 className="mb-3 text-xl font-extrabold">3. Intellectual Property &amp; Design Copyright</h2>
+          <h2 className="mb-3 text-xl font-extrabold">
+            3. Intellectual Property &amp; Design Copyright
+          </h2>
           <p className="font-medium text-muted-foreground">
-            All designs, artwork, logos, graphics, and content on the PRINT&amp;PEEL website are
-            the intellectual property of PRINT&amp;PEEL or our licensed partners. You may not
-            reproduce, copy, distribute, or use any designs without our written permission.
+            All designs, artwork, logos, graphics, and content on the PRINT&amp;PEEL website are the
+            intellectual property of PRINT&amp;PEEL or our licensed partners. You may not reproduce,
+            copy, distribute, or use any designs without our written permission.
           </p>
           <p className="mt-3 font-medium text-muted-foreground">
-            For custom orders, you confirm that you own the rights to any artwork you upload or
-            that you have permission to use it. PRINT&amp;PEEL is not liable for copyright
-            infringement arising from customer-submitted designs. We reserve the right to refuse
-            to print any design that we believe infringes on third-party intellectual property
-            rights.
+            For custom orders, you confirm that you own the rights to any artwork you upload or that
+            you have permission to use it. PRINT&amp;PEEL is not liable for copyright infringement
+            arising from customer-submitted designs. We reserve the right to refuse to print any
+            design that we believe infringes on third-party intellectual property rights.
           </p>
         </section>
 
@@ -97,8 +99,8 @@ function TermsPage() {
         <section>
           <h2 className="mb-3 text-xl font-extrabold">7. Changes to These Terms</h2>
           <p className="font-medium text-muted-foreground">
-            We may update these Terms &amp; Conditions from time to time. Any changes will be
-            posted on this page with an updated revision date.
+            We may update these Terms &amp; Conditions from time to time. Any changes will be posted
+            on this page with an updated revision date.
           </p>
         </section>
 

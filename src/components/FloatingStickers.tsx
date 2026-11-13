@@ -91,10 +91,7 @@ export function FloatingStickers() {
               transition: "transform 300ms ease-out",
             }}
           >
-            <div
-              className="animate-drop-in"
-              style={{ animationDelay: spot.delay }}
-            >
+            <div className="animate-drop-in" style={{ animationDelay: spot.delay }}>
               <div className={spot.anim}>
                 <img
                   src={product.images[0]}

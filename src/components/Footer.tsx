@@ -64,7 +64,9 @@ export function Footer() {
             </Link>
           </div>
           <div className="space-y-3">
-            <p className="font-mono text-[10px] tracking-widest uppercase text-neon-blue">Support</p>
+            <p className="font-mono text-[10px] tracking-widest uppercase text-neon-blue">
+              Support
+            </p>
             <button
               type="button"
               onClick={() => openWhatsApp(enquiryMessage())}
@@ -91,9 +93,7 @@ export function Footer() {
             >
               printandpeel@gmail.com
             </a>
-            <p className="text-[11px] font-medium text-white/40">
-              Gwalior, Madhya Pradesh, India
-            </p>
+            <p className="text-[11px] font-medium text-white/40">Gwalior, Madhya Pradesh, India</p>
           </div>
         </div>
 
