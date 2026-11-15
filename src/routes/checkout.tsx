@@ -11,7 +11,8 @@ import {
 import { toast } from "sonner";
 import { DELIVERY_FEE_STANDARD, formatPrice, deliveryFeeForCity } from "@/lib/config";
 import { downloadReceipt, formatOrderDate, printReceipt } from "@/lib/orders";
-import { placeOrder } from "@/lib/checkout.functions";
+import { verifyOrder, buildOrderInsertRow } from "@/lib/checkout.functions";
+import { supabase } from "@/integrations/supabase/client";
 import { useStore, type CustomerProfile, type OrderRecord } from "@/lib/store";
 import ronaldoManUtdImg from "@/assets/ronaldo.png";
 import wastedImg from "@/assets/wasted.png";
@@ -73,7 +74,7 @@ function CheckoutPage() {
   const autocompleteFn = useServerFn(autocompleteAddress);
   const detailsFn = useServerFn(placeDetails);
   const reverseFn = useServerFn(reverseGeocode);
-  const placeOrderFn = useServerFn(placeOrder);
+  const verifyOrderFn = useServerFn(verifyOrder);
   useEffect(() => {
     if (profile) setDetails(profile);
   }, [profile]);
@@ -115,23 +116,28 @@ function CheckoutPage() {
     setSubmitting(true);
     const mapsLink = gps ? `https://www.google.com/maps?q=${gps.lat},${gps.lon}` : "";
     const fullAddress = `${details.landmark ? `${details.landmark}, ` : ""}${details.address}`;
+    const orderInput = {
+      orderId: `PP-${Date.now().toString().slice(-6)}`,
+      items: cart.map(({ key, productId, size, qty }) => ({ key, productId, size, qty })),
+      customerName: `${details.firstName} ${details.lastName}`.trim(),
+      phone: details.phone,
+      email: details.email,
+      address: fullAddress,
+      googleMapsLink: mapsLink,
+      city: details.city,
+      state: details.state,
+      pincode: details.pincode,
+      paymentMethod: paymentMethod as "UPI" | "Card" | "Net banking",
+      notes,
+    };
     try {
-      const result = await placeOrderFn({
-        data: {
-          orderId: `PP-${Date.now().toString().slice(-6)}`,
-          items: cart.map(({ key, productId, size, qty }) => ({ key, productId, size, qty })),
-          customerName: `${details.firstName} ${details.lastName}`.trim(),
-          phone: details.phone,
-          email: details.email,
-          address: fullAddress,
-          googleMapsLink: mapsLink,
-          city: details.city,
-          state: details.state,
-          pincode: details.pincode,
-          paymentMethod: paymentMethod as "UPI" | "Card" | "Net banking",
-          notes,
-        },
-      });
+      const result = await verifyOrderFn({ data: orderInput });
+      const row = buildOrderInsertRow(orderInput, result);
+      const { error: insertError } = await supabase.from("orders").insert(row);
+      if (insertError) {
+        console.error("Order insert failed:", insertError.message, insertError.code);
+        throw new Error("Could not save your order. Please try again.");
+      }
       const next: OrderRecord = {
         id: result.orderId,
         date: new Date().toISOString(),
