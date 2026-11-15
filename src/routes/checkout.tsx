@@ -102,6 +102,12 @@ function CheckoutPage() {
       toast.error("Please enter a valid 6-digit PIN code");
       return;
     }
+    if (!gps) {
+      toast.error("Please share your location", {
+        description: 'Tap "Use my current location" so we can pin your exact delivery address.',
+      });
+      return;
+    }
     if (cart.length === 0) {
       toast.error("Your cart is empty");
       return;
@@ -438,7 +444,7 @@ function CheckoutPage() {
                         ? "Finding your location…"
                         : locationCaptured
                           ? "Location captured — tap to recapture"
-                          : "Use my current location (optional)"}
+                          : "Use my current location (required)"}
                     </span>
                   </button>
                   <label className="relative block">
@@ -532,16 +538,20 @@ function CheckoutPage() {
             </select>
           </label>
           {!locationCaptured && (
-            <p className="sm:col-span-2 border-2 border-dashed border-ink bg-paper px-4 py-3 font-mono text-[10px] font-extrabold tracking-widest uppercase text-muted-foreground">
-              Location pin is optional. You can continue with your typed delivery address.
+            <p className="sm:col-span-2 border-2 border-dashed border-ink bg-accent/10 px-4 py-3 font-mono text-[10px] font-extrabold tracking-widest uppercase text-accent">
+              Location pin required — please tap "Use my current location" above so we can deliver to your exact address.
             </p>
           )}
           <button
             type="submit"
-            disabled={submitting}
+            disabled={submitting || !locationCaptured}
             className="w-full border-4 border-ink bg-accent px-6 py-5 font-display text-2xl text-accent-foreground uppercase hard-shadow press sm:col-span-2 disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            {submitting ? "Placing order…" : "Place order"}
+            {submitting
+              ? "Placing order…"
+              : locationCaptured
+                ? "Place order"
+                : "Share location to continue"}
           </button>
         </form>
         <aside className="h-fit border-4 border-ink bg-paper p-6 hard-shadow lg:sticky lg:top-28">
