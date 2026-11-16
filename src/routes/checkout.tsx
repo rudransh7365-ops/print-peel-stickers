@@ -1,18 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useServerFn } from "@tanstack/react-start";
-import { CreditCard, MapPin, Search, ShieldCheck } from "lucide-react";
+import { MapPin, Search, ShieldCheck } from "lucide-react";
 import { Fragment, useEffect, useRef, useState } from "react";
-import {
-  autocompleteAddress,
-  placeDetails,
-  reverseGeocode,
-  type ResolvedAddress,
-} from "@/lib/maps.functions";
 import { toast } from "sonner";
 import { DELIVERY_FEE_STANDARD, formatPrice, deliveryFeeForCity } from "@/lib/config";
 import { downloadReceipt, formatOrderDate, printReceipt } from "@/lib/orders";
-import { verifyOrder, buildOrderInsertRow } from "@/lib/checkout.functions";
-import { supabase } from "@/integrations/supabase/client";
+import { orderWhatsAppMessage, openWhatsApp } from "@/lib/whatsapp";
 import { useStore, type CustomerProfile, type OrderRecord } from "@/lib/store";
 import ronaldoManUtdImg from "@/assets/ronaldo.png";
 import wastedImg from "@/assets/wasted.png";
@@ -66,20 +58,11 @@ function CheckoutPage() {
   const [submitting, setSubmitting] = useState(false);
   const [locating, setLocating] = useState(false);
   const [gps, setGps] = useState<{ lat: number; lon: number } | null>(null);
-  const [query, setQuery] = useState("");
-  const [suggestions, setSuggestions] = useState<{ placeId: string; text: string }[]>([]);
-  const sessionRef = useRef("");
-  const reqRef = useRef(0);
-  const debounceRef = useRef<number | undefined>(undefined);
-  const autocompleteFn = useServerFn(autocompleteAddress);
-  const detailsFn = useServerFn(placeDetails);
-  const reverseFn = useServerFn(reverseGeocode);
-  const verifyOrderFn = useServerFn(verifyOrder);
   useEffect(() => {
     if (profile) setDetails(profile);
   }, [profile]);
 
-  const handleSubmit = async (event: React.FormEvent) => {
+  const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     const required: [string, string | undefined][] = [
       ["First name", details.firstName],
@@ -113,70 +96,48 @@ function CheckoutPage() {
       toast.error("Your cart is empty");
       return;
     }
+
     setSubmitting(true);
-    const mapsLink = gps ? `https://www.google.com/maps?q=${gps.lat},${gps.lon}` : "";
-    const fullAddress = `${details.landmark ? `${details.landmark}, ` : ""}${details.address}`;
-    const orderInput = {
-      orderId: `PP-${Date.now().toString().slice(-6)}`,
-      items: cart.map(({ key, productId, size, qty }) => ({ key, productId, size, qty })),
-      customerName: `${details.firstName} ${details.lastName}`.trim(),
-      phone: details.phone,
-      email: details.email,
-      address: fullAddress,
-      googleMapsLink: mapsLink,
-      city: details.city,
-      state: details.state,
-      pincode: details.pincode,
-      paymentMethod: paymentMethod as "UPI" | "Card" | "Net banking",
+    const orderId = `PP-${Date.now().toString().slice(-6)}`;
+    const mapsLink = `https://www.google.com/maps?q=${gps.lat},${gps.lon}`;
+    const baseDelivery = details.city ? deliveryFeeForCity(details.city) : DELIVERY_FEE_STANDARD;
+    const delivery = freeDelivery ? 0 : baseDelivery;
+    const total = subtotal + delivery;
+
+    const message = orderWhatsAppMessage(
+      orderId,
+      cart,
+      details,
+      subtotal,
+      delivery,
+      total,
+      mapsLink,
+      paymentMethod,
       notes,
+    );
+
+    openWhatsApp(message);
+
+    const next: OrderRecord = {
+      id: orderId,
+      date: new Date().toISOString(),
+      items: cart.map((item) => ({ ...item })),
+      customer: details,
+      subtotal,
+      delivery,
+      tax: 0,
+      total,
     };
-    try {
-      const result = await verifyOrderFn({ data: orderInput });
-      const row = buildOrderInsertRow(orderInput, result);
-      const { error: insertError } = await supabase.from("orders").insert(row);
-      if (insertError) {
-        console.error("Order insert failed:", insertError.message, insertError.code);
-        throw new Error("Could not save your order. Please try again.");
-      }
-      const next: OrderRecord = {
-        id: result.orderId,
-        date: new Date().toISOString(),
-        items: result.items.map((item) => ({
-          ...item,
-          key: item.key ?? `${item.productId}-${item.size}`,
-        })),
-        customer: details,
-        subtotal: result.subtotal,
-        delivery: result.delivery,
-        tax: 0,
-        total: result.total,
-      };
-      toast.success("Order placed successfully!", { description: `Order ID ${next.id}` });
-      saveProfile(details);
-      saveOrder(next);
-      setOrder(next);
-      clearCart();
-    } catch (err) {
-      toast.error("Could not place your order", {
-        description: err instanceof Error ? err.message : "Please try again.",
-      });
-    } finally {
-      setSubmitting(false);
-    }
+    saveProfile(details);
+    saveOrder(next);
+    setOrder(next);
+    clearCart();
+    toast.success("Opening WhatsApp…", {
+      description: "Tap send in WhatsApp to complete your order.",
+    });
+    setSubmitting(false);
   };
 
-  const city = details.city ?? "";
-  const applyResolved = (r: ResolvedAddress) => {
-    setGps({ lat: r.lat, lon: r.lon });
-    setDetails((prev) => ({
-      ...prev,
-      address: r.address || prev.address,
-      city: r.city || prev.city,
-      state: r.state || prev.state,
-      pincode: r.pincode || prev.pincode,
-      country: "India",
-    }));
-  };
   const useCurrentLocation = () => {
     if (!navigator.geolocation) {
       toast.error("Location is not supported on this device");
@@ -184,23 +145,12 @@ function CheckoutPage() {
     }
     setLocating(true);
     navigator.geolocation.getCurrentPosition(
-      async ({ coords }) => {
+      ({ coords }) => {
         setGps({ lat: coords.latitude, lon: coords.longitude });
-        try {
-          const r = await reverseFn({ data: { lat: coords.latitude, lon: coords.longitude } });
-          applyResolved({ ...r, lat: coords.latitude, lon: coords.longitude });
-          toast.success("Location captured", {
-            description: "Address filled. Add your house number and landmark below.",
-          });
-        } catch (err) {
-          console.warn("Optional address lookup failed; exact GPS pin was saved.", err);
-          toast.success("Location captured", {
-            description:
-              "Your exact map pin is saved. Fill in your street address and landmark below.",
-          });
-        } finally {
-          setLocating(false);
-        }
+        setLocating(false);
+        toast.success("Location captured", {
+          description: "Your exact map pin is saved for the order.",
+        });
       },
       () => {
         setLocating(false);
@@ -209,49 +159,8 @@ function CheckoutPage() {
       { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 },
     );
   };
-  const onSearchInput = (value: string) => {
-    setQuery(value);
-    window.clearTimeout(debounceRef.current);
-    if (value.trim().length < 2) {
-      setSuggestions([]);
-      return;
-    }
-    if (!sessionRef.current) sessionRef.current = crypto.randomUUID();
-    const reqId = ++reqRef.current;
-    debounceRef.current = window.setTimeout(async () => {
-      try {
-        const list = await autocompleteFn({
-          data: { input: value, sessionToken: sessionRef.current },
-        });
-        if (reqId === reqRef.current) setSuggestions(list);
-      } catch (err) {
-        if (reqId === reqRef.current) {
-          setSuggestions([]);
-          toast.error(err instanceof Error ? err.message : "Search failed");
-        }
-      }
-    }, 300);
-  };
-  const pickSuggestion = async (s: { placeId: string; text: string }) => {
-    setSuggestions([]);
-    setQuery(s.text);
-    setLocating(true);
-    try {
-      const r = await detailsFn({ data: { placeId: s.placeId, sessionToken: sessionRef.current } });
-      applyResolved(r);
-      toast.success("Address filled", {
-        description: "Please add your house no. & landmark below.",
-      });
-    } catch (err) {
-      toast.error("Could not load this address", {
-        description: err instanceof Error ? err.message : undefined,
-      });
-    } finally {
-      sessionRef.current = "";
-      setLocating(false);
-    }
-  };
-  const baseDelivery = city ? deliveryFeeForCity(city) : DELIVERY_FEE_STANDARD;
+
+  const baseDelivery = details.city ? deliveryFeeForCity(details.city) : DELIVERY_FEE_STANDARD;
   const delivery = freeDelivery ? 0 : baseDelivery;
   const total = subtotal + delivery;
   const locationCaptured = gps !== null;
@@ -313,8 +222,32 @@ function CheckoutPage() {
         <div className="mt-6 flex flex-wrap gap-3">
           <button
             type="button"
-            onClick={() => printReceipt(order)}
+            onClick={() => {
+              const mapsLink = gps
+                ? `https://www.google.com/maps?q=${gps.lat},${gps.lon}`
+                : "";
+              openWhatsApp(
+                orderWhatsAppMessage(
+                  order.id,
+                  order.items,
+                  order.customer,
+                  order.subtotal,
+                  order.delivery,
+                  order.total,
+                  mapsLink,
+                  "",
+                  "",
+                ),
+              );
+            }}
             className="border-4 border-ink bg-neon-green px-5 py-3 font-mono text-[10px] font-extrabold tracking-widest uppercase hard-shadow press"
+          >
+            Re-send on WhatsApp
+          </button>
+          <button
+            type="button"
+            onClick={() => printReceipt(order)}
+            className="border-4 border-ink bg-white px-5 py-3 font-mono text-[10px] font-extrabold tracking-widest uppercase hard-shadow press"
           >
             Print receipt
           </button>
@@ -382,16 +315,15 @@ function CheckoutPage() {
           </div>
           <div>
             <h2 id="payment-title" className="mb-2 text-2xl uppercase">
-              Online payment only
+              Order via WhatsApp
             </h2>
             <p className="max-w-2xl text-sm font-bold leading-relaxed">
-              We accept online payments only so every order stays simple and trackable. Place your
-              order with confidence — we will confirm your details and share secure payment
-              instructions before processing it.
+              Fill in your delivery details and tap "Place order" — we'll open WhatsApp with your
+              order details pre-filled. Just hit send and we'll confirm your order and share payment
+              instructions.
             </p>
             <p className="mt-3 flex items-center gap-2 font-mono text-[10px] font-extrabold tracking-widest uppercase">
-              <CreditCard className="size-4" aria-hidden="true" /> Safe checkout · Personal support
-              · No cash on delivery
+              No cash on delivery · Personal support · Quick confirmation
             </p>
           </div>
         </div>
@@ -431,7 +363,7 @@ function CheckoutPage() {
           className="grid gap-4 sm:grid-cols-2"
           onSubmit={(e) => {
             e.preventDefault();
-            void handleSubmit(e);
+            handleSubmit(e);
           }}
         >
           {(Object.keys(EMPTY) as Array<keyof CustomerProfile>).map((key) => (
@@ -453,40 +385,6 @@ function CheckoutPage() {
                           : "Use my current location (required)"}
                     </span>
                   </button>
-                  <label className="relative block">
-                    <span className="mb-2 block font-mono text-[10px] font-extrabold tracking-widest uppercase">
-                      Or search your area
-                    </span>
-                    <span className="relative block">
-                      <Search
-                        className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2"
-                        aria-hidden="true"
-                      />
-                      <input
-                        type="text"
-                        value={query}
-                        onChange={(e) => onSearchInput(e.target.value)}
-                        placeholder="e.g. Amarkantak Colony"
-                        autoComplete="off"
-                        className={`${field} pl-9`}
-                      />
-                    </span>
-                    {suggestions.length > 0 && (
-                      <ul className="absolute z-20 mt-1 w-full border-4 border-ink bg-white hard-shadow-sm">
-                        {suggestions.map((s) => (
-                          <li key={s.placeId}>
-                            <button
-                              type="button"
-                              onClick={() => void pickSuggestion(s)}
-                              className="block w-full px-4 py-3 text-left text-sm font-bold hover:bg-paper"
-                            >
-                              {s.text}
-                            </button>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </label>
                   {gps && (
                     <p className="font-mono text-[10px] font-extrabold tracking-widest uppercase text-muted-foreground">
                       Exact pin saved: {gps.lat.toFixed(5)}, {gps.lon.toFixed(5)}
@@ -554,9 +452,9 @@ function CheckoutPage() {
             className="w-full border-4 border-ink bg-accent px-6 py-5 font-display text-2xl text-accent-foreground uppercase hard-shadow press sm:col-span-2 disabled:opacity-60 disabled:cursor-not-allowed"
           >
             {submitting
-              ? "Placing order…"
+              ? "Opening WhatsApp…"
               : locationCaptured
-                ? "Place order"
+                ? "Place order on WhatsApp"
                 : "Share location to continue"}
           </button>
         </form>
